@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html class="light" lang="fr">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Journal de Bord - Amazonie Project</title>
-    
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-    <!-- CRITICAL: Material Symbols Link -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -44,17 +44,13 @@
             },
             borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
             boxShadow: {
-                'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
             },
-            backgroundImage: {
-                'barred-pattern': "linear-gradient(45deg, #fef2f2 25%, transparent 25%, transparent 50%, #fef2f2 50%, #fef2f2 75%, transparent 75%, transparent)",
-            }
           },
         },
       }
     </script>
 
-    <!-- Custom CSS for specific effects -->
     <style>
         .barred-bg {
             background-size: 20px 20px;
@@ -103,160 +99,234 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <script type="text/babel">
-        // Required Destructuring
-        const { useState, useEffect } = React;
+        const { useState } = React;
         const { createRoot } = ReactDOM;
-        const { MemoryRouter, Routes, Route, Link, useNavigate } = ReactRouterDOM;
+        const { MemoryRouter, Routes, Route, Link } = ReactRouterDOM;
 
-        // --- Screen 4: Séance 1 (Start) ---
-        const Seance1 = () => {
+        const TopHeader = ({ current }) => {
+            const [mobileOpen, setMobileOpen] = useState(false);
+            const [seancesOpen, setSeancesOpen] = useState(false);
+
+            const seanceLinks = [
+                { to: '/', label: 'Séance 1' },
+                { to: '/seance-2', label: 'Séance 2' },
+                { to: '/inter-seance', label: 'Inter-Séance' },
+                { to: '/seance-3', label: 'Séance 3' },
+                { to: '/seance-4', label: 'Séance 4' },
+            ];
+
+            const isActive = (path) => current === path;
+            const isSeancesSection = seanceLinks.some((l) => l.to === current);
+
+            const baseLink = 'text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal';
+            const activeLink = "text-primary text-base font-bold leading-normal relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-full after:h-[2px] after:bg-primary";
+
             return (
-                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
-                    {/* Top Navigation */}
-                    <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e0e4e2] dark:border-b-gray-800 bg-white dark:bg-[#152e20] px-10 py-3 sticky top-0 z-50">
+                <header className="border-b border-solid border-b-[#e0e4e2] dark:border-b-gray-800 bg-white/95 dark:bg-[#152e20]/95 backdrop-blur-md px-4 md:px-10 py-3 sticky top-0 z-50">
+                    <div className="flex items-center justify-between whitespace-nowrap">
                         <div className="flex items-center gap-4 text-forest-dark dark:text-white">
                             <div className="size-8 text-primary flex items-center justify-center">
                                 <span className="material-symbols-outlined !text-[32px]">forest</span>
                             </div>
                             <h2 className="text-forest-dark dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Carnet de Bord EMC</h2>
                         </div>
-                        <div className="flex flex-1 justify-end gap-8">
-                            <div className="hidden md:flex items-center gap-9">
-                                <Link className="text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal" to="/">Accueil</Link>
-                                <a className="text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal" href="#">Le Projet</a>
-                                <Link className="text-primary text-base font-bold leading-normal relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-full after:h-[2px] after:bg-primary" to="/">Séances</Link>
-                                <a className="text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal" href="#">Ressources</a>
-                            </div>
-                            <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary hover:bg-[#0ebf49] transition-colors text-[#111813] text-sm font-bold leading-normal tracking-[0.015em]">
-                                <span className="mr-2 material-symbols-outlined !text-[18px]">download</span>
-                                <span className="truncate">Télécharger PDF</span>
+
+                        <div className="flex flex-1 justify-end gap-4 items-center">
+                            <nav className="hidden md:flex items-center gap-9">
+                                <Link className={isActive('/') ? activeLink : baseLink} to="/">Accueil</Link>
+                                <Link className={isActive('/projet') ? activeLink : baseLink} to="/projet">Le Projet</Link>
+
+                                <div className="relative">
+                                    <button
+                                        type="button"
+                                        className={isSeancesSection ? activeLink : baseLink}
+                                        onClick={() => setSeancesOpen((v) => !v)}
+                                    >
+                                        Séances
+                                        <span className="material-symbols-outlined align-middle ml-1 !text-[18px]">expand_more</span>
+                                    </button>
+                                    {seancesOpen && (
+                                        <div
+                                            className="absolute right-0 mt-3 w-56 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#152e20] shadow-lg overflow-hidden"
+                                            onMouseLeave={() => setSeancesOpen(false)}
+                                        >
+                                            {seanceLinks.map((item) => (
+                                                <Link
+                                                    key={item.to}
+                                                    to={item.to}
+                                                    className="block px-4 py-2.5 text-sm font-medium text-forest-dark dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/10"
+                                                    onClick={() => setSeancesOpen(false)}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <Link className={isActive('/ressources') ? activeLink : baseLink} to="/ressources">Ressources</Link>
+                            </nav>
+
+                            <button
+                                type="button"
+                                className="md:hidden text-forest-dark dark:text-gray-200"
+                                onClick={() => setMobileOpen((v) => !v)}
+                                aria-label="Ouvrir le menu"
+                            >
+                                <span className="material-symbols-outlined">menu</span>
                             </button>
                         </div>
-                    </header>
+                    </div>
+
+                    {mobileOpen && (
+                        <div className="md:hidden mt-3 pb-2 border-t border-gray-100 dark:border-gray-800">
+                            <div className="flex flex-col gap-1 pt-3">
+                                <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/" onClick={() => setMobileOpen(false)}>Accueil</Link>
+                                <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/projet" onClick={() => setMobileOpen(false)}>Le Projet</Link>
+                                <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/ressources" onClick={() => setMobileOpen(false)}>Ressources</Link>
+                                <div className="px-2 pt-2 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold">Séances</div>
+                                {seanceLinks.map((item) => (
+                                    <Link
+                                        key={item.to}
+                                        className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10"
+                                        to={item.to}
+                                        onClick={() => setMobileOpen(false)}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </header>
+            );
+        };
+
+        const BottomArrowsNav = ({ prev, next }) => {
+            return (
+                <div className="flex items-center justify-between pt-8 mt-4 border-t border-gray-100 dark:border-[#2a3e32]">
+                    {prev ? (
+                        <Link className="group flex items-center gap-3 text-gray-500 dark:text-gray-400 hover:text-text-main dark:hover:text-white transition-colors" to={prev.to}>
+                            <div className="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center group-hover:bg-gray-100 dark:group-hover:bg-[#2a3e32]">
+                                <span className="material-symbols-outlined text-sm">arrow_back</span>
+                            </div>
+                            <span className="text-sm font-medium">{prev.label}</span>
+                        </Link>
+                    ) : (
+                        <div />
+                    )}
+
+                    {next ? (
+                        <Link className="group flex items-center gap-3 text-primary hover:text-primary/80 transition-colors" to={next.to}>
+                            <span className="text-sm font-bold">{next.label}</span>
+                            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all">
+                                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                            </div>
+                        </Link>
+                    ) : (
+                        <div />
+                    )}
+                </div>
+            );
+        };
+
+        const SeancesSidebar = ({ current }) => {
+            const links = [
+                { to: '/', label: 'Séance 1' },
+                { to: '/seance-2', label: 'Séance 2' },
+                { to: '/inter-seance', label: 'Inter-Séance' },
+                { to: '/seance-3', label: 'Séance 3' },
+                { to: '/seance-4', label: 'Séance 4' },
+            ];
+
+            const base = "pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors";
+            const active = "pl-4 py-2 text-sm font-medium border-l-2 border-primary -ml-[2px] text-forest-dark dark:text-white";
+
+            return (
+                <aside className="hidden md:flex flex-col w-64 shrink-0 sticky top-24 h-fit gap-6">
+                    <div>
+                        <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold mb-3">Navigation</p>
+                        <nav className="flex flex-col gap-1 border-l-2 border-gray-200 dark:border-gray-700 ml-2">
+                            {links.map((l) => (
+                                <Link key={l.to} className={current === l.to ? active : base} to={l.to}>
+                                    {l.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+                    <div className="bg-white dark:bg-[#1a3324] p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
+                        <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold mb-2">Statut du Projet</p>
+                        <div className="flex items-center gap-2 mb-2">
+                            <span className="relative flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                            </span>
+                            <span className="text-sm font-bold text-forest-dark dark:text-white">En cours</span>
+                        </div>
+                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-1">
+                            <div className="bg-primary h-1.5 rounded-full" style={{ width: '15%' }}></div>
+                        </div>
+                        <p className="text-xs text-gray-400 text-right font-sans">15% complété</p>
+                    </div>
+                </aside>
+            );
+        };
+
+        const PosNegGrid = ({ positive, difficulty }) => {
+            return (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="bg-[#f0fdf4] dark:bg-[#0f291e] p-5 rounded-xl border border-[#bbf7d0] dark:border-[#164230] relative overflow-hidden group">
+                        <div className="absolute -right-4 -top-4 bg-[#dcfce7] dark:bg-[#14532d] rounded-full p-6 opacity-50 group-hover:scale-110 transition-transform duration-300"></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-2 mb-2 text-[#166534] dark:text-[#4ade80]">
+                                <span className="material-symbols-outlined">check_circle</span>
+                                <span className="font-bold text-sm uppercase font-sans tracking-wider">Points Positifs</span>
+                            </div>
+                            <p className="text-[#14532d] dark:text-[#bbf7d0] leading-snug">{positive}</p>
+                        </div>
+                    </div>
+                    <div className="bg-[#fffbeb] dark:bg-[#2e2305] p-5 rounded-xl border border-[#fde68a] dark:border-[#634907] relative overflow-hidden group">
+                        <div className="absolute -right-4 -top-4 bg-[#fef3c7] dark:bg-[#573e06] rounded-full p-6 opacity-50 group-hover:scale-110 transition-transform duration-300"></div>
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-2 mb-2 text-[#92400e] dark:text-[#fbbf24]">
+                                <span className="material-symbols-outlined">warning</span>
+                                <span className="font-bold text-sm uppercase font-sans tracking-wider">Difficultés</span>
+                            </div>
+                            <p className="text-[#78350f] dark:text-[#fde68a] leading-snug">{difficulty}</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const SeanceTemplate = ({ current, title, subtitle, dot = 'primary', children, prev, next }) => {
+            const dotClass = dot === 'alert' ? 'bg-alert' : dot === 'danger' ? 'bg-danger' : 'bg-primary';
+
+            return (
+                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
+                    <TopHeader current={current} />
                     <main className="flex-grow flex justify-center py-8 md:py-12 px-4 md:px-10">
                         <div className="max-w-[1024px] w-full flex flex-col md:flex-row gap-8 relative">
-                            {/* Left Sidebar */}
-                            <aside className="hidden md:flex flex-col w-64 shrink-0 sticky top-24 h-fit gap-6">
-                                <div>
-                                    <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold mb-3">Navigation</p>
-                                    <nav className="flex flex-col gap-1 border-l-2 border-gray-200 dark:border-gray-700 ml-2">
-                                        <Link className="pl-4 py-2 text-sm font-medium border-l-2 border-primary -ml-[2px] text-forest-dark dark:text-white" to="/">Séance 1: Lancement</Link>
-                                        <Link className="pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors" to="/inter-seance">Inter-Séance: Fausse Piste</Link>
-                                        <Link className="pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors" to="/seance-2">Séance 2: Écriture</Link>
-                                        <Link className="pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors" to="/seance-3">Séance 3: Répétitions</Link>
-                                    </nav>
-                                </div>
-                                <div className="bg-white dark:bg-[#1a3324] p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
-                                    <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold mb-2">Statut du Projet</p>
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="relative flex h-3 w-3">
-                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                                        </span>
-                                        <span className="text-sm font-bold text-forest-dark dark:text-white">En cours</span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-1">
-                                        <div className="bg-primary h-1.5 rounded-full" style={{width: '15%'}}></div>
-                                    </div>
-                                    <p className="text-xs text-gray-400 text-right font-sans">15% complété</p>
-                                </div>
-                            </aside>
-                            {/* Main Content */}
+                            <SeancesSidebar current={current} />
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2 font-sans">
                                     <span>Journal de Bord</span>
                                     <span className="material-symbols-outlined !text-[14px]">chevron_right</span>
-                                    <span className="text-forest-dark dark:text-primary font-medium">12 Octobre 2023</span>
+                                    <span className="text-forest-dark dark:text-primary font-medium">{title.split(':')[0]}</span>
                                 </div>
                                 <div className="mb-10">
-                                    <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">
-                                        SÉANCE 1 : Constitution du groupe et premières pistes
-                                    </h1>
-                                    <p className="text-xl text-[#61896f] dark:text-[#8cbfaa] italic">
-                                        Début de l'aventure : définir notre sujet et nos rôles.
-                                    </p>
+                                    <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">{title}</h1>
+                                    <p className="text-xl text-[#61896f] dark:text-[#8cbfaa] italic">{subtitle}</p>
                                 </div>
+
                                 <div className="relative pl-8 md:pl-10 border-l-2 border-dashed border-primary/30 dark:border-primary/20 pb-12 last:border-0">
-                                    <div className="absolute -left-[9px] top-0 size-[18px] rounded-full bg-primary border-4 border-white dark:border-background-dark shadow-sm"></div>
+                                    <div className={`absolute -left-[9px] top-0 size-[18px] rounded-full ${dotClass} border-4 border-white dark:border-background-dark shadow-sm`}></div>
                                     <div className="flex flex-col gap-8">
-                                        <div className="bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
-                                            <div className="flex items-center gap-3 mb-4 text-primary">
-                                                <span className="material-symbols-outlined">edit_note</span>
-                                                <span className="text-sm font-bold uppercase tracking-wider font-sans">Compte-rendu</span>
-                                            </div>
-                                            <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                                                Aujourd'hui marque le début officiel de notre projet EMC. Nous avons formé notre groupe de quatre élèves assez rapidement car nous avions déjà des affinités de travail.
-                                            </p>
-                                            <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                                                Après un débat animé sur plusieurs sujets d'actualité (la liberté de la presse, les inégalités scolaires), nous avons choisi de nous concentrer sur <strong className="text-primary font-bold">la déforestation en Amazonie</strong>. C'est un sujet qui nous permet de croiser des enjeux écologiques, politiques et économiques.
-                                            </p>
-                                            <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
-                                                <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                                    <span className="material-symbols-outlined text-gray-500">theater_comedy</span>
-                                                    Première ébauche de scénario
-                                                </h3>
-                                                <p className="text-base text-gray-600 dark:text-gray-300 italic mb-4">
-                                                    "Une confrontation directe dans un bureau officiel à Brasilia."
-                                                </p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    <div className="flex items-center gap-x-2 rounded-full bg-white dark:bg-white/10 border border-gray-200 dark:border-gray-600 px-3 py-1.5 shadow-sm">
-                                                        <span className="material-symbols-outlined !text-[18px] text-gray-600 dark:text-gray-300">person</span>
-                                                        <p className="text-sm font-bold text-forest-dark dark:text-white font-sans">Jair Bolsonaro</p>
-                                                    </div>
-                                                    <div className="flex items-center gap-x-2 rounded-full bg-white dark:bg-white/10 border border-gray-200 dark:border-gray-600 px-3 py-1.5 shadow-sm">
-                                                        <span className="material-symbols-outlined !text-[18px] text-gray-600 dark:text-gray-300">groups</span>
-                                                        <p className="text-sm font-bold text-forest-dark dark:text-white font-sans">Peuples Autochtones</p>
-                                                    </div>
-                                                    <div className="flex items-center gap-x-2 rounded-full bg-white dark:bg-white/10 border border-gray-200 dark:border-gray-600 px-3 py-1.5 shadow-sm">
-                                                        <span className="material-symbols-outlined !text-[18px] text-gray-600 dark:text-gray-300">public</span>
-                                                        <p className="text-sm font-bold text-forest-dark dark:text-white font-sans">Greta Thunberg</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <div className="bg-[#f0fdf4] dark:bg-[#0f291e] p-5 rounded-xl border border-[#bbf7d0] dark:border-[#164230] relative overflow-hidden group">
-                                                <div className="absolute -right-4 -top-4 bg-[#dcfce7] dark:bg-[#14532d] rounded-full p-6 opacity-50 group-hover:scale-110 transition-transform duration-300"></div>
-                                                <div className="relative z-10">
-                                                    <div className="flex items-center gap-2 mb-2 text-[#166534] dark:text-[#4ade80]">
-                                                        <span className="material-symbols-outlined">check_circle</span>
-                                                        <span className="font-bold text-sm uppercase font-sans tracking-wider">Points Positifs</span>
-                                                    </div>
-                                                    <p className="text-[#14532d] dark:text-[#bbf7d0] leading-snug">
-                                                        La dynamique de groupe est excellente. Le sujet choisi offre énormément de ressources documentaires et permet d'aborder le programme d'EMC sous plusieurs angles.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="bg-[#fffbeb] dark:bg-[#2e2305] p-5 rounded-xl border border-[#fde68a] dark:border-[#634907] relative overflow-hidden group">
-                                                <div className="absolute -right-4 -top-4 bg-[#fef3c7] dark:bg-[#573e06] rounded-full p-6 opacity-50 group-hover:scale-110 transition-transform duration-300"></div>
-                                                <div className="relative z-10">
-                                                    <div className="flex items-center gap-2 mb-2 text-[#92400e] dark:text-[#fbbf24]">
-                                                        <span className="material-symbols-outlined">warning</span>
-                                                        <span className="font-bold text-sm uppercase font-sans tracking-wider">Difficultés</span>
-                                                    </div>
-                                                    <p className="text-[#78350f] dark:text-[#fde68a] leading-snug">
-                                                        Nous avons du mal à intégrer le personnage de Greta Thunberg de manière réaliste dans une scène qui se déroule au Brésil. Risque de tomber dans la caricature.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="mt-2">
-                                            <div className="w-full h-64 md:h-80 rounded-xl bg-cover bg-center relative overflow-hidden group cursor-pointer shadow-md" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4qIFJ80XhsHD15oSkXAzong595QhMPneI43uLd-VmVjNWkW87t12KDLamzGmva2ojZjw9On_JjAW_cnEkvRAHH3MuP35wFGxY1eMZBQesstrRrmbMWzVwFjjGeE0LRn26f8LPrp50eIJTN0bzUz-K9z2eFsdFMovO30_7as7PLOuQ2BiBp7QzAzWWi1EP-tebv4tCCARveAegAA7Z-GGhYKwhAnCqvGyNXfpdMvhrLVIX-YLxkJznqv6Reube9mW82rKma5M3z-A')"}}>
-                                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
-                                                <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-lg text-sm font-medium flex items-center gap-2">
-                                                    <span className="material-symbols-outlined !text-[16px]">image</span>
-                                                    Moodboard: Ambiance Amazonie
-                                                </div>
-                                            </div>
-                                        </div>
+                                        {children}
                                     </div>
                                 </div>
-                                <Link to="/inter-seance" className="pl-8 md:pl-10 mt-2 opacity-50 hover:opacity-100 transition-opacity block">
-                                    <div className="flex items-center gap-4 text-gray-400 dark:text-gray-600">
-                                        <div className="size-3 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-                                        <p className="font-bold text-lg">Suite: Inter-Séance (La fausse piste)...</p>
-                                    </div>
-                                </Link>
+
+                                <BottomArrowsNav prev={prev} next={next} />
                             </div>
                         </div>
                     </main>
@@ -264,519 +334,321 @@
             );
         };
 
-        // --- Screen 2: Inter-Séance ---
-        const InterSeance = () => {
+        const CompteRenduCard = ({ variant = 'primary', children }) => {
+            const color = variant === 'alert' ? 'text-alert' : 'text-primary';
+            const border = variant === 'alert' ? 'border-alert/20' : 'border-gray-100 dark:border-gray-800';
+            const bg = variant === 'alert' ? 'barred-bg' : '';
+            const icon = variant === 'alert' ? 'error' : 'edit_note';
+
             return (
-                <div className="bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-gray-100 antialiased overflow-x-hidden transition-colors duration-200">
-                    <div className="relative flex min-h-screen flex-col">
-                        <header className="sticky top-0 z-50 flex items-center justify-between border-b border-[#e5e7eb] bg-white/90 dark:bg-[#102216]/90 backdrop-blur-md px-6 py-4 lg:px-10">
-                            <div className="flex items-center gap-4">
-                                <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                                    <span className="material-symbols-outlined">forest</span>
-                                </div>
-                                <div>
-                                    <h2 className="text-lg font-bold leading-tight tracking-tight dark:text-white">Logbook: Projet Amazonie</h2>
-                                    <p className="text-xs text-gray-500 font-sans">Groupe 3 • Classe de 1ère</p>
-                                </div>
-                            </div>
-                            <div className="hidden md:flex flex-1 justify-end gap-8 items-center">
-                                <nav className="flex gap-8">
-                                    <Link className="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300" to="/">Timeline</Link>
-                                    <a className="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300" href="#">Journal</a>
-                                    <a className="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300" href="#">Ressources</a>
-                                    <a className="text-sm font-medium hover:text-primary transition-colors dark:text-gray-300" href="#">À propos</a>
-                                </nav>
-                                <button className="flex h-10 items-center justify-center rounded-full bg-primary px-6 text-sm font-bold text-white shadow-sm hover:bg-[#0ebf49] transition-colors font-sans">
-                                    Retour au projet
-                                </button>
-                            </div>
-                        </header>
-                        <main className="flex-1 flex justify-center py-8 px-4 sm:px-6 lg:px-8">
-                            <div className="w-full max-w-[960px] flex flex-col gap-6">
-                                <nav className="flex items-center gap-2 text-sm text-gray-500 font-sans pl-2">
-                                    <Link className="hover:text-primary transition-colors" to="/">Accueil</Link>
-                                    <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-                                    <Link className="hover:text-primary transition-colors" to="/">Timeline</Link>
-                                    <span className="material-symbols-outlined text-[16px]">chevron_right</span>
-                                    <span className="font-medium text-gray-900 dark:text-white">Inter-Séance: Fausse Piste</span>
-                                </nav>
-                                <div className="relative pl-8 md:pl-12 border-l-2 border-dashed border-gray-200 dark:border-gray-700 ml-4 py-4">
-                                    <div className="absolute -left-[11px] top-10 flex h-6 w-6 items-center justify-center rounded-full bg-alert ring-4 ring-white dark:ring-background-dark">
-                                        <span className="material-symbols-outlined text-white text-[14px] font-bold">close</span>
-                                    </div>
-                                    <div className="flex flex-col gap-6">
-                                        <div className="flex flex-col gap-4">
-                                            <div className="flex flex-wrap items-center gap-3">
-                                                <span className="rounded-full bg-alert/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-alert border border-alert/20 font-sans flex items-center gap-1">
-                                                    <span className="material-symbols-outlined text-[16px]">warning</span>
-                                                    Fausse Piste
-                                                </span>
-                                                <span className="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 font-sans">
-                                                    24 Octobre
-                                                </span>
-                                                <span className="rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 font-sans">
-                                                    Travail à distance
-                                                </span>
-                                            </div>
-                                            <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900 dark:text-white">
-                                                Inter-Séance: Hésitations et hors-sujet
-                                            </h1>
-                                            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
-                                                Une session de travail confuse où le groupe a failli changer radicalement de direction pour un sujet hors du cadre chronologique.
-                                            </p>
-                                        </div>
-                                        <div className="relative overflow-hidden rounded-xl border border-alert/30 bg-white dark:bg-[#1a2e22] shadow-sm">
-                                            <div className="absolute inset-0 barred-bg opacity-50 pointer-events-none"></div>
-                                            <div className="relative z-10 flex flex-col md:flex-row">
-                                                <div className="md:w-1/3 min-h-[200px] md:min-h-full relative">
-                                                    <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB2OE6JvScXh3kTGnYAqtGEMi5NUKY3YTx-hYh7ZO4ztEGMdJTyv4YB1SeavpRk5c_3IJoWezG7Xk4fR30bg9cI3s4qI6i_NhAbuOh6GtCO6bPvx__UnXy1QBHN9oFnmoLUTXPq2koB3TALN1EZYjpxWsQlr7TTlrsQurfvlGEj2hD6kIo7jLoxqvovSA8P8iZBJdvWAhe89MjJFzobGOQPlVktessNRIGFGOvq9174a6YiOSVdRsc7q11ryTIkXqxMUpDM5Htv_d8')"}}></div>
-                                                    <div className="absolute inset-0 bg-alert/20 backdrop-grayscale mix-blend-multiply"></div>
-                                                    <div className="absolute inset-0 flex items-center justify-center">
-                                                        <div className="bg-white/90 dark:bg-black/80 px-4 py-2 rounded-lg shadow-lg border border-alert text-alert font-bold uppercase tracking-widest text-sm flex items-center gap-2 transform -rotate-6">
-                                                            <span className="material-symbols-outlined">block</span>
-                                                            Impasse
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="p-6 md:p-8 md:w-2/3">
-                                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                                        <span className="material-symbols-outlined text-alert">question_mark</span>
-                                                        L'hypothèse Chinoise
-                                                    </h3>
-                                                    <div className="prose prose-stone dark:prose-invert">
-                                                        <p className="mb-4 text-gray-700 dark:text-gray-300">
-                                                            Nous avons passé deux heures à remettre en question notre sujet initial sur l'Amazonie. L'idée a émergé : <span className="italic">"Et si on parlait de l'industrialisation rapide de la Chine ?"</span>. Le sujet semblait plus dramatique, plus théâtral.
-                                                        </p>
-                                                        <p className="mb-4 text-gray-700 dark:text-gray-300">
-                                                            Nous avons commencé à rassembler des images, des musiques traditionnelles, et à écrire une scène d'introduction. L'enthousiasme était réel, nous pensions tenir une idée originale qui nous démarquerait des autres groupes.
-                                                        </p>
-                                                        <div className="rounded-lg bg-alert/5 border border-alert/20 p-4 mt-6">
-                                                            <p className="text-sm font-semibold text-alert mb-1 flex items-center gap-1">
-                                                                <span className="material-symbols-outlined text-sm">error</span>
-                                                                Le Réveil
-                                                            </p>
-                                                            <p className="text-sm text-gray-800 dark:text-gray-200">
-                                                                En relisant la consigne à 18h00, nous avons réalisé que le cadre temporel imposé (2010-2023) rendait notre angle sur la révolution industrielle chinoise totalement hors-sujet. Retour à la case départ.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-                                            <div className="group rounded-xl border border-gray-200 bg-white dark:bg-[#1a2e22] dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
-                                                <div className="flex items-center gap-3 mb-4">
-                                                    <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                                                        <span className="material-symbols-outlined">thumb_up</span>
-                                                    </div>
-                                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">Points Positifs</h3>
-                                                </div>
-                                                <ul className="space-y-3">
-                                                    <li className="flex items-start gap-3">
-                                                        <span className="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
-                                                        <span className="text-gray-600 dark:text-gray-300"><strong>Dynamique de groupe :</strong> Tout le monde a participé activement au débat, même les plus timides.</span>
-                                                    </li>
-                                                    <li className="flex items-start gap-3">
-                                                        <span className="material-symbols-outlined text-primary text-sm mt-1">check_circle</span>
-                                                        <span className="text-gray-600 dark:text-gray-300"><strong>Créativité :</strong> La volonté de sortir des sentiers battus montre notre ambition pour le projet.</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div className="group rounded-xl border border-alert/30 bg-white dark:bg-[#1a2e22] p-6 shadow-sm hover:shadow-md transition-shadow">
-                                                <div className="flex items-center gap-3 mb-4">
-                                                    <div className="flex size-10 items-center justify-center rounded-lg bg-alert/10 text-alert">
-                                                        <span className="material-symbols-outlined">thumb_down</span>
-                                                    </div>
-                                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">Points Négatifs</h3>
-                                                </div>
-                                                <ul className="space-y-3">
-                                                    <li className="flex items-start gap-3">
-                                                        <span className="material-symbols-outlined text-alert text-sm mt-1">cancel</span>
-                                                        <span className="text-gray-600 dark:text-gray-300"><strong>Perte de temps :</strong> 3 heures perdues sur une piste inutilisable.</span>
-                                                    </li>
-                                                    <li className="flex items-start gap-3">
-                                                        <span className="material-symbols-outlined text-alert text-sm mt-1">cancel</span>
-                                                        <span className="text-gray-600 dark:text-gray-300"><strong>Consignes mal lues :</strong> Nous avons négligé le cadre imposé par le professeur.</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div className="mt-4 flex items-center justify-center">
-                                            <div className="flex items-center gap-3 rounded-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-6 py-3">
-                                                <span className="material-symbols-outlined text-gray-400">lightbulb</span>
-                                                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                                                    <span className="font-bold text-gray-900 dark:text-white">Leçon apprise :</span> Toujours valider les consignes avant de se lancer.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <Link to="/seance-2" className="relative pl-8 md:pl-12 border-l-2 border-dashed border-gray-200 dark:border-gray-700 ml-4 py-8 opacity-50 block hover:opacity-100 transition-opacity">
-                                    <div className="absolute -left-[7px] top-10 size-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                                    <p className="text-sm font-bold text-gray-400 font-sans">Prochaine étape : Séance 2 (Recentrage)</p>
-                                </Link>
-                            </div>
-                        </main>
+                <div className={`bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border ${border} ${bg}`.trim()}>
+                    <div className={`flex items-center gap-3 mb-4 ${color}`.trim()}>
+                        <span className="material-symbols-outlined">{icon}</span>
+                        <span className="text-sm font-bold uppercase tracking-wider font-sans">Compte-rendu</span>
                     </div>
+                    {children}
                 </div>
             );
         };
 
-        // --- Screen 1: Séance 2 ---
+        const RecitCard = ({ children }) => {
+            return (
+                <div className="bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center gap-3 mb-4 text-primary">
+                        <span className="material-symbols-outlined">auto_stories</span>
+                        <span className="text-sm font-bold uppercase tracking-wider font-sans">Récit</span>
+                    </div>
+                    {children}
+                </div>
+            );
+        };
+
+        // --- Séance 1 ---
+        const Seance1 = () => {
+            return (
+                <SeanceTemplate
+                    current="/"
+                    title="SÉANCE 1 : Constitution du groupe et premières pistes"
+                    subtitle="Définir notre sujet et nos rôles."
+                    dot="primary"
+                    prev={null}
+                    next={{ to: '/seance-2', label: 'Séance 2' }}
+                >
+                    <CompteRenduCard>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Formation de l'équipe :</strong> Le groupe a été formé par tirage au sort. Nous avons pris du temps pour organiser notre dynamique de travail.
+                        </p>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Choix du sujet :</strong> Nous avons convergé vers une thématique environnementale et choisi <strong className="text-primary font-bold">l'Amazonie</strong>.
+                        </p>
+                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
+                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-gray-500">theater_comedy</span>
+                                Piste de scénario (idée initiale)
+                            </h3>
+                            <p className="text-base text-gray-600 dark:text-gray-300">
+                                <strong className="text-forest-dark dark:text-gray-100 font-bold">Ébauche :</strong> opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg.
+                            </p>
+                        </div>
+                    </CompteRenduCard>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                Le groupe a été formé par tirage au sort. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode,
+                                et définir rapidement un sujet exploitable pour l’EMC.
+                            </p>
+                            <p>
+                                L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables.
+                                On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines),
+                                de l’autre la protection de la forêt, des populations autochtones et de la biodiversité.
+                            </p>
+                            <p>
+                                On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg.
+                                À ce stade, l’objectif était surtout de poser un conflit clair et une progression de scènes, quitte à ajuster ensuite pour rester crédibles.
+                            </p>
+                        </div>
+                    </RecitCard>
+
+                    <PosNegGrid
+                        positive="La dynamique de groupe est bonne. Le sujet Amazonie offre beaucoup de ressources et permet d'aborder l'EMC sous plusieurs angles."
+                        difficulty="Intégrer Greta Thunberg de façon réaliste dans une scène au Brésil paraît difficile : son rôle est plus symbolique qu'actif sur le terrain."
+                    />
+                </SeanceTemplate>
+            );
+        };
+
+        // --- Séance 2 ---
         const Seance2 = () => {
             return (
-                <div className="bg-background-light dark:bg-background-dark text-text-main dark:text-text-dark font-display overflow-x-hidden transition-colors duration-300 min-h-screen flex flex-col">
-                    <div className="relative flex w-full flex-col bg-white dark:bg-card-dark border-b border-[#f0f4f2] dark:border-[#2a3e32]">
-                        <div className="layout-container flex h-full grow flex-col">
-                            <div className="flex flex-1 justify-center">
-                                <div className="layout-content-container flex flex-col max-w-[960px] flex-1 w-full">
-                                    <header className="flex items-center justify-between whitespace-nowrap px-4 md:px-10 py-4">
-                                        <div className="flex items-center gap-4 text-text-main dark:text-text-dark">
-                                            <div className="size-6 text-primary">
-                                                <svg className="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
-                                                </svg>
-                                            </div>
-                                            <h2 className="text-lg font-bold leading-tight tracking-[-0.015em] hidden sm:block">Journal de Bord - Amazonie</h2>
-                                        </div>
-                                        <div className="flex flex-1 justify-end gap-8">
-                                            <div className="hidden md:flex items-center gap-9">
-                                                <Link className="text-sm font-medium leading-normal hover:text-primary transition-colors" to="/">Accueil</Link>
-                                                <a className="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Projet</a>
-                                                <a className="text-sm font-medium leading-normal text-primary font-bold" href="#">Journal</a>
-                                                <a className="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Équipe</a>
-                                            </div>
-                                            <button className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-[#111813] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-sm">
-                                                <span className="truncate">Se connecter</span>
-                                            </button>
-                                        </div>
-                                    </header>
-                                </div>
-                            </div>
+                <SeanceTemplate
+                    current="/seance-2"
+                    title="SÉANCE 2 : Confrontation au réel et réajustements"
+                    subtitle="Analyse critique du scénario et décisions structurantes."
+                    dot="primary"
+                    prev={{ to: '/', label: 'Séance 1' }}
+                    next={{ to: '/inter-seance', label: 'Inter-Séance' }}
+                >
+                    <CompteRenduCard>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
+                        </p>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
+                        </p>
+                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
+                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-gray-500">edit</span>
+                                Atelier d'écriture
+                            </h3>
+                            <p className="text-base text-gray-600 dark:text-gray-300">Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.</p>
                         </div>
-                    </div>
-                    <main className="layout-container flex h-full grow flex-col py-10">
-                        <div className="flex flex-1 justify-center px-4 md:px-0">
-                            <div className="layout-content-container flex flex-col max-w-[960px] flex-1">
-                                <div className="relative grid grid-cols-[48px_1fr] md:grid-cols-[60px_1fr] gap-x-4 md:gap-x-8 px-2 md:px-4">
-                                    <div className="relative flex flex-col items-center pt-2">
-                                        <div className="absolute top-0 bottom-0 left-1/2 -ml-px w-[2px] bg-[#e0e4e2] dark:bg-[#2a3e32]"></div>
-                                        <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white dark:bg-card-dark border-4 border-primary shadow-sm">
-                                            <span className="material-symbols-outlined text-primary text-[20px]">calendar_today</span>
-                                        </div>
-                                        <div className="flex-1 w-[2px] bg-[#e0e4e2] dark:bg-[#2a3e32] my-2"></div>
-                                    </div>
-                                    <div className="flex flex-col gap-8 pb-16">
-                                        <div className="flex flex-col gap-2 pt-1">
-                                            <div className="flex items-center gap-3 text-muted-green dark:text-primary/80 font-medium text-sm tracking-widest uppercase">
-                                                <span>24 Janvier</span>
-                                                <span className="w-1 h-1 rounded-full bg-current"></span>
-                                                <span>Phase 1</span>
-                                            </div>
-                                            <h1 className="text-text-main dark:text-text-dark tracking-light text-[32px] md:text-[40px] font-bold leading-tight">
-                                                SÉANCE 2 : Confrontation au réel et réajustements
-                                            </h1>
-                                        </div>
-                                        <div className="bg-white dark:bg-card-dark rounded-xl p-6 md:p-8 shadow-soft border border-gray-100 dark:border-[#2a3e32]">
-                                            <div className="flex flex-col md:flex-row gap-6 items-start">
-                                                <div className="flex-1">
-                                                    <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-                                                        Aujourd'hui, nous avons analysé notre scénario de manière critique. C'est une étape charnière où l'imaginaire se heurte aux contraintes de la mise en scène.
-                                                    </p>
-                                                    <div className="mt-4 pl-4 border-l-2 border-primary/30 dark:border-primary/50 italic text-gray-600 dark:text-gray-400">
-                                                        "Décision majeure : le personnage de Greta a été supprimé pour plus de réalisme. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire."
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl overflow-hidden shadow-soft h-[300px] md:h-[400px] relative group" style={{backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKi_wWT5wYiO3Qg9DH6Yz2YPp0vkhACoiKYiYj1wL8yXu3QikVMaEaz47KoLR_X0RsGgEwlxvVU_Lu9fJxKE4sAcIhToapO53e0w8RbfyUBgO1zwi8Dbz6U6_IkTWEXVmLb0qCRFsjOyivEGRQyz7kh2urcKUxO3aaoPw0s87afaaefoBZC-nch-DPOAtlNEOUc7N6nTztR1lXiSRYAbfO4rIyo8Y9iJxoXedpwQqlOR2CJFXOEnexHTclE_Vtk5IpbNgWM5JmOgk")'}}>
-                                            <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs font-medium flex items-center gap-1">
-                                                <span className="material-symbols-outlined text-[14px]">photo_camera</span>
-                                                Atelier d'écriture
-                                            </div>
-                                            <div className="flex w-full items-end justify-between gap-4 p-6 md:p-8 relative z-10 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                                <div className="flex max-w-[500px] flex-1 flex-col gap-1">
-                                                    <p className="text-white tracking-light text-2xl font-bold leading-tight">Analyse du Scénario</p>
-                                                    <p className="text-gray-200 text-sm md:text-base font-medium leading-normal opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-                                                        Le groupe débat sur la pertinence des personnages secondaires face au thème de la déforestation.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className="bg-[#f0fdf4] dark:bg-[#152e1e] border border-[#dcfce7] dark:border-[#1e4529] rounded-xl p-6 relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 p-4 opacity-10">
-                                                    <span className="material-symbols-outlined text-8xl text-primary">check_circle</span>
-                                                </div>
-                                                <div className="relative z-10">
-                                                    <div className="w-10 h-10 rounded-full bg-white dark:bg-card-dark flex items-center justify-center shadow-sm mb-4 text-primary">
-                                                        <span className="material-symbols-outlined">check</span>
-                                                    </div>
-                                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Avancées &amp; Positif</h3>
-                                                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                                                        Une bonne autocritique du groupe a permis d'affiner l'intrigue. Le scénario est plus solide et cohérent sans le personnage superflu de Greta.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="bg-[#fffbeb] dark:bg-[#2e2310] border border-[#fef3c7] dark:border-[#4d3b10] rounded-xl p-6 relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 p-4 opacity-10">
-                                                    <span className="material-symbols-outlined text-8xl text-amber-500">warning</span>
-                                                </div>
-                                                <div className="relative z-10">
-                                                    <div className="w-10 h-10 rounded-full bg-white dark:bg-card-dark flex items-center justify-center shadow-sm mb-4 text-amber-500">
-                                                        <span className="material-symbols-outlined">priority_high</span>
-                                                    </div>
-                                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Difficultés &amp; Doutes</h3>
-                                                    <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                                                        L'absence d'Hector nous a ralentis considérablement. Un sentiment général de "reculer pour mieux sauter" s'est installé, créant une légère frustration.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center justify-between pt-8 mt-4 border-t border-gray-100 dark:border-[#2a3e32]">
-                                            <Link className="group flex items-center gap-3 text-gray-500 dark:text-gray-400 hover:text-text-main dark:hover:text-white transition-colors" to="/inter-seance">
-                                                <div className="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center group-hover:bg-gray-100 dark:group-hover:bg-[#2a3e32]">
-                                                    <span className="material-symbols-outlined text-sm">arrow_back</span>
-                                                </div>
-                                                <span className="text-sm font-medium">Inter-Séance</span>
-                                            </Link>
-                                            <Link className="group flex items-center gap-3 text-primary hover:text-primary/80 transition-colors" to="/seance-3">
-                                                <span className="text-sm font-bold">Séance 3 : Impasse</span>
-                                                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all">
-                                                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    </CompteRenduCard>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                Pendant la séance 2, on a relu le scénario et repéré ce qui posait problème en mise en scène : cohérence, réalisme, utilité des personnages,
+                                et clarté du message EMC.
+                            </p>
+                            <p>
+                                On a décidé de supprimer Greta Thunberg : dans notre contexte, sa présence rendait la scène moins crédible.
+                                On a recentré sur des acteurs directement liés au terrain et aux décisions : responsables politiques, représentants locaux,
+                                populations concernées, et points de vue opposés (développement économique vs protection).
+                            </p>
+                            <p>
+                                Le but était de garder une histoire simple à jouer tout en montrant les mécanismes : arguments économiques utilisés pour justifier la déforestation,
+                                contestation par les populations et les ONG, et conséquences concrètes (perte de terres, atteintes à la biodiversité).
+                            </p>
                         </div>
-                    </main>
-                </div>
+                    </RecitCard>
+
+                    <PosNegGrid
+                        positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
+                        difficulty="L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches."
+                    />
+                </SeanceTemplate>
             );
         };
 
-        // --- Screen 3: Séance 3 ---
+        // --- Inter-Séance (entre 2 et 3) ---
+        const InterSeance = () => {
+            return (
+                <SeanceTemplate
+                    current="/inter-seance"
+                    title="INTER-SÉANCE : Impasse (fausse piste)"
+                    subtitle="Travail à distance : hésitations, piste alternative, puis abandon après vérification des consignes."
+                    dot="alert"
+                    prev={{ to: '/seance-2', label: 'Séance 2' }}
+                    next={{ to: '/seance-3', label: 'Séance 3' }}
+                >
+                    <CompteRenduCard variant="alert">
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative.
+                        </p>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après relecture des consignes, nous avons constaté que la piste envisagée était hors-thème. Nous l'avons abandonnée.
+                        </p>
+                        <div className="bg-white/70 dark:bg-black/20 p-5 rounded-lg border border-alert/20">
+                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-alert">block</span>
+                                Signalement d'impasse
+                            </h3>
+                            <p className="text-base text-gray-600 dark:text-gray-300">Cette étape sert à documenter l'impasse et le retour aux consignes.</p>
+                        </div>
+                    </CompteRenduCard>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                Entre les séances 2 et 3, on a travaillé à distance et on a douté de notre cadrage.
+                                On a envisagé une piste alternative en pensant qu’elle serait plus simple à traiter.
+                            </p>
+                            <p>
+                                Après vérification des consignes, on s’est rendu compte que cette piste était hors-thème.
+                                On l’a donc abandonnée pour éviter de perdre du temps.
+                            </p>
+                            <p>
+                                On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques,
+                                et impacts sur les populations et l’environnement).
+                            </p>
+                        </div>
+                    </RecitCard>
+
+                    <PosNegGrid
+                        positive="La communication à distance a permis d'identifier rapidement le problème et d'éviter d'insister inutilement."
+                        difficulty="Une lecture initiale insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
+                    />
+                </SeanceTemplate>
+            );
+        };
+
+        // --- Séance 3 ---
         const Seance3 = () => {
             return (
-                <div className="bg-background-light dark:bg-background-dark text-[#111813] dark:text-gray-100 font-display transition-colors duration-200 min-h-screen flex flex-col">
-                    <header className="sticky top-0 z-50 bg-paper/90 dark:bg-paper-dark/90 backdrop-blur-md border-b border-[#f0f4f2] dark:border-gray-800">
-                        <div className="px-4 md:px-10 py-3 flex items-center justify-between max-w-[1200px] mx-auto">
-                            <div className="flex items-center gap-4">
-                                <div className="size-8 text-primary flex items-center justify-center bg-primary/10 rounded-full">
-                                    <span className="material-symbols-outlined text-xl">forest</span>
-                                </div>
-                                <h2 className="text-lg md:text-xl font-bold leading-tight tracking-tight">Carnet de Bord EMC</h2>
-                            </div>
-                            <button className="md:hidden text-gray-700 dark:text-gray-200">
-                                <span className="material-symbols-outlined">menu</span>
-                            </button>
-                            <nav className="hidden md:flex items-center gap-8">
-                                <Link className="text-sm font-medium hover:text-primary transition-colors" to="/">Accueil</Link>
-                                <a className="text-sm font-bold text-primary" href="#">Journal</a>
-                                <a className="text-sm font-medium hover:text-primary transition-colors" href="#">Ressources</a>
-                                <a className="text-sm font-medium hover:text-primary transition-colors" href="#">À propos</a>
-                            </nav>
+                <SeanceTemplate
+                    current="/seance-3"
+                    title="SÉANCE 3 : Impasse et recentrage"
+                    subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
+                    dot="danger"
+                    prev={{ to: '/inter-seance', label: 'Inter-Séance' }}
+                    next={{ to: '/seance-4', label: 'Séance 4' }}
+                >
+                    <CompteRenduCard>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Piste testée :</strong> crise des déchets à Naples ("Terre des Feux"), liant écologie et criminalité.
+                        </p>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Retour professeur :</strong> sujet jugé trop complexe et trop éloigné. Décision : abandon et retour à l'Amazonie.
+                        </p>
+                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
+                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-gray-500">analytics</span>
+                                Recentrage
+                            </h3>
+                            <p className="text-base text-gray-600 dark:text-gray-300">Recentrage sur les mécanismes économiques et politiques de la déforestation amazonienne.</p>
                         </div>
-                    </header>
-                    <main className="flex-1 w-full max-w-[960px] mx-auto px-4 md:px-8 py-8 md:py-12">
-                        <nav className="flex items-center flex-wrap gap-2 mb-8 text-sm font-body">
-                            <Link className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors" to="/">Journal</Link>
-                            <span className="text-gray-300 dark:text-gray-600">/</span>
-                            <Link className="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors" to="/seance-2">Séance 2</Link>
-                            <span className="text-gray-300 dark:text-gray-600">/</span>
-                            <span className="text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded text-xs uppercase tracking-wide">Séance 3 : Actuelle</span>
-                        </nav>
-                        <section className="mb-12 relative">
-                            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/30 via-danger/40 to-primary/30 rounded-full md:block hidden"></div>
-                            <div className="flex flex-col gap-2 mb-6">
-                                <div className="flex items-center gap-3">
-                                    <span className="text-xs font-bold tracking-widest uppercase text-gray-500 dark:text-gray-400 font-body">16 Octobre 2023</span>
-                                    <span className="h-px w-8 bg-gray-300 dark:bg-gray-700"></span>
-                                    <span className="flex items-center gap-1 text-xs font-bold uppercase text-danger bg-danger/10 px-2 py-0.5 rounded-full">
-                                        <span className="material-symbols-outlined text-[14px]">warning</span>
-                                        Impasse Validée
-                                    </span>
-                                </div>
-                                <h1 className="text-4xl md:text-5xl font-black text-gray-900 dark:text-white leading-[1.1] mb-2">
-                                    L'Impasse de la <span className="strikethrough-red text-gray-400 dark:text-gray-500">Mafia</span>
-                                </h1>
-                                <p className="text-xl text-primary font-medium italic">Tentatives, validation et démarrage des recherches.</p>
-                            </div>
-                            <div className="prose dark:prose-invert prose-lg max-w-none font-display text-gray-700 dark:text-gray-300 leading-relaxed">
-                                <p>
-                                    La séance d'aujourd'hui marque un tournant critique. Nous pensions avoir trouvé une piste originale avec la <strong className="text-gray-900 dark:text-white">crise des déchets à Naples</strong>. Une idée séduisante sur le papier, liant écologie et criminalité organisée. Cependant, la confrontation avec la réalité du sujet — et l'avis tranché du professeur — nous a menés à une impasse nécessaire.
-                                </p>
-                            </div>
-                        </section>
-                        <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                            <div className="relative group overflow-hidden rounded-2xl border-2 border-dashed border-danger/30 bg-danger/5 dark:bg-red-900/10 p-6 flex flex-col justify-between min-h-[240px]">
-                                <div className="absolute inset-0 opacity-5 pattern-diagonal-lines"></div>
-                                <div>
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="size-10 rounded-full bg-danger/10 text-danger flex items-center justify-center">
-                                            <span className="material-symbols-outlined">block</span>
-                                        </div>
-                                        <span className="text-xs font-bold uppercase tracking-wider text-danger/80 border border-danger/20 px-2 py-1 rounded">Refusé</span>
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-2">Piste : Mafia Napolitaine</h3>
-                                    <p className="text-sm text-gray-600 dark:text-gray-400 font-body leading-relaxed">
-                                        Enquête sur la "Terre des Feux" et la gestion criminelle des déchets toxiques en Campanie.
-                                    </p>
-                                </div>
-                                <div className="mt-6 p-3 bg-white dark:bg-black/20 rounded-lg border-l-4 border-danger">
-                                    <p className="text-sm italic text-gray-600 dark:text-gray-300 font-serif">
-                                        « Sujet trop complexe pour le format théâtral et s'éloigne trop de la problématique environnementale globale visée. »
-                                    </p>
-                                    <p className="text-xs text-right mt-1 font-bold text-gray-400 uppercase">— Feedback Professeur</p>
-                                </div>
-                            </div>
-                            <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-primary/5 dark:bg-green-900/10 p-6 flex flex-col justify-between min-h-[240px] shadow-sm">
-                                <div className="absolute inset-0 z-0">
-                                    <img alt="Dense green amazon rainforest canopy texture" className="w-full h-full object-cover opacity-10 dark:opacity-20 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9DhAxMrSCxBIlQQHV61St9BaW19LEYPcztMxHNJYtjm3vDXRMCtPbpcFg8opj0Y6UeMGe-f5b7smbr0mTUm6irA5Fpn1IlP2QVx6dw_viJKnvqKFI2u8TMm4ad2xG3SWJJN6ymsrzflAJrmcSVsZ_YIc8z4yXzTog4Shv7oMsNrrMQnfRkSzcO1LCbfgEN0PMIy81j959EYwitfDZZ9WKxgL83IN_yJJKGerth1EEMZcAjN3DIociVTQFzgz9OkUix4rBvPB9J9w"/>
-                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/80 dark:to-background-dark"></div>
-                                </div>
-                                <div className="relative z-10">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className="size-10 rounded-full bg-primary text-white shadow-lg shadow-primary/30 flex items-center justify-center">
-                                            <span className="material-symbols-outlined">check</span>
-                                        </div>
-                                        <span className="text-xs font-bold uppercase tracking-wider text-primary border border-primary/20 bg-white/50 dark:bg-black/20 px-2 py-1 rounded">Validé</span>
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Retour : Déforestation Amazonienne</h3>
-                                    <p className="text-sm text-gray-700 dark:text-gray-300 font-body leading-relaxed">
-                                        Recentrage sur les mécanismes économiques et politiques de la destruction de la forêt amazonienne.
-                                    </p>
-                                </div>
-                                <div className="relative z-10 mt-6">
-                                    <button className="w-full flex items-center justify-between bg-white dark:bg-gray-800 hover:bg-primary/10 border border-gray-100 dark:border-gray-700 px-4 py-3 rounded-lg group transition-all">
-                                        <span className="text-sm font-bold text-gray-800 dark:text-gray-200 group-hover:text-primary">Voir les nouvelles recherches</span>
-                                        <span className="material-symbols-outlined text-gray-400 group-hover:text-primary transition-transform group-hover:translate-x-1">arrow_forward</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </section>
-                        <section className="mb-16">
-                            <h2 className="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white mb-8 border-b border-gray-100 dark:border-gray-800 pb-4">
-                                <span className="material-symbols-outlined text-gray-400">analytics</span>
-                                Bilan de la Séance
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="size-2 rounded-full bg-primary"></span>
-                                        <h3 className="font-bold text-gray-900 dark:text-white font-body uppercase tracking-wider text-sm">Points Positifs</h3>
-                                    </div>
-                                    <div className="bg-white dark:bg-paper-dark border border-gray-100 dark:border-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-                                        <div className="flex items-start gap-3">
-                                            <span className="material-symbols-outlined text-primary mt-1">psychology_alt</span>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Cadrage Professeur</h4>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400 font-body">L'intervention a permis d'éviter de s'enliser des semaines dans un sujet hors-propos. La réactivité du groupe a été soulignée.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-paper-dark border border-gray-100 dark:border-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow">
-                                        <div className="flex items-start gap-3">
-                                            <span className="material-symbols-outlined text-primary mt-1">construction</span>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Travail Concret</h4>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Dès la validation du sujet Amazonie, la répartition des tâches s'est faite naturellement pour rattraper le temps.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col gap-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="size-2 rounded-full bg-danger"></span>
-                                        <h3 className="font-bold text-gray-900 dark:text-white font-body uppercase tracking-wider text-sm">Points Négatifs</h3>
-                                    </div>
-                                    <div className="bg-white dark:bg-paper-dark border border-gray-100 dark:border-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-danger/20"></div>
-                                        <div className="flex items-start gap-3">
-                                            <span className="material-symbols-outlined text-danger mt-1">schedule</span>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Retard au Démarrage</h4>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Une séance entière consacrée à explorer une fausse piste. Nous avons techniquement une séance de retard sur le planning initial.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="bg-white dark:bg-paper-dark border border-gray-100 dark:border-gray-800 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden">
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-danger/20"></div>
-                                        <div className="flex items-start gap-3">
-                                            <span className="material-symbols-outlined text-danger mt-1">waves</span>
-                                            <div>
-                                                <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-1">Instabilité Momentanée</h4>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400 font-body">Le rejet de l'idée "Mafia" a créé un moment de flottement et de démotivation avant le rebond collectif.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section className="mt-20 border-t border-gray-100 dark:border-gray-800 pt-10">
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-                                <Link className="group flex items-center gap-3 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors" to="/seance-2">
-                                    <span className="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
-                                    <div className="text-left">
-                                        <div className="text-xs uppercase tracking-wide font-body">Précédent</div>
-                                        <div className="font-bold">Séance 2 : Brainstorming</div>
-                                    </div>
-                                </Link>
-                                <div className="h-10 w-px bg-gray-200 dark:bg-gray-700 hidden md:block"></div>
-                                <a className="group flex items-center gap-3 text-right text-gray-900 dark:text-white cursor-pointer" onClick={() => alert("Prototype ends here.")}>
-                                    <div className="text-right">
-                                        <div className="text-xs uppercase tracking-wide font-body text-primary font-bold">À suivre</div>
-                                        <div className="font-bold group-hover:underline decoration-primary decoration-2 underline-offset-4">Séance 4 : Statistiques</div>
-                                    </div>
-                                    <div className="size-10 rounded-full bg-primary text-white flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-primary/30">
-                                        <span className="material-symbols-outlined">arrow_forward</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </section>
+                    </CompteRenduCard>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                En séance 3, on a testé une autre piste : la crise des déchets à Naples (“Terre des Feux”), qui mélange écologie, santé publique et criminalité.
+                                Le sujet était intéressant, mais difficile à traiter correctement dans le cadre et le temps disponibles.
+                            </p>
+                            <p>
+                                Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif.
+                                Décision : abandonner et revenir à l’Amazonie.
+                            </p>
+                            <p>
+                                On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation,
+                                montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité.
+                            </p>
+                        </div>
+                    </RecitCard>
+
+                    <PosNegGrid
+                        positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
+                        difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage."
+                    />
+                </SeanceTemplate>
+            );
+        };
+
+        // --- Séance 4 (placeholder mais format identique) ---
+        const Seance4 = () => {
+            return (
+                <SeanceTemplate
+                    current="/seance-4"
+                    title="SÉANCE 4 : Statistiques"
+                    subtitle="Page à compléter (format conservé pour cohérence)."
+                    dot="primary"
+                    prev={{ to: '/seance-3', label: 'Séance 3' }}
+                    next={null}
+                >
+                    <CompteRenduCard>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200">À compléter.</p>
+                    </CompteRenduCard>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                Cette séance sert à transformer les recherches en éléments concrets pour la mise en scène : chiffres, dates, acteurs et vocabulaire précis.
+                                L’objectif est de sélectionner des données utiles, pas d’accumuler des statistiques.
+                            </p>
+                            <p>
+                                Chaque affirmation du scénario doit pouvoir s’appuyer sur un fait (surfaces détruites, conséquences pour les populations,
+                                intérêts économiques, rôle des décisions politiques). On vérifiera aussi la cohérence globale.
+                            </p>
+                        </div>
+                    </RecitCard>
+
+                    <PosNegGrid positive="À compléter." difficulty="À compléter." />
+                </SeanceTemplate>
+            );
+        };
+
+        const ProjetPage = () => {
+            return (
+                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
+                    <TopHeader current="/projet" />
+                    <main className="flex-1 flex justify-center py-10 px-4 md:px-10">
+                        <div className="max-w-[960px] w-full">
+                            <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">Le Projet</h1>
+                            <p className="text-lg text-[#61896f] dark:text-[#8cbfaa]">Page de présentation (à compléter).</p>
+                            <BottomArrowsNav prev={{ to: '/', label: 'Séance 1' }} next={{ to: '/ressources', label: 'Ressources' }} />
+                        </div>
                     </main>
-                    <footer className="bg-white dark:bg-paper-dark border-t border-gray-100 dark:border-gray-800 py-8">
-                        <div className="max-w-[960px] mx-auto px-8 text-center">
-                            <p className="text-sm text-gray-400 dark:text-gray-500 font-body">Projet EMC - Lycée Théâtre &amp; Écologie © 2023</p>
-                        </div>
-                    </footer>
                 </div>
             );
         };
 
-        const FloatingNav = () => {
+        const RessourcesPage = () => {
             return (
-                <div className="fixed bottom-4 right-4 z-[100] bg-white dark:bg-[#1a2e22] p-2 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 flex gap-2">
-                    <Link to="/" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-xs font-bold text-gray-600 dark:text-gray-300 flex flex-col items-center">
-                        <span className="material-symbols-outlined mb-1">looks_one</span>
-                        S1
-                    </Link>
-                    <Link to="/inter-seance" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-xs font-bold text-gray-600 dark:text-gray-300 flex flex-col items-center">
-                        <span className="material-symbols-outlined mb-1">warning</span>
-                        Inter
-                    </Link>
-                     <Link to="/seance-2" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-xs font-bold text-gray-600 dark:text-gray-300 flex flex-col items-center">
-                        <span className="material-symbols-outlined mb-1">looks_two</span>
-                        S2
-                    </Link>
-                    <Link to="/seance-3" className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-xs font-bold text-gray-600 dark:text-gray-300 flex flex-col items-center">
-                        <span className="material-symbols-outlined mb-1">looks_3</span>
-                        S3
-                    </Link>
+                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
+                    <TopHeader current="/ressources" />
+                    <main className="flex-1 flex justify-center py-10 px-4 md:px-10">
+                        <div className="max-w-[960px] w-full">
+                            <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">Ressources</h1>
+                            <p className="text-lg text-[#61896f] dark:text-[#8cbfaa]">Liens, sources et documents (à compléter).</p>
+                            <BottomArrowsNav prev={{ to: '/projet', label: 'Le Projet' }} next={{ to: '/', label: 'Séance 1' }} />
+                        </div>
+                    </main>
                 </div>
             );
-        }
+        };
 
         const App = () => {
             return (
                 <MemoryRouter>
-                    <FloatingNav />
                     <Routes>
                         <Route path="/" element={<Seance1 />} />
-                        <Route path="/inter-seance" element={<InterSeance />} />
                         <Route path="/seance-2" element={<Seance2 />} />
+                        <Route path="/inter-seance" element={<InterSeance />} />
                         <Route path="/seance-3" element={<Seance3 />} />
+                        <Route path="/seance-4" element={<Seance4 />} />
+                        <Route path="/projet" element={<ProjetPage />} />
+                        <Route path="/ressources" element={<RessourcesPage />} />
                     </Routes>
                 </MemoryRouter>
             );
@@ -785,6 +657,7 @@
         const root = createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
+
     <script>
         // System preference detection for dark mode (Runs outside React to prevent FOUC)
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
