@@ -112,7 +112,6 @@
                 { to: '/seance-2', label: 'Séance 2' },
                 { to: '/inter-seance', label: 'Inter-Séance' },
                 { to: '/seance-3', label: 'Séance 3' },
-                { to: '/seance-4', label: 'Séance 4' },
             ];
 
             const isActive = (path) => current === path;
@@ -134,7 +133,6 @@
                         <div className="flex flex-1 justify-end gap-4 items-center">
                             <nav className="hidden md:flex items-center gap-9">
                                 <Link className={isActive('/') ? activeLink : baseLink} to="/">Accueil</Link>
-                                <Link className={isActive('/projet') ? activeLink : baseLink} to="/projet">Le Projet</Link>
 
                                 <div className="relative">
                                     <button
@@ -163,8 +161,6 @@
                                         </div>
                                     )}
                                 </div>
-
-                                <Link className={isActive('/ressources') ? activeLink : baseLink} to="/ressources">Ressources</Link>
                             </nav>
 
                             <button
@@ -182,8 +178,6 @@
                         <div className="md:hidden mt-3 pb-2 border-t border-gray-100 dark:border-gray-800">
                             <div className="flex flex-col gap-1 pt-3">
                                 <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/" onClick={() => setMobileOpen(false)}>Accueil</Link>
-                                <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/projet" onClick={() => setMobileOpen(false)}>Le Projet</Link>
-                                <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/ressources" onClick={() => setMobileOpen(false)}>Ressources</Link>
                                 <div className="px-2 pt-2 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold">Séances</div>
                                 {seanceLinks.map((item) => (
                                     <Link
@@ -236,7 +230,6 @@
                 { to: '/seance-2', label: 'Séance 2' },
                 { to: '/inter-seance', label: 'Inter-Séance' },
                 { to: '/seance-3', label: 'Séance 3' },
-                { to: '/seance-4', label: 'Séance 4' },
             ];
 
             const base = "pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors";
@@ -532,7 +525,7 @@
                     subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
                     dot="danger"
                     prev={{ to: '/inter-seance', label: 'Inter-Séance' }}
-                    next={{ to: '/seance-4', label: 'Séance 4' }}
+                    next={null}
                 >
                     <CompteRenduCard>
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
@@ -553,7 +546,7 @@
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
                             <p>
-                                En séance 3, on a testé une autre piste : la crise des déchets à Naples (“Terre des Feux”), qui mélange écologie, santé publique et criminalité.
+                                En séance 3, on a testé une autre piste : la mafia italienne.
                                 Le sujet était intéressant, mais difficile à traiter correctement dans le cadre et le temps disponibles.
                             </p>
                             <p>
@@ -575,68 +568,6 @@
             );
         };
 
-        // --- Séance 4 (placeholder mais format identique) ---
-        const Seance4 = () => {
-            return (
-                <SeanceTemplate
-                    current="/seance-4"
-                    title="SÉANCE 4 : Statistiques"
-                    subtitle="Page à compléter (format conservé pour cohérence)."
-                    dot="primary"
-                    prev={{ to: '/seance-3', label: 'Séance 3' }}
-                    next={null}
-                >
-                    <CompteRenduCard>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200">À compléter.</p>
-                    </CompteRenduCard>
-
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                Cette séance sert à transformer les recherches en éléments concrets pour la mise en scène : chiffres, dates, acteurs et vocabulaire précis.
-                                L’objectif est de sélectionner des données utiles, pas d’accumuler des statistiques.
-                            </p>
-                            <p>
-                                Chaque affirmation du scénario doit pouvoir s’appuyer sur un fait (surfaces détruites, conséquences pour les populations,
-                                intérêts économiques, rôle des décisions politiques). On vérifiera aussi la cohérence globale.
-                            </p>
-                        </div>
-                    </RecitCard>
-
-                    <PosNegGrid positive="À compléter." difficulty="À compléter." />
-                </SeanceTemplate>
-            );
-        };
-
-        const ProjetPage = () => {
-            return (
-                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
-                    <TopHeader current="/projet" />
-                    <main className="flex-1 flex justify-center py-10 px-4 md:px-10">
-                        <div className="max-w-[960px] w-full">
-                            <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">Le Projet</h1>
-                            <p className="text-lg text-[#61896f] dark:text-[#8cbfaa]">Page de présentation (à compléter).</p>
-                            <BottomArrowsNav prev={{ to: '/', label: 'Séance 1' }} next={{ to: '/ressources', label: 'Ressources' }} />
-                        </div>
-                    </main>
-                </div>
-            );
-        };
-
-        const RessourcesPage = () => {
-            return (
-                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
-                    <TopHeader current="/ressources" />
-                    <main className="flex-1 flex justify-center py-10 px-4 md:px-10">
-                        <div className="max-w-[960px] w-full">
-                            <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">Ressources</h1>
-                            <p className="text-lg text-[#61896f] dark:text-[#8cbfaa]">Liens, sources et documents (à compléter).</p>
-                            <BottomArrowsNav prev={{ to: '/projet', label: 'Le Projet' }} next={{ to: '/', label: 'Séance 1' }} />
-                        </div>
-                    </main>
-                </div>
-            );
-        };
 
         const App = () => {
             return (
@@ -646,9 +577,6 @@
                         <Route path="/seance-2" element={<Seance2 />} />
                         <Route path="/inter-seance" element={<InterSeance />} />
                         <Route path="/seance-3" element={<Seance3 />} />
-                        <Route path="/seance-4" element={<Seance4 />} />
-                        <Route path="/projet" element={<ProjetPage />} />
-                        <Route path="/ressources" element={<RessourcesPage />} />
                     </Routes>
                 </MemoryRouter>
             );
