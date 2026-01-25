@@ -12,43 +12,140 @@
     <!-- Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#11d452",
-              "primary-dark": "#0ea640",
-              "background-light": "#f6f8f6",
-              "background-dark": "#102216",
-              "card-light": "#ffffff",
-              "card-dark": "#1a2e22",
-              "text-main": "#111813",
-              "text-dark": "#f0f4f2",
-              "muted-green": "#61896f",
-              "forest-dark": "#1e3a29",
-              "earth-light": "#e8e6df",
-              "alert": "#ef4444",
-              "alert-soft": "#fef2f2",
-              "danger": "#e3342f",
-              "paper": "#ffffff",
-              "paper-dark": "#1a2c20",
-            },
-            fontFamily: {
-              "display": ["Newsreader", "serif"],
-              "sans": ["Noto Sans", "sans-serif"],
-              "body": ["Noto Sans", "sans-serif"],
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
-            boxShadow: {
-              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-            },
-          },
-        },
-      }
+        <!-- Tailwind CSS (config must be defined BEFORE loading the CDN script) -->
+        <script id="tailwind-config">
+                window.tailwind = window.tailwind || {};
+                window.tailwind.config = {
+                        darkMode: "class",
+                        theme: {
+                                extend: {
+                                        colors: {
+                                                "primary": "#11d452",
+                                                "primary-dark": "#0ea640",
+                                                "background-light": "#f6f8f6",
+                                                "background-dark": "#102216",
+                                                "card-light": "#ffffff",
+                                                "card-dark": "#1a2e22",
+                                                "text-main": "#111813",
+                                                "text-dark": "#f0f4f2",
+                                                "muted-green": "#61896f",
+                                                "forest-dark": "#1e3a29",
+                                                "earth-light": "#e8e6df",
+                                                "alert": "#ef4444",
+                                                "alert-soft": "#fef2f2",
+                                                "danger": "#e3342f",
+                                                "paper": "#ffffff",
+                                                "paper-dark": "#1a2c20",
+                                        },
+                                        fontFamily: {
+                                                "display": ["Newsreader", "serif"],
+                                                "sans": ["Noto Sans", "sans-serif"],
+                                                "body": ["Noto Sans", "sans-serif"],
+                                        },
+                                        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                                        boxShadow: {
+                                                'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                                        },
+                                },
+                        },
+                };
+        </script>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" crossorigin="anonymous"></script>
+
+    <script>
+        // If Tailwind CDN is blocked, inject a small fallback CSS so the page stays readable/styled.
+        (function () {
+            function isTailwindLoaded() {
+                try {
+                    var test = document.createElement('div');
+                    test.className = 'hidden';
+                    document.body.appendChild(test);
+                    var ok = window.getComputedStyle(test).display === 'none';
+                    test.remove();
+                    return ok;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+            function injectFallbackCss() {
+                if (document.getElementById('tw-fallback')) return;
+
+                var style = document.createElement('style');
+                style.id = 'tw-fallback';
+                style.textContent = [
+                    ':root{--primary:#11d452;--forest:#1e3a29;--bg:#f6f8f6;--border:#e0e4e2;--text:#111813;}',
+                    'html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Noto Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}',
+                    'a{color:var(--primary);text-decoration:none;}',
+                    'a:hover{text-decoration:underline;}',
+                    'code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}',
+                    'header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}',
+                    'main{padding:24px 16px;}',
+                    'h1,h2,h3{color:var(--forest);}',
+                    '',
+                    '/* Minimal utility fallbacks for the most used classes */',
+                    '[class~="bg-background-light"]{background:var(--bg);}',
+                    '[class~="bg-white"]{background:#fff;}',
+                    '[class~="text-primary"]{color:var(--primary);}',
+                    '[class~="text-forest-dark"]{color:var(--forest);}',
+                    '[class~="border"]{border:1px solid var(--border);}',
+                    '[class~="border-gray-100"],[class~="border-gray-200"]{border-color:var(--border);}',
+                    '[class~="shadow-sm"]{box-shadow:0 1px 2px rgba(0,0,0,0.06);}',
+                    '[class~="rounded-lg"]{border-radius:0.5rem;}',
+                    '[class~="rounded-xl"]{border-radius:0.75rem;}',
+                    '[class~="p-4"]{padding:1rem;}',
+                    '[class~="p-5"]{padding:1.25rem;}',
+                    '[class~="p-6"]{padding:1.5rem;}',
+                    '[class~="mb-2"]{margin-bottom:0.5rem;}',
+                    '[class~="mb-3"]{margin-bottom:0.75rem;}',
+                    '[class~="mb-4"]{margin-bottom:1rem;}',
+                    '[class~="mb-6"]{margin-bottom:1.5rem;}',
+                    '[class~="mb-10"]{margin-bottom:2.5rem;}',
+                    '[class~="space-y-3"] > * + *{margin-top:0.75rem;}',
+                    '[class~="space-y-4"] > * + *{margin-top:1rem;}',
+                    '',
+                    '/* Basic layout helpers */',
+                    '[class~="flex"]{display:flex;}',
+                    '[class~="flex-col"]{flex-direction:column;}',
+                    '[class~="items-center"]{align-items:center;}',
+                    '[class~="justify-between"]{justify-content:space-between;}',
+                    '[class~="gap-2"]{gap:0.5rem;}',
+                    '[class~="gap-3"]{gap:0.75rem;}',
+                    '[class~="gap-4"]{gap:1rem;}'
+                ].join('\n');
+                document.head.appendChild(style);
+            }
+
+            function check() {
+                if (!isTailwindLoaded()) {
+                    document.documentElement.dataset.tw = 'fallback';
+                    injectFallbackCss();
+                } else {
+                    document.documentElement.dataset.tw = 'ok';
+                }
+
+                var boot = document.getElementById('boot-status');
+                if (boot && boot.querySelector) {
+                    var existing = boot.querySelector('[data-tw-indicator]');
+                    if (!existing) {
+                        var p = document.createElement('p');
+                        p.setAttribute('data-tw-indicator', 'true');
+                        p.style.margin = '8px 0 0';
+                        p.style.opacity = '0.85';
+                        p.textContent = (document.documentElement.dataset.tw === 'ok')
+                            ? 'Style: Tailwind OK.'
+                            : 'Style: mode secours (Tailwind non chargé).';
+                        var container = boot.querySelector('div');
+                        if (container) container.appendChild(p);
+                    }
+                }
+            }
+
+            window.addEventListener('DOMContentLoaded', function () {
+                // give the CDN a moment to load
+                setTimeout(check, 1200);
+            });
+        })();
     </script>
 
     <style>
@@ -88,15 +185,141 @@
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div id="boot-status" style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color: #111813;">
+            <div style="max-width: 900px; margin: 0 auto;">
+                <h1 style="font-size: 20px; font-weight: 800; margin: 0 0 8px;">Chargement…</h1>
+                <p style="margin: 0; opacity: 0.85; line-height: 1.4;">
+                    Si l’écran reste blanc, c’est souvent un blocage des scripts externes (réseau/filtrage) ou une erreur JavaScript.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            function escapeHtml(s) {
+                return String(s)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            function showBootError(title, details) {
+                var root = document.getElementById('root');
+                if (!root) return;
+
+                var detailHtml = details ? ('<pre style="white-space:pre-wrap;background:#f6f8f6;border:1px solid #e0e4e2;border-radius:8px;padding:12px;overflow:auto;">' + escapeHtml(details) + '</pre>') : '';
+
+                root.innerHTML =
+                    '<div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color:#111813;">' +
+                    '  <div style="max-width: 900px; margin: 0 auto;">' +
+                    '    <h1 style="font-size: 20px; font-weight: 900; margin: 0 0 8px;">' + escapeHtml(title) + '</h1>' +
+                    '    <p style="margin: 0 0 12px; opacity: 0.9; line-height: 1.4;">' +
+                    '      Astuce : ouvre le fichier via un serveur local (ex. <code>py -m http.server 8000</code>) puis va sur <code>http://localhost:8000/emc.html</code>. ' +
+                    '      Si tu es sur un réseau filtré (lycée), les CDNs <code>unpkg.com</code> / <code>cdn.tailwindcss.com</code> peuvent être bloqués.' +
+                    '    </p>' +
+                    detailHtml +
+                    '  </div>' +
+                    '</div>';
+            }
+
+            window.__showBootError = showBootError;
+
+            window.addEventListener('error', function (event) {
+                try {
+                    var msg = event && (event.message || (event.error && event.error.message)) || 'Erreur JavaScript.';
+                    var stack = event && event.error && event.error.stack ? event.error.stack : '';
+                    showBootError('Erreur au chargement de la page', msg + (stack ? "\n\n" + stack : ''));
+                } catch (_) {
+                    // ignore
+                }
+            });
+
+            window.addEventListener('unhandledrejection', function (event) {
+                try {
+                    var reason = event && event.reason;
+                    var details = reason && (reason.stack || reason.message) ? (reason.stack || reason.message) : String(reason);
+                    showBootError('Promesse rejetée (unhandledrejection)', details);
+                } catch (_) {
+                    // ignore
+                }
+            });
+
+            // If core libs don't arrive (blocked CDNs), surface a helpful message.
+            setTimeout(function () {
+                if (!window.React || !window.ReactDOM || !window.ReactRouterDOM) {
+                    showBootError(
+                        'Dépendances externes non chargées',
+                        'React/ReactDOM/ReactRouterDOM ne sont pas disponibles. Cela arrive quand le réseau bloque les CDNs (unpkg/tailwind) ou en ouverture directe via file://.'
+                    );
+                }
+            }, 2500);
+        })();
+    </script>
 
     <!-- React Dependencies -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
-    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
-    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin="anonymous"></script>
+
+    <script>
+        // CDN fallback loader: if unpkg/cdn.tailwind are blocked, try jsDelivr.
+        (function () {
+            function loadScript(url) {
+                return new Promise(function (resolve, reject) {
+                    var s = document.createElement('script');
+                    s.src = url;
+                    s.async = true;
+                    s.crossOrigin = 'anonymous';
+                    s.referrerPolicy = 'no-referrer';
+                    s.onload = function () { resolve(url); };
+                    s.onerror = function () { reject(new Error('Failed to load: ' + url)); };
+                    document.head.appendChild(s);
+                });
+            }
+
+            function ensureDepsWithFallback() {
+                // Wait a moment for primary CDNs.
+                setTimeout(function () {
+                    var missing = [];
+                    if (!window.React) missing.push('React');
+                    if (!window.ReactDOM) missing.push('ReactDOM');
+                    if (!window.ReactRouterDOM) missing.push('ReactRouterDOM');
+                    if (!window.Babel) missing.push('Babel');
+
+                    if (missing.length === 0) return;
+
+                    // Attempt fallback from jsDelivr.
+                    var chain = Promise.resolve();
+                    if (!window.React) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js'); });
+                    if (!window.ReactDOM) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js'); });
+                    // history/react-router/react-router-dom UMD builds
+                    if (!window.HistoryLibrary) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/history@5/umd/history.development.js'); });
+                    if (!window.ReactRouter) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react-router@6.3.0/umd/react-router.development.js'); });
+                    if (!window.ReactRouterDOM) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react-router-dom@6.3.0/umd/react-router-dom.development.js'); });
+                    if (!window.Babel) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/babel-standalone@6/babel.min.js'); });
+
+                    chain.catch(function (e) {
+                        if (window.__showBootError) {
+                            window.__showBootError(
+                                'Impossible de charger les bibliothèques (CDN bloqué)',
+                                (e && (e.stack || e.message)) ? (e.stack || e.message) : String(e)
+                            );
+                        }
+                    });
+                }, 800);
+            }
+
+            // Fire-and-forget; actual app boot is handled by Babel once available.
+            ensureDepsWithFallback();
+        })();
+    </script>
 
     <script type="text/babel">
         const { useState } = React;
@@ -356,8 +579,73 @@
             );
         };
 
+        const InlineRef = ({ n }) => {
+            return (
+                <sup className="ml-1 align-super text-xs text-primary font-sans">
+                    <a className="hover:underline" href={`#src-${n}`} aria-label={`Source ${n}`}>[{n}]</a>
+                </sup>
+            );
+        };
+
+        const SourcesCard = ({ title = 'Sources (sélection)', sources = [] }) => {
+            if (!sources || sources.length === 0) return null;
+
+            return (
+                <div className="bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center gap-3 mb-4 text-primary">
+                        <span className="material-symbols-outlined">library_books</span>
+                        <span className="text-sm font-bold uppercase tracking-wider font-sans">{title}</span>
+                    </div>
+                    <ol className="list-decimal pl-5 space-y-3 text-sm text-gray-700 dark:text-gray-300 font-sans">
+                        {sources.map((s) => (
+                            <li key={s.n} id={`src-${s.n}`} className="scroll-mt-28">
+                                <span className="font-medium">{s.authors}</span>
+                                {s.date ? <span> ({s.date})</span> : null}
+                                <span> — </span>
+                                <span className="italic">{s.title}</span>
+                                {s.publisher ? <span>, {s.publisher}</span> : null}
+                                {s.url ? (
+                                    <span>
+                                        <span>. </span>
+                                        <a className="text-primary hover:underline break-all" href={s.url} target="_blank" rel="noreferrer">{s.url}</a>
+                                    </span>
+                                ) : null}
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            );
+        };
+
         // --- Séance 1 ---
         const Seance1 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Tom Phillips',
+                    date: '10 déc. 2019',
+                    title: "Greta Thunberg labelled a 'brat' by Brazil's far-right leader Jair Bolsonaro",
+                    publisher: 'The Guardian',
+                    url: 'https://www.theguardian.com/world/2019/dec/10/greta-thunberg-labelled-a-brat-by-brazils-far-right-leader-jair-bolsonaro'
+                },
+                {
+                    n: 2,
+                    authors: 'Congressional Research Service (Hoover, Meyer, Procita, Sheikh)',
+                    date: '5 janv. 2021',
+                    title: 'Fire and Deforestation in the Brazilian Amazon (IF11306)',
+                    publisher: 'Congress.gov / CRS',
+                    url: 'https://crsreports.congress.gov/product/pdf/IF/IF11306'
+                },
+                {
+                    n: 3,
+                    authors: 'United Nations Web TV',
+                    date: '23 sept. 2019',
+                    title: 'Greta Thunberg — Opening of the Climate Action Summit 2019 (video)',
+                    publisher: 'UN Web TV',
+                    url: 'https://media.un.org/en/asset/k10/k10j9y1q2v'
+                },
+            ];
+
             return (
                 <SeanceTemplate
                     current="/"
@@ -381,6 +669,8 @@
                             </h3>
                             <p className="text-base text-gray-600 dark:text-gray-300">
                                 <strong className="text-forest-dark dark:text-gray-100 font-bold">Ébauche :</strong> opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg.
+                                <span className="ml-1">Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg.</span>
+                                <InlineRef n={1} />
                             </p>
                         </div>
                     </CompteRenduCard>
@@ -395,10 +685,13 @@
                                 L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables.
                                 On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines),
                                 de l’autre la protection de la forêt, des populations autochtones et de la biodiversité.
+                                <InlineRef n={2} />
                             </p>
                             <p>
                                 On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg.
                                 À ce stade, l’objectif était surtout de poser un conflit clair et une progression de scènes, quitte à ajuster ensuite pour rester crédibles.
+                                <span className="ml-1">Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), ce qui rend sa présence sur le terrain moins évidente.</span>
+                                <InlineRef n={3} />
                             </p>
                         </div>
                     </RecitCard>
@@ -407,12 +700,41 @@
                         positive="La dynamique de groupe est bonne. Le sujet Amazonie offre beaucoup de ressources et permet d'aborder l'EMC sous plusieurs angles."
                         difficulty="Intégrer Greta Thunberg de façon réaliste dans une scène au Brésil paraît difficile : son rôle est plus symbolique qu'actif sur le terrain."
                     />
+
+                    <SourcesCard sources={sources} />
                 </SeanceTemplate>
             );
         };
 
         // --- Séance 2 ---
         const Seance2 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Human Rights Watch',
+                    date: '2021',
+                    title: 'World Report 2021 — Brazil (section)',
+                    publisher: 'Human Rights Watch',
+                    url: 'https://www.hrw.org/world-report/2021/country-chapters/brazil'
+                },
+                {
+                    n: 2,
+                    authors: 'Abessa, Famá & Buruaem (open access)',
+                    date: '2021',
+                    title: 'Environmental governance under Bolsonaro: dismantling institutions, curtailing participation, delegitimising opposition',
+                    publisher: 'PMC',
+                    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8358914/'
+                },
+                {
+                    n: 3,
+                    authors: 'Congressional Research Service (Hoover, Meyer, Procita, Sheikh)',
+                    date: '5 janv. 2021',
+                    title: 'Fire and Deforestation in the Brazilian Amazon (IF11306)',
+                    publisher: 'Congress.gov / CRS',
+                    url: 'https://crsreports.congress.gov/product/pdf/IF/IF11306'
+                },
+            ];
+
             return (
                 <SeanceTemplate
                     current="/seance-2"
@@ -448,10 +770,14 @@
                                 On a décidé de supprimer Greta Thunberg : dans notre contexte, sa présence rendait la scène moins crédible.
                                 On a recentré sur des acteurs directement liés au terrain et aux décisions : responsables politiques, représentants locaux,
                                 populations concernées, et points de vue opposés (développement économique vs protection).
+                                <span className="ml-1">Pour cadrer nos arguments, on s’est appuyés sur des sources qui décrivent à la fois les mécanismes de déforestation et le contexte politique (application des lois, pressions sur les acteurs).</span>
+                                <InlineRef n={1} />
+                                <InlineRef n={2} />
                             </p>
                             <p>
                                 Le but était de garder une histoire simple à jouer tout en montrant les mécanismes : arguments économiques utilisés pour justifier la déforestation,
                                 contestation par les populations et les ONG, et conséquences concrètes (perte de terres, atteintes à la biodiversité).
+                                <InlineRef n={3} />
                             </p>
                         </div>
                     </RecitCard>
@@ -460,6 +786,8 @@
                         positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
                         difficulty="L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches."
                     />
+
+                    <SourcesCard sources={sources} />
                 </SeanceTemplate>
             );
         };
@@ -518,6 +846,25 @@
 
         // --- Séance 3 ---
         const Seance3 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Garraffa, Sannino & others (open access)',
+                    date: '2022',
+                    title: "The 'land of fires': epidemiological research and public health policy during the waste crisis in Campania, Italy",
+                    publisher: 'PMC',
+                    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9792804/'
+                },
+                {
+                    n: 2,
+                    authors: 'Roberto Saviano',
+                    date: '2006',
+                    title: 'Gomorra',
+                    publisher: 'Mondadori (ouvrage)',
+                    url: 'https://en.wikipedia.org/wiki/Gomorrah_(book)'
+                },
+            ];
+
             return (
                 <SeanceTemplate
                     current="/seance-3"
@@ -530,6 +877,8 @@
                     <CompteRenduCard>
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
                             <strong className="text-forest-dark dark:text-gray-100 font-bold">Piste testée :</strong> crise des déchets à Naples ("Terre des Feux"), liant écologie et criminalité.
+                            <InlineRef n={1} />
+                            <InlineRef n={2} />
                         </p>
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
                             <strong className="text-forest-dark dark:text-gray-100 font-bold">Retour professeur :</strong> sujet jugé trop complexe et trop éloigné. Décision : abandon et retour à l'Amazonie.
@@ -548,6 +897,8 @@
                             <p>
                                 En séance 3, on a testé une autre piste : la mafia italienne.
                                 Le sujet était intéressant, mais difficile à traiter correctement dans le cadre et le temps disponibles.
+                                <span className="ml-1">La crise des déchets en Campanie est documentée (enjeux sanitaires, politiques publiques, criminalité organisée), mais c’est un terrain complexe à résumer sans simplifier à l’excès.</span>
+                                <InlineRef n={1} />
                             </p>
                             <p>
                                 Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif.
@@ -564,6 +915,8 @@
                         positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
                         difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage."
                     />
+
+                    <SourcesCard sources={sources} />
                 </SeanceTemplate>
             );
         };
