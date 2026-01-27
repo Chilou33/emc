@@ -189,9 +189,6 @@
         <div id="boot-status" style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color: #111813;">
             <div style="max-width: 900px; margin: 0 auto;">
                 <h1 style="font-size: 20px; font-weight: 800; margin: 0 0 8px;">Chargement…</h1>
-                <p style="margin: 0; opacity: 0.85; line-height: 1.4;">
-                    Si l’écran reste blanc, c’est souvent un blocage des scripts externes (réseau/filtrage) ou une erreur JavaScript.
-                </p>
             </div>
         </div>
     </div>
@@ -587,7 +584,7 @@
             );
         };
 
-        const SourcesCard = ({ title = 'Sources (sélection)', sources = [] }) => {
+        const SourcesCard = ({ title = 'Sources', sources = [] }) => {
             if (!sources || sources.length === 0) return null;
 
             return (
@@ -622,19 +619,19 @@
             const sources = [
                 {
                     n: 1,
-                    authors: 'Tom Phillips',
+                    authors: 'The Guardian',
                     date: '10 déc. 2019',
-                    title: "Greta Thunberg labelled a 'brat' by Brazil's far-right leader Jair Bolsonaro",
-                    publisher: 'The Guardian',
-                    url: 'https://www.theguardian.com/world/2019/dec/10/greta-thunberg-labelled-a-brat-by-brazils-far-right-leader-jair-bolsonaro'
+                    title: 'Greta Thunberg labelled a \'brat\' by Brazil\'s far-right leader Jair Bolsonaro',
+                    publisher: 'Tom Phillips',
+                    url: 'https://www.theguardian.com/environment/2019/dec/10/greta-thunberg-jair-bolsonaro-brazil-indigenous-amazon'
                 },
                 {
                     n: 2,
-                    authors: 'Congressional Research Service (Hoover, Meyer, Procita, Sheikh)',
-                    date: '5 janv. 2021',
-                    title: 'Fire and Deforestation in the Brazilian Amazon (IF11306)',
-                    publisher: 'Congress.gov / CRS',
-                    url: 'https://crsreports.congress.gov/product/pdf/IF/IF11306'
+                    authors: 'France 24 (avec AFP)',
+                    date: '19 nov. 2021',
+                    title: 'Brésil : la déforestation en Amazonie continue à un rythme effréné',
+                    publisher: 'France 24',
+                    url: 'https://www.france24.com/fr/am%C3%A9riques/20211119-br%C3%A9sil-la-d%C3%A9forestation-en-amazonie-continue-%C3%A0-un-rythme-effr%C3%A9n%C3%A9'
                 },
                 {
                     n: 3,
@@ -643,6 +640,13 @@
                     title: 'Greta Thunberg — Opening of the Climate Action Summit 2019 (video)',
                     publisher: 'UN Web TV',
                     url: 'https://media.un.org/en/asset/k10/k10j9y1q2v'
+                },
+                {
+                    n: 4,
+                    authors: 'WWF France',
+                    title: "L’Amazonie, une forêt tropicale en danger",
+                    publisher: 'WWF France',
+                    url: 'https://www.wwf.fr/espaces-prioritaires/amazonie'
                 },
             ];
 
@@ -675,6 +679,17 @@
                         </div>
                     </CompteRenduCard>
 
+                    {/* Image 1 : Forêt amazonienne */}
+                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
+                        <img 
+                            src="https://images.unsplash.com/photo-1593069567131-53a0614dde1d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                            alt="Forêt amazonienne luxuriante" 
+                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                        />
+                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">La canopée amazonienne, poumon vert de la planète menacé par la déforestation</figcaption>
+                    </figure>
+
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
                             <p>
@@ -686,6 +701,7 @@
                                 On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines),
                                 de l’autre la protection de la forêt, des populations autochtones et de la biodiversité.
                                 <InlineRef n={2} />
+                                <InlineRef n={4} />
                             </p>
                             <p>
                                 On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg.
@@ -711,27 +727,43 @@
             const sources = [
                 {
                     n: 1,
-                    authors: 'Human Rights Watch',
-                    date: '2021',
-                    title: 'World Report 2021 — Brazil (section)',
-                    publisher: 'Human Rights Watch',
-                    url: 'https://www.hrw.org/world-report/2021/country-chapters/brazil'
+                    authors: 'Haut-Commissariat des Nations unies aux droits de l\'homme (OHCHR)',
+                    date: 'oct. 2009',
+                    title: 'Les populations autochtones revendiquent la reconnaissance de leurs savoirs traditionnels pour gérer l\'environnement',
+                    publisher: 'ONU — OHCHR (FR)',
+                    url: 'https://www.ohchr.org/fr/press-releases/2009/10/default-title-582'
                 },
                 {
                     n: 2,
-                    authors: 'Abessa, Famá & Buruaem (open access)',
-                    date: '2021',
-                    title: 'Environmental governance under Bolsonaro: dismantling institutions, curtailing participation, delegitimising opposition',
-                    publisher: 'PMC',
-                    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8358914/'
+                    authors: 'Amnesty International',
+                    date: '26 nov. 2019',
+                    title: 'Brésil. Il faut mettre fin à l\'élevage illégal de bétail qui alimente la destruction de la forêt tropicale amazonienne',
+                    publisher: 'Amnesty International (FR)',
+                    url: 'https://www.amnesty.org/fr/latest/news/2019/11/brazil-halt-illegal-cattle-farms-fuelling-amazon-rainforest-destruction/'
                 },
                 {
                     n: 3,
-                    authors: 'Congressional Research Service (Hoover, Meyer, Procita, Sheikh)',
-                    date: '5 janv. 2021',
-                    title: 'Fire and Deforestation in the Brazilian Amazon (IF11306)',
-                    publisher: 'Congress.gov / CRS',
-                    url: 'https://crsreports.congress.gov/product/pdf/IF/IF11306'
+                    authors: 'Pauline Fricot (avec AFP)',
+                    date: '24 nov. 2021',
+                    title: 'Malgré les promesses de Jair Bolsonaro, la déforestation en Amazonie n\'a pas cessé d\'augmenter',
+                    publisher: 'Novethic',
+                    url: 'https://www.novethic.fr/actualite/environnement/agriculture/isr-rse/la-deforestation-en-amazonie-augmente-sous-le-mandat-de-bolsonaro-150330.html'
+                },
+                {
+                    n: 4,
+                    authors: 'Amnesty International',
+                    date: '2019',
+                    title: 'Brésil. Risque d\'effusion de sang en Amazonie si les autorités ne protègent pas les peuples indigènes',
+                    publisher: 'Amnesty International (FR)',
+                    url: 'https://www.amnesty.org/fr/latest/press-release/2019/05/brazil-risk-of-bloodshed-in-the-amazon-unless-government-protects-indigenous-peoples-from-illegal-land-seizures-and-logging/'
+                },
+                {
+                    n: 5,
+                    authors: 'Haut-Commissariat des Nations unies aux droits de l\'homme (OHCHR)',
+                    date: '2022',
+                    title: 'Dans la forêt amazonienne, une tribu autochtone se bat pour sa survie',
+                    publisher: 'ONU — OHCHR (FR)',
+                    url: 'https://www.ohchr.org/fr/stories/2022/08/amazon-rainforest-indigenous-tribe-fights-survival'
                 },
             ];
 
@@ -763,12 +795,11 @@
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
                             <p>
-                                Pendant la séance 2, on a relu le scénario et repéré ce qui posait problème en mise en scène : cohérence, réalisme, utilité des personnages,
-                                et clarté du message EMC.
+                                Pendant la séance 2, on a relu le scénario et repéré ce qui posait problème en termes de cohérence et de réalisme.
                             </p>
                             <p>
-                                On a décidé de supprimer Greta Thunberg : dans notre contexte, sa présence rendait la scène moins crédible.
-                                On a recentré sur des acteurs directement liés au terrain et aux décisions : responsables politiques, représentants locaux,
+                                On a donc décidé de supprimer Greta Thunberg : dans notre contexte, sa présence rendait la scène moins crédible. Car elle ne s'est jamais rendue en Amazonie,
+                                et on s'est recentrés sur des acteurs directement liés au terrain et aux décisions : responsables politiques, représentants locaux,
                                 populations concernées, et points de vue opposés (développement économique vs protection).
                                 <span className="ml-1">Pour cadrer nos arguments, on s’est appuyés sur des sources qui décrivent à la fois les mécanismes de déforestation et le contexte politique (application des lois, pressions sur les acteurs).</span>
                                 <InlineRef n={1} />
@@ -778,9 +809,22 @@
                                 Le but était de garder une histoire simple à jouer tout en montrant les mécanismes : arguments économiques utilisés pour justifier la déforestation,
                                 contestation par les populations et les ONG, et conséquences concrètes (perte de terres, atteintes à la biodiversité).
                                 <InlineRef n={3} />
+                                <InlineRef n={4} />
+                                <InlineRef n={5} />
                             </p>
                         </div>
                     </RecitCard>
+
+                    {/* Image 2 : Rivière amazonienne */}
+                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
+                        <img 
+                            src="https://images.unsplash.com/photo-1694614360428-608d018bb054?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                            alt="Rivière en Amazonie" 
+                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                        />
+                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">Les cours d'eau amazoniens, artères vitales d'un écosystème complexe</figcaption>
+                    </figure>
 
                     <PosNegGrid
                         positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
@@ -794,6 +838,25 @@
 
         // --- Inter-Séance (entre 2 et 3) ---
         const InterSeance = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Bibliothèque nationale de France (BnF)',
+                    date: 'consulté en 2026',
+                    title: "Notice d’autorité : Qin Shi Huangdi (259?-210 av. J.-C.)",
+                    publisher: 'data.bnf.fr',
+                    url: 'https://data.bnf.fr/fr/11897975/qin_shi_huangdi/'
+                },
+                {
+                    n: 2,
+                    authors: 'Encyclopaedia Britannica',
+                    date: 'consulté en 2026',
+                    title: 'Qin Shihuang (emperor of Qin dynasty)',
+                    publisher: 'Britannica',
+                    url: 'https://www.britannica.com/biography/Qin-Shi-Huang'
+                },
+            ];
+
             return (
                 <SeanceTemplate
                     current="/inter-seance"
@@ -805,41 +868,28 @@
                 >
                     <CompteRenduCard variant="alert">
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative.
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Nous avons choisi de parler du premier empereur chinois Qin Shi Huang. 
+                            <InlineRef n={1} />
+                            <InlineRef n={2} />
                         </p>
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après relecture des consignes, nous avons constaté que la piste envisagée était hors-thème. Nous l'avons abandonnée.
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après qu'un membre du groupe se soit rappelé les consignes, nous avons constaté que la piste envisagée était hors-thème car le sujet est trop ancien. Nous l'avons abandonnée.
                         </p>
-                        <div className="bg-white/70 dark:bg-black/20 p-5 rounded-lg border border-alert/20">
-                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-alert">block</span>
-                                Signalement d'impasse
-                            </h3>
-                            <p className="text-base text-gray-600 dark:text-gray-300">Cette étape sert à documenter l'impasse et le retour aux consignes.</p>
-                        </div>
+                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Retour à l'amazonie :</strong>                                 On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques,
+                                et impacts sur les populations et l’environnement).
+                        </p>
+                       
                     </CompteRenduCard>
 
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                Entre les séances 2 et 3, on a travaillé à distance et on a douté de notre cadrage.
-                                On a envisagé une piste alternative en pensant qu’elle serait plus simple à traiter.
-                            </p>
-                            <p>
-                                Après vérification des consignes, on s’est rendu compte que cette piste était hors-thème.
-                                On l’a donc abandonnée pour éviter de perdre du temps.
-                            </p>
-                            <p>
-                                On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques,
-                                et impacts sur les populations et l’environnement).
-                            </p>
-                        </div>
-                    </RecitCard>
+
 
                     <PosNegGrid
-                        positive="La communication à distance a permis d'identifier rapidement le problème et d'éviter d'insister inutilement."
-                        difficulty="Une lecture initiale insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
+                        positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une recherche constante."
+                        difficulty="Une compréhension initiale insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
                     />
+
+                    <SourcesCard sources={sources} />
                 </SeanceTemplate>
             );
         };
@@ -849,19 +899,11 @@
             const sources = [
                 {
                     n: 1,
-                    authors: 'Garraffa, Sannino & others (open access)',
-                    date: '2022',
-                    title: "The 'land of fires': epidemiological research and public health policy during the waste crisis in Campania, Italy",
-                    publisher: 'PMC',
-                    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9792804/'
-                },
-                {
-                    n: 2,
-                    authors: 'Roberto Saviano',
-                    date: '2006',
-                    title: 'Gomorra',
-                    publisher: 'Mondadori (ouvrage)',
-                    url: 'https://en.wikipedia.org/wiki/Gomorrah_(book)'
+                    authors: 'Wikipédia',
+                    title: "Giovanni Falcone: magistrat italien tué par la Mafia (1939-1992)",
+                    publisher: 'Wikipédia',
+                    url: 'https://fr.wikipedia.org/wiki/Giovanni_Falcone'
+                    
                 },
             ];
 
@@ -874,30 +916,14 @@
                     prev={{ to: '/inter-seance', label: 'Inter-Séance' }}
                     next={null}
                 >
-                    <CompteRenduCard>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Piste testée :</strong> crise des déchets à Naples ("Terre des Feux"), liant écologie et criminalité.
-                            <InlineRef n={1} />
-                            <InlineRef n={2} />
-                        </p>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Retour professeur :</strong> sujet jugé trop complexe et trop éloigné. Décision : abandon et retour à l'Amazonie.
-                        </p>
-                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
-                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-gray-500">analytics</span>
-                                Recentrage
-                            </h3>
-                            <p className="text-base text-gray-600 dark:text-gray-300">Recentrage sur les mécanismes économiques et politiques de la déforestation amazonienne.</p>
-                        </div>
-                    </CompteRenduCard>
+
 
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
                             <p>
-                                En séance 3, on a testé une autre piste : la mafia italienne.
+                                En séance 3, on a testé une autre piste : la mafia italienne car Pauline a des origines italiennes, nous vouions explorer l'importance de la mafia dans la société italienne avec par exemple l'assasinat de Giovani Falcone.
                                 Le sujet était intéressant, mais difficile à traiter correctement dans le cadre et le temps disponibles.
-                                <span className="ml-1">La crise des déchets en Campanie est documentée (enjeux sanitaires, politiques publiques, criminalité organisée), mais c’est un terrain complexe à résumer sans simplifier à l’excès.</span>
+
                                 <InlineRef n={1} />
                             </p>
                             <p>
@@ -910,6 +936,17 @@
                             </p>
                         </div>
                     </RecitCard>
+
+                    {/* Image 3 : Biodiversité amazonienne */}
+                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
+                        <img 
+                            src="https://plus.unsplash.com/premium_photo-1687440854310-b58abd7fe9f4?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                            alt="Biodiversité en Amazonie" 
+                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                        />
+                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">L'écosystème amazonien, trésor de biodiversité au cœur des tensions économiques et environnementales</figcaption>
+                    </figure>
 
                     <PosNegGrid
                         positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
