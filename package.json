@@ -1,0 +1,13 @@
+{
+  "name": "emc",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pw:install": "playwright install --with-deps chromium",
+    "open": "node ./playwright/open-site.mjs",
+    "open:local": "node ./playwright/open-site.mjs ./emc.html"
+  },
+  "devDependencies": {
+    "playwright": "^1.41.2"
+  }
+}

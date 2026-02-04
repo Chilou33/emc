@@ -589,12 +589,12 @@
         const InlineRef = ({ n }) => {
             return (
                 <sup className="ml-1 align-super text-xs text-primary font-sans">
-                    <a className="hover:underline" href={`#src-${n}`} aria-label={`Source ${n}`}>[{n}]</a>
+                    <a className="hover:underline" href={`#src-${n}`} aria-label={`Référence ${n}`}>[{n}]</a>
                 </sup>
             );
         };
 
-        const SourcesCard = ({ title = 'Sources', sources = [] }) => {
+        const SourcesCard = ({ title = 'Références', sources = [] }) => {
             if (!sources || sources.length === 0) return null;
 
             return (
@@ -710,13 +710,14 @@
                                 L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables.
                                 On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines),
                                 de l’autre la protection de la forêt, des populations autochtones et de la biodiversité.
+                                <span className="ml-1">Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses qui donnent des faits et des enjeux concrets.</span>
                                 <InlineRef n={2} />
                                 <InlineRef n={4} />
                             </p>
                             <p>
                                 On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg.
                                 À ce stade, l’objectif était surtout de poser un conflit clair et une progression de scènes, quitte à ajuster ensuite pour rester crédibles.
-                                <span className="ml-1">Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), ce qui rend sa présence sur le terrain moins évidente.</span>
+                                <span className="ml-1">On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos vérifications nous ont ensuite obligés à corriger.</span>
                                 <InlineRef n={3} />
                             </p>
                         </div>
@@ -775,6 +776,30 @@
                     publisher: 'ONU — OHCHR (FR)',
                     url: 'https://www.ohchr.org/fr/stories/2022/08/amazon-rainforest-indigenous-tribe-fights-survival'
                 },
+                {
+                    n: 6,
+                    authors: 'Encyclopaedia Britannica',
+                    date: 'consulté en 2026',
+                    title: 'Greta Thunberg (biographie)',
+                    publisher: 'Britannica',
+                    url: 'https://www.britannica.com/biography/Greta-Thunberg'
+                },
+                {
+                    n: 7,
+                    authors: 'Greta Thunberg',
+                    date: 'consulté en 2026',
+                    title: 'Compte Instagram officiel (publications et déplacements)',
+                    publisher: 'Instagram',
+                    url: 'https://www.instagram.com/gretathunberg/'
+                },
+                {
+                    n: 8,
+                    authors: 'Poynter — International Fact-Checking Network (IFCN)',
+                    date: '18 déc. 2019',
+                    title: 'Hoaxes about Greta Thunberg go after her family, image and activism. But why?',
+                    publisher: 'Poynter',
+                    url: 'https://www.poynter.org/fact-checking/2019/hoaxes-about-greta-thunberg-go-after-her-family-image-and-activism-but-why/'
+                },
             ];
 
             return (
@@ -791,7 +816,7 @@
                             <strong className="text-forest-dark dark:text-gray-100 font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
                         </p>
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme <em>(décision prise après vérification documentaire)</em>. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
                         </p>
                         <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
                             <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
@@ -805,22 +830,20 @@
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
                             <p>
-                                Pendant la séance 2, on a relu le scénario et repéré ce qui posait problème en termes de cohérence et de réalisme.
+                                Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ?
                             </p>
                             <p>
-                                On a donc décidé de supprimer Greta Thunberg : dans notre contexte, sa présence rendait la scène moins crédible. Car elle ne s'est jamais rendue en Amazonie,
-                                et on s'est recentrés sur des acteurs directement liés au terrain et aux décisions : responsables politiques, représentants locaux,
-                                populations concernées, et points de vue opposés (développement économique vs protection).
-                                <span className="ml-1">Pour cadrer nos arguments, on s’est appuyés sur des sources qui décrivent à la fois les mécanismes de déforestation et le contexte politique (application des lois, pressions sur les acteurs).</span>
-                                <InlineRef n={1} />
-                                <InlineRef n={2} />
+                                En confrontant notre histoire à des informations factuelles (sur les peuples autochtones et la déforestation), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
+                                <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={5} />
                             </p>
                             <p>
-                                Le but était de garder une histoire simple à jouer tout en montrant les mécanismes : arguments économiques utilisés pour justifier la déforestation,
-                                contestation par les populations et les ONG, et conséquences concrètes (perte de terres, atteintes à la biodiversité).
-                                <InlineRef n={3} />
-                                <InlineRef n={4} />
-                                <InlineRef n={5} />
+                                C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie et ses prises de parole (et en comparant avec ses déplacements/publications), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit.
+                                <span className="ml-1">Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.</span>
+                                <InlineRef n={6} /><InlineRef n={7} /><InlineRef n={8} />
+                            </p>
+                            <p>
+                                Enfin, ce travail de vérification nous a aidés à rendre le scénario plus “EMC” : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques, conséquences humaines).
+                                <InlineRef n={3} /><InlineRef n={4} />
                             </p>
                         </div>
                     </RecitCard>
@@ -865,6 +888,13 @@
                     publisher: 'Britannica',
                     url: 'https://www.britannica.com/biography/Qin-Shi-Huang'
                 },
+                {
+                    n: 3,
+                    authors: 'Consignes du projet EMC',
+                    date: 'consulté en 2026',
+                    title: 'Document de consignes (ENT / cahier de texte / feuille distribuée)',
+                    publisher: 'Cours (interne)',
+                },
             ];
 
             return (
@@ -883,7 +913,8 @@
                             <InlineRef n={2} />
                         </p>
                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après qu'un membre du groupe se soit rappelé les consignes, nous avons constaté que la piste envisagée était hors-thème car le sujet est trop ancien. Nous l'avons abandonnée.
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après relecture des consignes, on a compris que la piste envisagée était hors-thème (trop ancienne / trop éloignée d’un enjeu actuel). On l'a donc abandonnée.
+                            <InlineRef n={3} />
                         </p>
                          <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
                             <strong className="text-forest-dark dark:text-gray-100 font-bold">Retour à l'amazonie :</strong>                                 On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques,
@@ -891,6 +922,20 @@
                         </p>
                        
                     </CompteRenduCard>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                Entre les séances, on a essayé d’être “efficaces” en cherchant un nouveau thème. On a trouvé rapidement des informations fiables sur Qin Shi Huang (références encyclopédiques et base d’autorité), ce qui nous a donné l’impression d’avoir un sujet solide.
+                                <InlineRef n={1} /><InlineRef n={2} />
+                            </p>
+                            <p>
+                                Mais en revenant aux consignes, on a réalisé que ce n’était pas ce qui était attendu : même si les références étaient solides, le sujet ne répondait pas au cadre demandé.
+                                <span className="ml-1">C’est un bon exemple où <strong>les références ne servent pas seulement à “raconter”, elles servent à valider qu’on est dans le bon projet</strong>.</span>
+                                <InlineRef n={3} />
+                            </p>
+                        </div>
+                    </RecitCard>
 
 
 
@@ -915,6 +960,30 @@
                     url: 'https://fr.wikipedia.org/wiki/Giovanni_Falcone'
                     
                 },
+                {
+                    n: 2,
+                    authors: 'BBC',
+                    date: '6 févr. 2018',
+                    title: 'Italian mafia: How crime families went global',
+                    publisher: 'BBC News',
+                    url: 'https://www.bbc.com/news/world-europe-42794848'
+                },
+                {
+                    n: 3,
+                    authors: 'FBI',
+                    date: '23 mai 2017',
+                    title: 'Remembering Giovanni Falcone',
+                    publisher: 'fbi.gov',
+                    url: 'https://www.fbi.gov/news/stories/remembering-giovanni-falcone'
+                },
+                {
+                    n: 4,
+                    authors: 'Encyclopaedia Britannica',
+                    date: 'consulté en 2026',
+                    title: 'Mafia (crime organization)',
+                    publisher: 'Britannica',
+                    url: 'https://www.britannica.com/topic/Mafia'
+                },
             ];
 
             return (
@@ -931,18 +1000,18 @@
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
                             <p>
-                                En séance 3, on a testé une autre piste : la mafia italienne car Pauline a des origines italiennes, nous vouions explorer l'importance de la mafia dans la société italienne avec par exemple l'assasinat de Giovani Falcone.
-                                Le sujet était intéressant, mais difficile à traiter correctement dans le cadre et le temps disponibles.
-
-                                <InlineRef n={1} />
+                                En séance 3, on a tenté une nouvelle piste : la mafia italienne (liée à l’histoire familiale de Pauline). Pour vérifier qu’on ne restait pas au niveau “film/séries”, on a cherché des repères généraux et institutionnels sur la mafia et sur l’assassinat de Giovanni Falcone.
+                                <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={3} /><InlineRef n={4} />
                             </p>
                             <p>
+                                Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne…
+                                <span className="ml-1">On a compris qu’on risquait de simplifier à l’excès et de perdre le fil EMC.</span>
                                 Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif.
-                                Décision : abandonner et revenir à l’Amazonie.
+                                <strong className="ml-1">Décision : abandonner et revenir à l’Amazonie.</strong>
                             </p>
                             <p>
-                                On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation,
-                                montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité.
+                                On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation, montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité.
+                                <span className="ml-1">Autrement dit : après deux fausses pistes, on s’est fixé une règle simple : <strong>chaque scène doit pouvoir être appuyée par au moins une référence</strong>.</span>
                             </p>
                         </div>
                     </RecitCard>
