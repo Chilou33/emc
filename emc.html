@@ -332,6 +332,7 @@
                 { to: '/seance-2', label: 'Séance 2' },
                 { to: '/inter-seance', label: 'Inter-Séance' },
                 { to: '/seance-3', label: 'Séance 3' },
+                { to: '/seance-4', label: 'Séance 4' },
             ];
 
             const isActive = (path) => current === path;
@@ -450,6 +451,7 @@
                 { to: '/seance-2', label: 'Séance 2' },
                 { to: '/inter-seance', label: 'Inter-Séance' },
                 { to: '/seance-3', label: 'Séance 3' },
+                { to: '/seance-4', label: 'Séance 4' },
             ];
 
             const base = "pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors";
@@ -457,12 +459,13 @@
 
             // Calcul dynamique du pourcentage en fonction de la page actuelle
             const progressMap = {
-                '/': 25,
-                '/seance-2': 50,
-                '/inter-seance': 75,
-                '/seance-3': 100
+                '/': 20,
+                '/seance-2': 40,
+                '/inter-seance': 60,
+                '/seance-3': 80,
+                '/seance-4': 100
             };
-            const progress = progressMap[current] || 25;
+            const progress = progressMap[current] || 20;
             const isComplete = progress === 100;
 
             return (
@@ -993,7 +996,7 @@
                     subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
                     dot="danger"
                     prev={{ to: '/inter-seance', label: 'Inter-Séance' }}
-                    next={null}
+                    next={{ to: '/seance-4', label: 'Séance 4' }}
                 >
 
 
@@ -1038,6 +1041,163 @@
         };
 
 
+        // --- Séance 4 ---
+        const Seance4 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Document de cours (travail de groupe)',
+                    date: 'consulté en 2026',
+                    title: 'Dossier de travail — Asháninka / barrage Pakitzapango (notes et idées de mise en scène)',
+                    publisher: 'EMC — support interne',
+                },
+                {
+                    n: 2,
+                    authors: 'ARTE Éducation',
+                    date: 'consulté en 2026',
+                    title: 'Gardiens de la forêt : Brésil — Replanter l’Amazonie (vidéo)',
+                    publisher: 'educ.arte.tv',
+                    url: 'https://educ.arte.tv/program/gardiens-de-la-foret-bresil-replanter-l-amazonie'
+                },
+                {
+                    n: 3,
+                    authors: 'franceinfo',
+                    date: 'consulté en 2026',
+                    title: 'Un projet de barrage menace la forêt amazonienne',
+                    publisher: 'franceinfo',
+                    url: 'https://www.franceinfo.fr/monde/ameriques/un-projet-de-barrage-menace-la-foret-amazonienne_3070557.html'
+                },
+                {
+                    n: 4,
+                    authors: 'Goldman Environmental Prize',
+                    date: 'consulté en 2026',
+                    title: 'Ruth Buendía (campagne contre les projets de barrages sur le fleuve Ene)',
+                    publisher: 'goldmanprize.org',
+                    url: 'https://www.goldmanprize.org/recipient/ruth-buendia/'
+                },
+                {
+                    n: 5,
+                    authors: 'Instituto Socioambiental (ISA) — PIB',
+                    date: 'consulté en 2026',
+                    title: 'Constitution brésilienne (1988) — repères sur les droits des peuples autochtones (art. 231)',
+                    publisher: 'pib.socioambiental.org',
+                    url: 'https://pib.socioambiental.org/en/Constitution'
+                },
+                {
+                    n: 6,
+                    authors: 'Terras Indígenas no Brasil (ISA)',
+                    date: 'consulté en 2026',
+                    title: 'Terra Indígena Kampa do Rio Amônia (Acre) — informations générales',
+                    publisher: 'terrasindigenas.org.br',
+                    url: 'https://terrasindigenas.org.br/pt-br/terras-indigenas/3716'
+                },
+                {
+                    n: 7,
+                    authors: 'Survival International',
+                    date: 'consulté en 2026',
+                    title: 'Galerie photo Asháninka (crédit de l’image utilisée dans la séance 4)',
+                    publisher: 'survivalinternational.org',
+                    url: 'https://www.survivalinternational.org/galleries/ashaninka'
+                },
+                {
+                    n: 8,
+                    authors: 'Survival International',
+                    date: 'consulté en 2026',
+                    title: 'Photographie (fichier) — Asháninka',
+                    publisher: 'assets.survivalinternational.org',
+                    url: 'https://assets.survivalinternational.org/pictures/1786/width1800-f0f2c0a2d8cb2472cec7ce13b43e1d33.jpg'
+                },
+            ];
+
+            return (
+                <SeanceTemplate
+                    current="/seance-4"
+                    title="SÉANCE 4 : Choix des Asháninka et première trame"
+                    subtitle="Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture."
+                    dot="primary"
+                    prev={{ to: '/seance-3', label: 'Séance 3' }}
+                    next={null}
+                >
+                    <CompteRenduCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                Après la séance 3, on ne voulait plus rester au niveau “Amazonie” en général : il nous fallait un <strong>cas précis</strong> et un <strong>conflit</strong> qu’on puisse jouer sans caricaturer.
+                                On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène (des situations, des enjeux, des mots qui sonnent juste au théâtre) et ce qui devait rester au rang d’arrière-plan.
+                                <InlineRef n={1} />
+                            </p>
+                            <p>
+                                À ce moment-là, l’idée du <strong>barrage</strong> nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre.
+                                On a cherché une formulation claire du problème pour en faire un conflit central, puis on a noté ce que ça impliquait pour notre intrigue (qu’est-ce qui change concrètement, qui parle, qui décide, qu’est-ce qui est contesté).
+                                <InlineRef n={3} />
+                            </p>
+                            <p>
+                                Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan.
+                                Et pour notre personnage “adjuvant”, on s’est inspirés d’un parcours d’engagement existant, sans copier une personne, juste pour rendre crédible l’idée d’organisation et de mobilisation.
+                                <InlineRef n={5} /><InlineRef n={4} />
+                            </p>
+                            <p>
+                                En fin de séance, on a posé une première trame pour l’ouverture : <strong>forêt</strong> (sons, lumière) puis <strong>rupture</strong> (machines) — et tout de suite après, un échange où l’enjeu est dit clairement.
+                                On s’est aussi laissés une “liste mentale” de ce qu’on doit encore verrouiller à la prochaine séance (vocabulaire, précision des lieux, cohérence des dates), pour que le texte tienne autant sur la scène que sur le plan factuel.
+                            </p>
+                            <p className="text-base text-gray-700 dark:text-gray-300 italic">
+                                Illustration : photo de Survival International choisie pour rester sur une image documentaire, avec crédit noté dans les références.
+                                <InlineRef n={7} /><InlineRef n={8} />
+                            </p>
+                        </div>
+                    </CompteRenduCard>
+
+                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
+                        <img
+                            src="https://assets.survivalinternational.org/pictures/1786/width1800-f0f2c0a2d8cb2472cec7ce13b43e1d33.jpg"
+                            alt="Communauté asháninka en Amazonie"
+                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                        />
+                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">
+                            Photo documentaire liée aux Asháninka. Crédit : Survival International <InlineRef n={7} />
+                        </figcaption>
+                    </figure>
+
+                    <RecitCard>
+                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
+                            <p>
+                                En séance 4, on a enfin trouvé une idée qui nous permettait d’être à la fois <strong>précis</strong> et <strong>jouable</strong> : partir des Asháninka, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire.
+                                <InlineRef n={1} />
+                            </p>
+                            <p>
+                                On a commencé par poser le décor à partir de repères concrets : les Asháninka vivent entre le Pérou et le Brésil, et certaines communautés sont situées dans des terres indigènes identifiées.
+                                <span className="ml-1">Ça nous a évité de les présenter comme un “peuple vague de la forêt” : on sait où on place la scène, et pourquoi.</span>
+                                <InlineRef n={6} />
+                            </p>
+                            <p>
+                                Ensuite, les lectures sur le barrage de Pakitzapango nous ont donné <strong>un conflit central</strong> : un projet d’infrastructure qui noierait une partie de la forêt et menacerait l’équilibre d’un peuple installé dans la région depuis très longtemps.
+                                <span className="ml-1">À partir de là, on a reformulé notre scénario : il ne s’agit pas de “sauver la planète”, mais de montrer un choix politique et ses conséquences humaines.</span>
+                                <InlineRef n={3} />
+                            </p>
+                            <p>
+                                Pour ne pas écrire uniquement “à l’émotion”, on a aussi cherché un cadre de droits : au Brésil, la Constitution reconnaît des protections spécifiques liées aux terres indigènes.
+                                <span className="ml-1">Ça nous a aidés à écrire des répliques crédibles (revendications, légitimité, limites de l’État) et à construire un débat plutôt qu’un simple affrontement.</span>
+                                <InlineRef n={5} />
+                            </p>
+                            <p>
+                                Enfin, on a transformé ces repères en mise en scène : une <strong>scène d’ouverture</strong> très sensorielle (sons de la forêt, lumière verte, torche), brutalement interrompue par l’arrivée des machines.
+                                <span className="ml-1">Et pour notre “adjuvant”, on s’est inspirés d’exemples réels d’organisation et de mobilisation, afin de montrer comment une communauté peut se structurer face à un projet imposé.</span>
+                                <InlineRef n={2} /><InlineRef n={4} />
+                            </p>
+                        </div>
+                    </RecitCard>
+
+                    <PosNegGrid
+                        positive="Le thème devient concret : un lieu, un peuple, un enjeu clair, et une première scène écrite avec des repères vérifiés."
+                        difficulty="Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues."
+                    />
+
+                    <SourcesCard sources={sources} />
+                </SeanceTemplate>
+            );
+        };
+
+
         const App = () => {
             return (
                 <MemoryRouter>
@@ -1046,6 +1206,7 @@
                         <Route path="/seance-2" element={<Seance2 />} />
                         <Route path="/inter-seance" element={<InterSeance />} />
                         <Route path="/seance-3" element={<Seance3 />} />
+                        <Route path="/seance-4" element={<Seance4 />} />
                     </Routes>
                 </MemoryRouter>
             );

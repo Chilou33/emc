@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "playwright": "^1.41.2"
+  },
+  "dependencies": {
+    "gpt-researcher": "^1.0.27"
   }
 }
