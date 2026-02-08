@@ -182,6 +182,19 @@
         .dark .paper-texture {
              background-image: linear-gradient(#1a2c20 2px, transparent 2px), linear-gradient(90deg, #1a2c20 2px, transparent 2px);
         }
+
+        /* ADD: simple edit-mode visuals */
+        body[data-edit-mode="true"] [data-editable-region="true"]{
+            outline: 2px dashed rgba(17, 212, 82, 0.55);
+            outline-offset: 10px;
+            border-radius: 12px;
+        }
+        body[data-edit-mode="true"] [data-editable-region="true"] *{
+            cursor: text;
+        }
+        body[data-edit-mode="true"] [data-editable-region="true"] a{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -319,13 +332,141 @@
     </script>
 
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect, useLayoutEffect, useRef, useContext, createContext, useImperativeHandle } = React;
         const { createRoot } = ReactDOM;
         const { MemoryRouter, Routes, Route, Link } = ReactRouterDOM;
+
+        // ADD: Edit mode context (simple)
+        const EditModeContext = createContext({ editMode: false, setEditMode: () => {} });
+
+        // ADD: Editable region (saves per page in localStorage)
+        const EditableRegion = React.forwardRef(function EditableRegion(
+            { storageKey, className = "", children },
+            apiRef
+        ) {
+            const viewRef = useRef(null);
+            const editRef = useRef(null);
+            const originalSnapshotRef = useRef(null);
+
+            const { editMode } = useContext(EditModeContext);
+
+            const [savedHtml, setSavedHtml] = useState(() => localStorage.getItem(storageKey) || "");
+            const [originalHtml, setOriginalHtml] = useState("");
+            const [status, setStatus] = useState("");
+            const [dirty, setDirty] = useState(false);
+
+            // Keep an attribute on <body> so CSS can highlight editable areas
+            useEffect(() => {
+                document.body.dataset.editMode = editMode ? "true" : "false";
+            }, [editMode]);
+
+            // Capture the original (from code) HTML once via a hidden render of children.
+            useEffect(() => {
+                if (originalHtml) return;
+                if (!originalSnapshotRef.current) return;
+                setOriginalHtml(originalSnapshotRef.current.innerHTML);
+            }, [originalHtml]);
+
+            function applyNonEditableIconFix(rootEl) {
+                if (!rootEl) return;
+                try {
+                    var icons = rootEl.querySelectorAll('.material-symbols-outlined');
+                    for (var i = 0; i < icons.length; i++) {
+                        icons[i].setAttribute('contenteditable', 'false');
+                    }
+                } catch (_) {}
+            }
+
+            // When entering edit mode, initialize the editable DOM synchronously (avoids a blank flash).
+            useLayoutEffect(() => {
+                if (!editMode) return;
+                if (!editRef.current) return;
+
+                var snapshotHtml = originalSnapshotRef.current ? originalSnapshotRef.current.innerHTML : "";
+                var html = savedHtml || originalHtml || snapshotHtml || (viewRef.current ? viewRef.current.innerHTML : "");
+                editRef.current.innerHTML = typeof html === 'string' ? html : "";
+                applyNonEditableIconFix(editRef.current);
+
+                setDirty(false);
+                setStatus("");
+            }, [editMode, savedHtml, originalHtml]);
+
+            function handleInput() {
+                if (!editMode) return;
+                setDirty(true);
+                setStatus("");
+            }
+
+            function save() {
+                if (!editRef.current) return;
+                var htmlToSave = editRef.current.innerHTML;
+                localStorage.setItem(storageKey, htmlToSave);
+                setSavedHtml(htmlToSave);
+                setDirty(false);
+                setStatus("Sauvegardé (dans ce navigateur).");
+            }
+
+            function reset() {
+                localStorage.removeItem(storageKey);
+                setSavedHtml("");
+                setDirty(false);
+                setStatus("Réinitialisé (retour au texte d’origine).");
+                if (editRef.current) {
+                    var snapshotHtml = originalSnapshotRef.current ? originalSnapshotRef.current.innerHTML : "";
+                    editRef.current.innerHTML = originalHtml || snapshotHtml || (viewRef.current ? viewRef.current.innerHTML : "");
+                    applyNonEditableIconFix(editRef.current);
+                }
+            }
+
+            useImperativeHandle(apiRef, () => ({
+                save,
+                reset,
+                dirty: () => dirty,
+                status: () => status,
+                hasSaved: () => Boolean(savedHtml),
+            }), [dirty, status, savedHtml, originalHtml]);
+
+            return (
+                <React.Fragment>
+                    {/* Hidden original snapshot (from code) used for Reset / initial edit content */}
+                    <div ref={originalSnapshotRef} style={{ display: 'none' }}>
+                        {children}
+                    </div>
+
+                    {!editMode ? (
+                        savedHtml ? (
+                            <div
+                                ref={viewRef}
+                                className={className}
+                                data-editable-region="true"
+                                dangerouslySetInnerHTML={{ __html: savedHtml }}
+                            />
+                        ) : (
+                            <div ref={viewRef} className={className} data-editable-region="true">
+                                {children}
+                            </div>
+                        )
+                    ) : (
+                        <div
+                            ref={editRef}
+                            className={className}
+                            data-editable-region="true"
+                            contentEditable={true}
+                            suppressContentEditableWarning={true}
+                            spellCheck={true}
+                            onInput={handleInput}
+                        />
+                    )}
+                </React.Fragment>
+            );
+        });
 
         const TopHeader = ({ current }) => {
             const [mobileOpen, setMobileOpen] = useState(false);
             const [seancesOpen, setSeancesOpen] = useState(false);
+
+            // ADD
+            const { editMode, setEditMode } = useContext(EditModeContext);
 
             const seanceLinks = [
                 { to: '/', label: 'Séance 1' },
@@ -382,6 +523,17 @@
                                         </div>
                                     )}
                                 </div>
+
+                                {/* ADD: edit mode toggle */}
+                                <button
+                                    type="button"
+                                    className={(editMode ? "text-primary font-bold " : "") + baseLink}
+                                    onClick={() => setEditMode((v) => !v)}
+                                    title="Activer/désactiver l’édition directe"
+                                >
+                                    <span className="material-symbols-outlined align-middle mr-1 !text-[18px]">edit</span>
+                                    {editMode ? "Quitter l’édition" : "Mode édition"}
+                                </button>
                             </nav>
 
                             <button
@@ -410,6 +562,18 @@
                                         {item.label}
                                     </Link>
                                 ))}
+
+                                {/* ADD: edit mode toggle (mobile) */}
+                                <div className="mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
+                                    <button
+                                        type="button"
+                                        className="w-full text-left px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10 text-forest-dark dark:text-gray-200 font-medium"
+                                        onClick={() => { setEditMode((v) => !v); }}
+                                    >
+                                        <span className="material-symbols-outlined align-middle mr-2 !text-[18px]">edit</span>
+                                        {editMode ? "Quitter l’édition" : "Mode édition"}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -528,6 +692,28 @@
         const SeanceTemplate = ({ current, title, subtitle, dot = 'primary', children, prev, next }) => {
             const dotClass = dot === 'alert' ? 'bg-alert' : dot === 'danger' ? 'bg-danger' : 'bg-primary';
 
+            // ADD: hook into edit mode + editable region api
+            const { editMode } = useContext(EditModeContext);
+            const regionApiRef = useRef(null);
+            const [editHint, setEditHint] = useState("");
+
+            // ADD: Ctrl+S to save in edit mode
+            useEffect(() => {
+                function onKeyDown(e) {
+                    if (!editMode) return;
+                    const isSave = (e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S');
+                    if (!isSave) return;
+                    e.preventDefault();
+                    if (regionApiRef.current && typeof regionApiRef.current.save === 'function') {
+                        regionApiRef.current.save();
+                    }
+                    setEditHint("Sauvegarde effectuée (Ctrl+S).");
+                    setTimeout(() => setEditHint(""), 2000);
+                }
+                window.addEventListener('keydown', onKeyDown);
+                return () => window.removeEventListener('keydown', onKeyDown);
+            }, [editMode]);
+
             return (
                 <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
                     <TopHeader current={current} />
@@ -543,13 +729,55 @@
                                 <div className="mb-10">
                                     <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">{title}</h1>
                                     <p className="text-xl text-[#61896f] dark:text-[#8cbfaa] italic">{subtitle}</p>
+
+                                    {/* ADD: edit toolbar (simple) */}
+                                    {editMode && (
+                                        <div className="mt-5 flex flex-wrap items-center gap-2 text-sm font-sans">
+                                            <button
+                                                type="button"
+                                                className="px-3 py-2 rounded-lg bg-primary text-white font-bold"
+                                                onClick={() => {
+                                                    if (regionApiRef.current && typeof regionApiRef.current.save === 'function') {
+                                                        regionApiRef.current.save();
+                                                    }
+                                                    setEditHint("Sauvegardé.");
+                                                    setTimeout(() => setEditHint(""), 2000);
+                                                }}
+                                            >
+                                                Sauvegarder
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 font-bold"
+                                                onClick={() => {
+                                                    if (regionApiRef.current && typeof regionApiRef.current.reset === 'function') {
+                                                        regionApiRef.current.reset();
+                                                    }
+                                                    setEditHint("Réinitialisé.");
+                                                    setTimeout(() => setEditHint(""), 2000);
+                                                }}
+                                            >
+                                                Réinitialiser
+                                            </button>
+                                            <span className="text-gray-500 dark:text-gray-400">
+                                                Astuce : <strong>Ctrl+S</strong> sauvegarde. (Sauvegarde locale dans ce navigateur)
+                                            </span>
+                                            {editHint ? <span className="text-gray-500 dark:text-gray-400">{editHint}</span> : null}
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="relative pl-8 md:pl-10 border-l-2 border-dashed border-primary/30 dark:border-primary/20 pb-12 last:border-0">
                                     <div className={`absolute -left-[9px] top-0 size-[18px] rounded-full ${dotClass} border-4 border-white dark:border-background-dark shadow-sm`}></div>
-                                    <div className="flex flex-col gap-8">
+
+                                    {/* CHANGED: children are now editable per-page */}
+                                    <EditableRegion
+                                        ref={regionApiRef}
+                                        storageKey={`emc_page_html:${current}`}
+                                        className="flex flex-col gap-8"
+                                    >
                                         {children}
-                                    </div>
+                                    </EditableRegion>
                                 </div>
 
                                 <BottomArrowsNav prev={prev} next={next} />
@@ -998,7 +1226,21 @@
                     prev={{ to: '/inter-seance', label: 'Inter-Séance' }}
                     next={{ to: '/seance-4', label: 'Séance 4' }}
                 >
-
+                    <CompteRenduCard>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
+                        </p>
+                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
+                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme <em>(décision prise après vérification documentaire)</em>. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
+                        </p>
+                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
+                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                <span className="material-symbols-outlined text-gray-500">edit</span>
+                                Atelier d'écriture
+                            </h3>
+                            <p className="text-base text-gray-600 dark:text-gray-300">Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.</p>
+                        </div>
+                    </CompteRenduCard>
 
                     <RecitCard>
                         <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
@@ -1089,7 +1331,7 @@
                     date: 'consulté en 2026',
                     title: 'Terra Indígena Kampa do Rio Amônia (Acre) — informations générales',
                     publisher: 'terrasindigenas.org.br',
-                    url: 'https://terrasindigenas.org.br/pt-br/terras-indigenas/3716'
+                    url: 'https://terrasindigenas.org.br/pt-br/terras-indígenas/3716'
                 },
                 {
                     n: 7,
@@ -1199,16 +1441,27 @@
 
 
         const App = () => {
+            // ADD: persist edit mode toggle
+            const [editMode, setEditMode] = useState(() => {
+                try { return localStorage.getItem('emc_edit_mode') === '1'; } catch (_) { return false; }
+            });
+
+            useEffect(() => {
+                try { localStorage.setItem('emc_edit_mode', editMode ? '1' : '0'); } catch (_) {}
+            }, [editMode]);
+
             return (
-                <MemoryRouter>
-                    <Routes>
-                        <Route path="/" element={<Seance1 />} />
-                        <Route path="/seance-2" element={<Seance2 />} />
-                        <Route path="/inter-seance" element={<InterSeance />} />
-                        <Route path="/seance-3" element={<Seance3 />} />
-                        <Route path="/seance-4" element={<Seance4 />} />
-                    </Routes>
-                </MemoryRouter>
+                <EditModeContext.Provider value={{ editMode, setEditMode }}>
+                    <MemoryRouter>
+                        <Routes>
+                            <Route path="/" element={<Seance1 />} />
+                            <Route path="/seance-2" element={<Seance2 />} />
+                            <Route path="/inter-seance" element={<InterSeance />} />
+                            <Route path="/seance-3" element={<Seance3 />} />
+                            <Route path="/seance-4" element={<Seance4 />} />
+                        </Routes>
+                    </MemoryRouter>
+                </EditModeContext.Provider>
             );
         };
 
@@ -1216,8 +1469,8 @@
         root.render(<App />);
     </script>
 
+    <!-- System preference detection for dark mode (Runs outside React to prevent FOUC) -->
     <script>
-        // System preference detection for dark mode (Runs outside React to prevent FOUC)
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
