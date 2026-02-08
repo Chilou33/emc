@@ -1,841 +1,251 @@
 <!DOCTYPE html>
-<html class="light" lang="fr">
+<html lang="fr">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Journal de Bord - Amazonie Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Amazonie - Journal de Bord</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-    <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-        <!-- Tailwind CSS (config must be defined BEFORE loading the CDN script) -->
-        <script id="tailwind-config">
-                window.tailwind = window.tailwind || {};
-                window.tailwind.config = {
-                        darkMode: "class",
-                        theme: {
-                                extend: {
-                                        colors: {
-                                                "primary": "#11d452",
-                                                "primary-dark": "#0ea640",
-                                                "background-light": "#f6f8f6",
-                                                "background-dark": "#102216",
-                                                "card-light": "#ffffff",
-                                                "card-dark": "#1a2e22",
-                                                "text-main": "#111813",
-                                                "text-dark": "#f0f4f2",
-                                                "muted-green": "#61896f",
-                                                "forest-dark": "#1e3a29",
-                                                "earth-light": "#e8e6df",
-                                                "alert": "#ef4444",
-                                                "alert-soft": "#fef2f2",
-                                                "danger": "#e3342f",
-                                                "paper": "#ffffff",
-                                                "paper-dark": "#1a2c20",
-                                        },
-                                        fontFamily: {
-                                                "display": ["Newsreader", "serif"],
-                                                "sans": ["Noto Sans", "sans-serif"],
-                                                "body": ["Noto Sans", "sans-serif"],
-                                        },
-                                        borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
-                                        boxShadow: {
-                                                'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-                                        },
-                                },
-                        },
-                };
-        </script>
-        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
+    <!-- Tailwind config must be set before loading the CDN script -->
     <script>
-        // If Tailwind CDN is blocked, inject a small fallback CSS so the page stays readable/styled.
-        (function () {
-            function isTailwindLoaded() {
-                try {
-                    var test = document.createElement('div');
-                    test.className = 'hidden';
-                    document.body.appendChild(test);
-                    var ok = window.getComputedStyle(test).display === 'none';
-                    test.remove();
-                    return ok;
-                } catch (_) {
-                    return false;
-                }
-            }
-
-            function injectFallbackCss() {
-                if (document.getElementById('tw-fallback')) return;
-
-                var style = document.createElement('style');
-                style.id = 'tw-fallback';
-                style.textContent = [
-                    ':root{--primary:#11d452;--forest:#1e3a29;--bg:#f6f8f6;--border:#e0e4e2;--text:#111813;}',
-                    'html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Noto Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}',
-                    'a{color:var(--primary);text-decoration:none;}',
-                    'a:hover{text-decoration:underline;}',
-                    'code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}',
-                    'header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}',
-                    'main{padding:24px 16px;}',
-                    'h1,h2,h3{color:var(--forest);}',
-                    '',
-                    '/* Minimal utility fallbacks for the most used classes */',
-                    '[class~="bg-background-light"]{background:var(--bg);}',
-                    '[class~="bg-white"]{background:#fff;}',
-                    '[class~="text-primary"]{color:var(--primary);}',
-                    '[class~="text-forest-dark"]{color:var(--forest);}',
-                    '[class~="border"]{border:1px solid var(--border);}',
-                    '[class~="border-gray-100"],[class~="border-gray-200"]{border-color:var(--border);}',
-                    '[class~="shadow-sm"]{box-shadow:0 1px 2px rgba(0,0,0,0.06);}',
-                    '[class~="rounded-lg"]{border-radius:0.5rem;}',
-                    '[class~="rounded-xl"]{border-radius:0.75rem;}',
-                    '[class~="p-4"]{padding:1rem;}',
-                    '[class~="p-5"]{padding:1.25rem;}',
-                    '[class~="p-6"]{padding:1.5rem;}',
-                    '[class~="mb-2"]{margin-bottom:0.5rem;}',
-                    '[class~="mb-3"]{margin-bottom:0.75rem;}',
-                    '[class~="mb-4"]{margin-bottom:1rem;}',
-                    '[class~="mb-6"]{margin-bottom:1.5rem;}',
-                    '[class~="mb-10"]{margin-bottom:2.5rem;}',
-                    '[class~="space-y-3"] > * + *{margin-top:0.75rem;}',
-                    '[class~="space-y-4"] > * + *{margin-top:1rem;}',
-                    '',
-                    '/* Basic layout helpers */',
-                    '[class~="flex"]{display:flex;}',
-                    '[class~="flex-col"]{flex-direction:column;}',
-                    '[class~="items-center"]{align-items:center;}',
-                    '[class~="justify-between"]{justify-content:space-between;}',
-                    '[class~="gap-2"]{gap:0.5rem;}',
-                    '[class~="gap-3"]{gap:0.75rem;}',
-                    '[class~="gap-4"]{gap:1rem;}'
-                ].join('\n');
-                document.head.appendChild(style);
-            }
-
-            function check() {
-                if (!isTailwindLoaded()) {
-                    document.documentElement.dataset.tw = 'fallback';
-                    injectFallbackCss();
-                } else {
-                    document.documentElement.dataset.tw = 'ok';
-                }
-
-                var boot = document.getElementById('boot-status');
-                if (boot && boot.querySelector) {
-                    var existing = boot.querySelector('[data-tw-indicator]');
-                    if (!existing) {
-                        var p = document.createElement('p');
-                        p.setAttribute('data-tw-indicator', 'true');
-                        p.style.margin = '8px 0 0';
-                        p.style.opacity = '0.85';
-                        p.textContent = (document.documentElement.dataset.tw === 'ok')
-                            ? 'Style: Tailwind OK.'
-                            : 'Style: mode secours (Tailwind non chargé).';
-                        var container = boot.querySelector('div');
-                        if (container) container.appendChild(p);
+        tailwind = window.tailwind || {};
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#34d399', // Emerald 400
+                        'primary-dark': '#059669',
+                        forest: '#022c22', // Very dark green
+                        glass: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans', 'sans-serif'],
+                        serif: ['Newsreader', 'serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1.5s ease-out forwards',
+                        'slide-up': 'slideUp 1s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(40px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
                     }
                 }
             }
-
-            window.addEventListener('DOMContentLoaded', function () {
-                // give the CDN a moment to load
-                setTimeout(check, 1200);
-            });
-        })();
+        };
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        .barred-bg {
-            background-size: 20px 20px;
-            background-image: repeating-linear-gradient(
-                45deg,
-                rgba(239, 68, 68, 0.03),
-                rgba(239, 68, 68, 0.03) 10px,
-                rgba(239, 68, 68, 0.08) 10px,
-                rgba(239, 68, 68, 0.08) 20px
-            );
+        body {
+            background-color: #022c22;
+            color: #e2e8f0;
+            overflow-x: hidden;
         }
-        .strikethrough-red {
-            position: relative;
-            display: inline-block;
+        /* Effet de verre global */
+        .glass-panel {
+            background: rgba(20, 40, 30, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
-        .strikethrough-red::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            width: 100%;
-            height: 3px;
-            background-color: #e3342f;
-            transform: rotate(-5deg);
-            opacity: 0.8;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, background 0.3s ease;
         }
-        .paper-texture {
-            background-image: linear-gradient(#f6f8f6 2px, transparent 2px), linear-gradient(90deg, #f6f8f6 2px, transparent 2px);
-            background-size: 40px 40px, 40px 40px;
-            background-position: -2px -2px, -2px -2px;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
         }
-        .dark .paper-texture {
-             background-image: linear-gradient(#1a2c20 2px, transparent 2px), linear-gradient(90deg, #1a2c20 2px, transparent 2px);
-        }
-
-        /* ADD: simple edit-mode visuals */
-        body[data-edit-mode="true"] [data-editable-region="true"]{
-            outline: 2px dashed rgba(17, 212, 82, 0.55);
-            outline-offset: 10px;
-            border-radius: 12px;
-        }
-        body[data-edit-mode="true"] [data-editable-region="true"] *{
-            cursor: text;
-        }
-        body[data-edit-mode="true"] [data-editable-region="true"] a{
-            cursor: pointer;
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #022c22; }
+        ::-webkit-scrollbar-thumb { background: #34d399; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div id="root">
-        <div id="boot-status" style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color: #111813;">
-            <div style="max-width: 900px; margin: 0 auto;">
-                <h1 style="font-size: 20px; font-weight: 800; margin: 0 0 8px;">Chargement…</h1>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        (function () {
-            function escapeHtml(s) {
-                return String(s)
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;')
-                    .replace(/'/g, '&#039;');
-            }
-
-            function showBootError(title, details) {
-                var root = document.getElementById('root');
-                if (!root) return;
-
-                var detailHtml = details ? ('<pre style="white-space:pre-wrap;background:#f6f8f6;border:1px solid #e0e4e2;border-radius:8px;padding:12px;overflow:auto;">' + escapeHtml(details) + '</pre>') : '';
-
-                root.innerHTML =
-                    '<div style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color:#111813;">' +
-                    '  <div style="max-width: 900px; margin: 0 auto;">' +
-                    '    <h1 style="font-size: 20px; font-weight: 900; margin: 0 0 8px;">' + escapeHtml(title) + '</h1>' +
-                    '    <p style="margin: 0 0 12px; opacity: 0.9; line-height: 1.4;">' +
-                    '      Astuce : ouvre le fichier via un serveur local (ex. <code>py -m http.server 8000</code>) puis va sur <code>http://localhost:8000/emc.html</code>. ' +
-                    '      Si tu es sur un réseau filtré (lycée), les CDNs <code>unpkg.com</code> / <code>cdn.tailwindcss.com</code> peuvent être bloqués.' +
-                    '    </p>' +
-                    detailHtml +
-                    '  </div>' +
-                    '</div>';
-            }
-
-            window.__showBootError = showBootError;
-
-            window.addEventListener('error', function (event) {
-                try {
-                    var msg = event && (event.message || (event.error && event.error.message)) || 'Erreur JavaScript.';
-                    var stack = event && event.error && event.error.stack ? event.error.stack : '';
-                    showBootError('Erreur au chargement de la page', msg + (stack ? "\n\n" + stack : ''));
-                } catch (_) {
-                    // ignore
-                }
-            });
-
-            window.addEventListener('unhandledrejection', function (event) {
-                try {
-                    var reason = event && event.reason;
-                    var details = reason && (reason.stack || reason.message) ? (reason.stack || reason.message) : String(reason);
-                    showBootError('Promesse rejetée (unhandledrejection)', details);
-                } catch (_) {
-                    // ignore
-                }
-            });
-
-            // If core libs don't arrive (blocked CDNs), surface a helpful message.
-            setTimeout(function () {
-                if (!window.React || !window.ReactDOM || !window.ReactRouterDOM) {
-                    showBootError(
-                        'Dépendances externes non chargées',
-                        'React/ReactDOM/ReactRouterDOM ne sont pas disponibles. Cela arrive quand le réseau bloque les CDNs (unpkg/tailwind) ou en ouverture directe via file://.'
-                    );
-                }
-            }, 2500);
-        })();
-    </script>
-
-    <!-- React Dependencies -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin="anonymous"></script>
-
-    <script>
-        // CDN fallback loader: if unpkg/cdn.tailwind are blocked, try jsDelivr.
-        (function () {
-            function loadScript(url) {
-                return new Promise(function (resolve, reject) {
-                    var s = document.createElement('script');
-                    s.src = url;
-                    s.async = true;
-                    s.crossOrigin = 'anonymous';
-                    s.referrerPolicy = 'no-referrer';
-                    s.onload = function () { resolve(url); };
-                    s.onerror = function () { reject(new Error('Failed to load: ' + url)); };
-                    document.head.appendChild(s);
-                });
-            }
-
-            function ensureDepsWithFallback() {
-                // Wait a moment for primary CDNs.
-                setTimeout(function () {
-                    var missing = [];
-                    if (!window.React) missing.push('React');
-                    if (!window.ReactDOM) missing.push('ReactDOM');
-                    if (!window.ReactRouterDOM) missing.push('ReactRouterDOM');
-                    if (!window.Babel) missing.push('Babel');
-
-                    if (missing.length === 0) return;
-
-                    // Attempt fallback from jsDelivr.
-                    var chain = Promise.resolve();
-                    if (!window.React) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js'); });
-                    if (!window.ReactDOM) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js'); });
-                    // history/react-router/react-router-dom UMD builds
-                    if (!window.HistoryLibrary) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/history@5/umd/history.development.js'); });
-                    if (!window.ReactRouter) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react-router@6.3.0/umd/react-router.development.js'); });
-                    if (!window.ReactRouterDOM) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/react-router-dom@6.3.0/umd/react-router-dom.development.js'); });
-                    if (!window.Babel) chain = chain.then(function () { return loadScript('https://cdn.jsdelivr.net/npm/babel-standalone@6/babel.min.js'); });
-
-                    chain.catch(function (e) {
-                        if (window.__showBootError) {
-                            window.__showBootError(
-                                'Impossible de charger les bibliothèques (CDN bloqué)',
-                                (e && (e.stack || e.message)) ? (e.stack || e.message) : String(e)
-                            );
-                        }
-                    });
-                }, 800);
-            }
-
-            // Fire-and-forget; actual app boot is handled by Babel once available.
-            ensureDepsWithFallback();
-        })();
-    </script>
+    <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useLayoutEffect, useRef, useContext, createContext, useImperativeHandle } = React;
-        const { createRoot } = ReactDOM;
-        const { MemoryRouter, Routes, Route, Link } = ReactRouterDOM;
+        const { useState, useEffect } = React;
+        const { HashRouter, Routes, Route, Link, useLocation } = ReactRouterDOM;
 
-        // ADD: Edit mode context (simple)
-        const EditModeContext = createContext({ editMode: false, setEditMode: () => {} });
+        // --- COMPOSANTS DE BASE ---
 
-        // ADD: Editable region (saves per page in localStorage)
-        const EditableRegion = React.forwardRef(function EditableRegion(
-            { storageKey, className = "", children },
-            apiRef
-        ) {
-            const viewRef = useRef(null);
-            const editRef = useRef(null);
-            const originalSnapshotRef = useRef(null);
+        // Barre de navigation (Glass)
+        const Navbar = () => {
+            const location = useLocation();
+            const [isOpen, setIsOpen] = useState(false);
+            const isHome = location.pathname === '/';
 
-            const { editMode } = useContext(EditModeContext);
-
-            const [savedHtml, setSavedHtml] = useState(() => localStorage.getItem(storageKey) || "");
-            const [originalHtml, setOriginalHtml] = useState("");
-            const [status, setStatus] = useState("");
-            const [dirty, setDirty] = useState(false);
-
-            // Keep an attribute on <body> so CSS can highlight editable areas
-            useEffect(() => {
-                document.body.dataset.editMode = editMode ? "true" : "false";
-            }, [editMode]);
-
-            // Capture the original (from code) HTML once via a hidden render of children.
-            useEffect(() => {
-                if (originalHtml) return;
-                if (!originalSnapshotRef.current) return;
-                setOriginalHtml(originalSnapshotRef.current.innerHTML);
-            }, [originalHtml]);
-
-            function applyNonEditableIconFix(rootEl) {
-                if (!rootEl) return;
-                try {
-                    var icons = rootEl.querySelectorAll('.material-symbols-outlined');
-                    for (var i = 0; i < icons.length; i++) {
-                        icons[i].setAttribute('contenteditable', 'false');
-                    }
-                } catch (_) {}
-            }
-
-            // When entering edit mode, initialize the editable DOM synchronously (avoids a blank flash).
-            useLayoutEffect(() => {
-                if (!editMode) return;
-                if (!editRef.current) return;
-
-                var snapshotHtml = originalSnapshotRef.current ? originalSnapshotRef.current.innerHTML : "";
-                var html = savedHtml || originalHtml || snapshotHtml || (viewRef.current ? viewRef.current.innerHTML : "");
-                editRef.current.innerHTML = typeof html === 'string' ? html : "";
-                applyNonEditableIconFix(editRef.current);
-
-                setDirty(false);
-                setStatus("");
-            }, [editMode, savedHtml, originalHtml]);
-
-            function handleInput() {
-                if (!editMode) return;
-                setDirty(true);
-                setStatus("");
-            }
-
-            function save() {
-                if (!editRef.current) return;
-                var htmlToSave = editRef.current.innerHTML;
-                localStorage.setItem(storageKey, htmlToSave);
-                setSavedHtml(htmlToSave);
-                setDirty(false);
-                setStatus("Sauvegardé (dans ce navigateur).");
-            }
-
-            function reset() {
-                localStorage.removeItem(storageKey);
-                setSavedHtml("");
-                setDirty(false);
-                setStatus("Réinitialisé (retour au texte d’origine).");
-                if (editRef.current) {
-                    var snapshotHtml = originalSnapshotRef.current ? originalSnapshotRef.current.innerHTML : "";
-                    editRef.current.innerHTML = originalHtml || snapshotHtml || (viewRef.current ? viewRef.current.innerHTML : "");
-                    applyNonEditableIconFix(editRef.current);
-                }
-            }
-
-            useImperativeHandle(apiRef, () => ({
-                save,
-                reset,
-                dirty: () => dirty,
-                status: () => status,
-                hasSaved: () => Boolean(savedHtml),
-            }), [dirty, status, savedHtml, originalHtml]);
-
-            return (
-                <React.Fragment>
-                    {/* Hidden original snapshot (from code) used for Reset / initial edit content */}
-                    <div ref={originalSnapshotRef} style={{ display: 'none' }}>
-                        {children}
-                    </div>
-
-                    {!editMode ? (
-                        savedHtml ? (
-                            <div
-                                ref={viewRef}
-                                className={className}
-                                data-editable-region="true"
-                                dangerouslySetInnerHTML={{ __html: savedHtml }}
-                            />
-                        ) : (
-                            <div ref={viewRef} className={className} data-editable-region="true">
-                                {children}
-                            </div>
-                        )
-                    ) : (
-                        <div
-                            ref={editRef}
-                            className={className}
-                            data-editable-region="true"
-                            contentEditable={true}
-                            suppressContentEditableWarning={true}
-                            spellCheck={true}
-                            onInput={handleInput}
-                        />
-                    )}
-                </React.Fragment>
-            );
-        });
-
-        const TopHeader = ({ current }) => {
-            const [mobileOpen, setMobileOpen] = useState(false);
-            const [seancesOpen, setSeancesOpen] = useState(false);
-
-            // ADD
-            const { editMode, setEditMode } = useContext(EditModeContext);
-
-            const seanceLinks = [
-                { to: '/', label: 'Séance 1' },
-                { to: '/seance-2', label: 'Séance 2' },
-                { to: '/inter-seance', label: 'Inter-Séance' },
-                { to: '/seance-3', label: 'Séance 3' },
-                { to: '/seance-4', label: 'Séance 4' },
+            const links = [
+                { to: '/seance-1', id: 'seance-1', label: 'Séance 1' },
+                { to: '/seance-2', id: 'seance-2', label: 'Séance 2' },
+                { to: '/inter-seance', id: 'inter-seance', label: 'Inter' },
+                { to: '/seance-3', id: 'seance-3', label: 'Séance 3' },
+                { to: '/seance-4', id: 'seance-4', label: 'Séance 4' },
             ];
 
-            const isActive = (path) => current === path;
-            const isSeancesSection = seanceLinks.some((l) => l.to === current);
-
-            const baseLink = 'text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal';
-            const activeLink = "text-primary text-base font-bold leading-normal relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-full after:h-[2px] after:bg-primary";
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+                setIsOpen(false);
+            };
 
             return (
-                <header className="border-b border-solid border-b-[#e0e4e2] dark:border-b-gray-800 bg-white/95 dark:bg-[#152e20]/95 backdrop-blur-md px-4 md:px-10 py-3 sticky top-0 z-50">
-                    <div className="flex items-center justify-between whitespace-nowrap">
-                        <div className="flex items-center gap-4 text-forest-dark dark:text-white">
-                            <div className="size-8 text-primary flex items-center justify-center">
-                                <span className="material-symbols-outlined !text-[32px]">forest</span>
-                            </div>
-                            <h2 className="text-forest-dark dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Carnet de Bord EMC</h2>
-                        </div>
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isHome ? 'p-6' : 'p-0'}`}>
+                    <div className={`mx-auto transition-all duration-500 ${isHome ? 'max-w-6xl rounded-2xl glass-panel px-6 py-4' : 'w-full glass-panel px-6 py-4 rounded-none border-x-0 border-t-0'}`}>
+                        <div className="flex items-center justify-between">
+                            <Link to="/" className="flex items-center gap-2 font-serif font-bold text-xl text-white hover:text-primary transition-colors">
+                                <span className="material-symbols-outlined text-primary">forest</span>
+                                <span>Journal de Bord</span>
+                            </Link>
 
-                        <div className="flex flex-1 justify-end gap-4 items-center">
-                            <nav className="hidden md:flex items-center gap-9">
-                                <Link className={isActive('/') ? activeLink : baseLink} to="/">Accueil</Link>
-
-                                <div className="relative">
-                                    <button
-                                        type="button"
-                                        className={isSeancesSection ? activeLink : baseLink}
-                                        onClick={() => setSeancesOpen((v) => !v)}
-                                    >
-                                        Séances
-                                        <span className="material-symbols-outlined align-middle ml-1 !text-[18px]">expand_more</span>
-                                    </button>
-                                    {seancesOpen && (
-                                        <div
-                                            className="absolute right-0 mt-3 w-56 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#152e20] shadow-lg overflow-hidden"
-                                            onMouseLeave={() => setSeancesOpen(false)}
+                            {/* Desktop Links */}
+                            <div className="hidden md:flex items-center gap-1">
+                                {links.map(link => (
+                                    isHome ? (
+                                        <button
+                                            key={link.id}
+                                            onClick={() => scrollToSection(link.id)}
+                                            className="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:bg-white/10 hover:text-white"
                                         >
-                                            {seanceLinks.map((item) => (
-                                                <Link
-                                                    key={item.to}
-                                                    to={item.to}
-                                                    className="block px-4 py-2.5 text-sm font-medium text-forest-dark dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/10"
-                                                    onClick={() => setSeancesOpen(false)}
-                                                >
-                                                    {item.label}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
+                                            {link.label}
+                                        </button>
+                                    ) : (
+                                        <Link
+                                            key={link.to}
+                                            to={link.to}
+                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${location.pathname === link.to ? 'bg-primary text-forest font-bold' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    )
+                                ))}
+                            </div>
 
-                                {/* ADD: edit mode toggle */}
-                                <button
-                                    type="button"
-                                    className={(editMode ? "text-primary font-bold " : "") + baseLink}
-                                    onClick={() => setEditMode((v) => !v)}
-                                    title="Activer/désactiver l’édition directe"
-                                >
-                                    <span className="material-symbols-outlined align-middle mr-1 !text-[18px]">edit</span>
-                                    {editMode ? "Quitter l’édition" : "Mode édition"}
-                                </button>
-                            </nav>
-
-                            <button
-                                type="button"
-                                className="md:hidden text-forest-dark dark:text-gray-200"
-                                onClick={() => setMobileOpen((v) => !v)}
-                                aria-label="Ouvrir le menu"
-                            >
+                            {/* Mobile Toggle */}
+                            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
                                 <span className="material-symbols-outlined">menu</span>
                             </button>
                         </div>
                     </div>
 
-                    {mobileOpen && (
-                        <div className="md:hidden mt-3 pb-2 border-t border-gray-100 dark:border-gray-800">
-                            <div className="flex flex-col gap-1 pt-3">
-                                <Link className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10" to="/" onClick={() => setMobileOpen(false)}>Accueil</Link>
-                                <div className="px-2 pt-2 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold">Séances</div>
-                                {seanceLinks.map((item) => (
-                                    <Link
-                                        key={item.to}
-                                        className="px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10"
-                                        to={item.to}
-                                        onClick={() => setMobileOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
-
-                                {/* ADD: edit mode toggle (mobile) */}
-                                <div className="mt-2 pt-2 border-t border-gray-100 dark:border-gray-800">
-                                    <button
-                                        type="button"
-                                        className="w-full text-left px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/10 text-forest-dark dark:text-gray-200 font-medium"
-                                        onClick={() => { setEditMode((v) => !v); }}
-                                    >
-                                        <span className="material-symbols-outlined align-middle mr-2 !text-[18px]">edit</span>
-                                        {editMode ? "Quitter l’édition" : "Mode édition"}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </header>
-            );
-        };
-
-        const BottomArrowsNav = ({ prev, next }) => {
-            return (
-                <div className="flex items-center justify-between pt-8 mt-4 border-t border-gray-100 dark:border-[#2a3e32]">
-                    {prev ? (
-                        <Link className="group flex items-center gap-3 text-gray-500 dark:text-gray-400 hover:text-text-main dark:hover:text-white transition-colors" to={prev.to}>
-                            <div className="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center group-hover:bg-gray-100 dark:group-hover:bg-[#2a3e32]">
-                                <span className="material-symbols-outlined text-sm">arrow_back</span>
-                            </div>
-                            <span className="text-sm font-medium">{prev.label}</span>
-                        </Link>
-                    ) : (
-                        <div />
-                    )}
-
-                    {next ? (
-                        <Link className="group flex items-center gap-3 text-primary hover:text-primary/80 transition-colors" to={next.to}>
-                            <span className="text-sm font-bold">{next.label}</span>
-                            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all">
-                                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                            </div>
-                        </Link>
-                    ) : (
-                        <div />
-                    )}
-                </div>
-            );
-        };
-
-        const SeancesSidebar = ({ current }) => {
-            const links = [
-                { to: '/', label: 'Séance 1' },
-                { to: '/seance-2', label: 'Séance 2' },
-                { to: '/inter-seance', label: 'Inter-Séance' },
-                { to: '/seance-3', label: 'Séance 3' },
-                { to: '/seance-4', label: 'Séance 4' },
-            ];
-
-            const base = "pl-4 py-2 text-sm text-gray-500 hover:text-forest-dark dark:text-gray-400 dark:hover:text-gray-200 transition-colors";
-            const active = "pl-4 py-2 text-sm font-medium border-l-2 border-primary -ml-[2px] text-forest-dark dark:text-white";
-
-            // Calcul dynamique du pourcentage en fonction de la page actuelle
-            const progressMap = {
-                '/': 20,
-                '/seance-2': 40,
-                '/inter-seance': 60,
-                '/seance-3': 80,
-                '/seance-4': 100
-            };
-            const progress = progressMap[current] || 20;
-            const isComplete = progress === 100;
-
-            return (
-                <aside className="hidden md:flex flex-col w-64 shrink-0 sticky top-24 h-fit gap-6">
-                    <div>
-                        <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold mb-3">Navigation</p>
-                        <nav className="flex flex-col gap-1 border-l-2 border-gray-200 dark:border-gray-700 ml-2">
-                            {links.map((l) => (
-                                <Link key={l.to} className={current === l.to ? active : base} to={l.to}>
-                                    {l.label}
-                                </Link>
+                    {/* Mobile Menu */}
+                    {isOpen && (
+                        <div className="absolute top-24 left-4 right-4 glass-panel rounded-xl p-4 flex flex-col gap-2 md:hidden animate-slide-up">
+                            <Link to="/" onClick={() => setIsOpen(false)} className="p-3 rounded bg-white/5 text-white">Accueil</Link>
+                            {links.map(l => (
+                                isHome ? (
+                                    <button key={l.id} onClick={() => scrollToSection(l.id)} className="p-3 rounded hover:bg-white/10 text-slate-300 text-left">{l.label}</button>
+                                ) : (
+                                    <Link key={l.to} to={l.to} onClick={() => setIsOpen(false)} className="p-3 rounded hover:bg-white/10 text-slate-300">{l.label}</Link>
+                                )
                             ))}
-                        </nav>
-                    </div>
-                    <div className="bg-white dark:bg-[#1a3324] p-4 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm">
-                        <p className="text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 font-sans font-bold mb-2">Statut du Projet</p>
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="relative flex h-3 w-3">
-                                {!isComplete && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>}
-                                <span className={`relative inline-flex rounded-full h-3 w-3 ${isComplete ? 'bg-green-500' : 'bg-primary'}`}></span>
-                            </span>
-                            <span className="text-sm font-bold text-forest-dark dark:text-white">{isComplete ? 'Terminé' : 'En cours'}</span>
                         </div>
-                        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mb-1">
-                            <div className={`h-1.5 rounded-full ${isComplete ? 'bg-green-500' : 'bg-primary'}`} style={{ width: `${progress}%` }}></div>
-                        </div>
-                        <p className="text-xs text-gray-400 text-right font-sans">{progress}% complété</p>
-                    </div>
-                </aside>
+                    )}
+                </nav>
             );
         };
 
-        const PosNegGrid = ({ positive, difficulty }) => {
+        // Fond d'écran animé
+        const Background = () => (
+            <div className="fixed inset-0 z-[-1] overflow-hidden">
+                <img
+                    src="https://images.unsplash.com/photo-1583470790878-4f4f3811a01f?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    alt="Jungle"
+                    className="absolute w-full h-full object-cover opacity-60 animate-fade-in scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/80 to-transparent mix-blend-multiply"></div>
+                <div className="absolute inset-0 bg-black/30"></div>
+            </div>
+        );
+
+        // Composants de contenu (Style Glass)
+        const ContentSection = ({ children, delay = '0s' }) => (
+            <div className="animate-slide-up" style={{ animationDelay: delay }}>
+                {children}
+            </div>
+        );
+
+        const SectionHeader = ({ title, subtitle, number }) => (
+            <div className="mb-10 pt-24 md:pt-32 text-center">
+                <div className="inline-block px-3 py-1 mb-4 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">
+                    Séance {number}
+                </div>
+                <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4 drop-shadow-lg">{title}</h1>
+                <p className="text-xl text-slate-300 max-w-2xl mx-auto font-serif italic border-b border-primary/30 pb-4 inline-block">{subtitle}</p>
+            </div>
+        );
+
+        const Card = ({ type = 'info', title, icon, children }) => {
+            const styles = {
+                info: 'border-white/10',
+                alert: 'border-red-500/30 bg-red-900/10',
+                success: 'border-emerald-500/30 bg-emerald-900/10'
+            };
+            const iconColors = {
+                info: 'text-primary',
+                alert: 'text-red-400',
+                success: 'text-emerald-400'
+            };
+
             return (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="bg-[#f0fdf4] dark:bg-[#0f291e] p-5 rounded-xl border border-[#bbf7d0] dark:border-[#164230] relative overflow-hidden group">
-                        <div className="absolute -right-4 -top-4 bg-[#dcfce7] dark:bg-[#14532d] rounded-full p-6 opacity-50 group-hover:scale-110 transition-transform duration-300"></div>
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-2 mb-2 text-[#166534] dark:text-[#4ade80]">
-                                <span className="material-symbols-outlined">check_circle</span>
-                                <span className="font-bold text-sm uppercase font-sans tracking-wider">Points Positifs</span>
-                            </div>
-                            <p className="text-[#14532d] dark:text-[#bbf7d0] leading-snug">{positive}</p>
-                        </div>
+                <div className={`glass-card p-6 md:p-8 rounded-2xl mb-6 ${styles[type]}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                        <span className={`material-symbols-outlined ${iconColors[type]}`}>{icon}</span>
+                        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">{title}</h3>
                     </div>
-                    <div className="bg-[#fffbeb] dark:bg-[#2e2305] p-5 rounded-xl border border-[#fde68a] dark:border-[#634907] relative overflow-hidden group">
-                        <div className="absolute -right-4 -top-4 bg-[#fef3c7] dark:bg-[#573e06] rounded-full p-6 opacity-50 group-hover:scale-110 transition-transform duration-300"></div>
-                        <div className="relative z-10">
-                            <div className="flex items-center gap-2 mb-2 text-[#92400e] dark:text-[#fbbf24]">
-                                <span className="material-symbols-outlined">warning</span>
-                                <span className="font-bold text-sm uppercase font-sans tracking-wider">Difficultés</span>
-                            </div>
-                            <p className="text-[#78350f] dark:text-[#fde68a] leading-snug">{difficulty}</p>
-                        </div>
+                    <div className="text-slate-200 leading-relaxed font-sans text-lg space-y-4">
+                        {children}
                     </div>
                 </div>
             );
         };
 
-        const SeanceTemplate = ({ current, title, subtitle, dot = 'primary', children, prev, next }) => {
-            const dotClass = dot === 'alert' ? 'bg-alert' : dot === 'danger' ? 'bg-danger' : 'bg-primary';
+        const InlineRef = ({ n }) => (
+            <sup className="ml-1 align-super text-xs text-primary font-sans">
+                <a className="hover:underline" href={`#src-${n}`} aria-label={`Référence ${n}`}>[{n}]</a>
+            </sup>
+        );
 
-            // ADD: hook into edit mode + editable region api
-            const { editMode } = useContext(EditModeContext);
-            const regionApiRef = useRef(null);
-            const [editHint, setEditHint] = useState("");
-
-            // ADD: Ctrl+S to save in edit mode
-            useEffect(() => {
-                function onKeyDown(e) {
-                    if (!editMode) return;
-                    const isSave = (e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S');
-                    if (!isSave) return;
-                    e.preventDefault();
-                    if (regionApiRef.current && typeof regionApiRef.current.save === 'function') {
-                        regionApiRef.current.save();
-                    }
-                    setEditHint("Sauvegarde effectuée (Ctrl+S).");
-                    setTimeout(() => setEditHint(""), 2000);
-                }
-                window.addEventListener('keydown', onKeyDown);
-                return () => window.removeEventListener('keydown', onKeyDown);
-            }, [editMode]);
+        const Sources = ({ title = 'Sources & Références', list }) => {
+            if (!list || list.length === 0) return null;
 
             return (
-                <div className="bg-background-light dark:bg-background-dark font-display text-forest-dark dark:text-gray-200 antialiased overflow-x-hidden flex flex-col min-h-screen">
-                    <TopHeader current={current} />
-                    <main className="flex-grow flex justify-center py-8 md:py-12 px-4 md:px-10">
-                        <div className="max-w-[1024px] w-full flex flex-col md:flex-row gap-8 relative">
-                            <SeancesSidebar current={current} />
-                            <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2 font-sans">
-                                    <span>Journal de Bord</span>
-                                    <span className="material-symbols-outlined !text-[14px]">chevron_right</span>
-                                    <span className="text-forest-dark dark:text-primary font-medium">{title.split(':')[0]}</span>
-                                </div>
-                                <div className="mb-10">
-                                    <h1 className="text-4xl md:text-5xl font-black leading-[1.1] tracking-tight text-forest-dark dark:text-white mb-4">{title}</h1>
-                                    <p className="text-xl text-[#61896f] dark:text-[#8cbfaa] italic">{subtitle}</p>
-
-                                    {/* ADD: edit toolbar (simple) */}
-                                    {editMode && (
-                                        <div className="mt-5 flex flex-wrap items-center gap-2 text-sm font-sans">
-                                            <button
-                                                type="button"
-                                                className="px-3 py-2 rounded-lg bg-primary text-white font-bold"
-                                                onClick={() => {
-                                                    if (regionApiRef.current && typeof regionApiRef.current.save === 'function') {
-                                                        regionApiRef.current.save();
-                                                    }
-                                                    setEditHint("Sauvegardé.");
-                                                    setTimeout(() => setEditHint(""), 2000);
-                                                }}
-                                            >
-                                                Sauvegarder
-                                            </button>
-                                            <button
-                                                type="button"
-                                                className="px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 font-bold"
-                                                onClick={() => {
-                                                    if (regionApiRef.current && typeof regionApiRef.current.reset === 'function') {
-                                                        regionApiRef.current.reset();
-                                                    }
-                                                    setEditHint("Réinitialisé.");
-                                                    setTimeout(() => setEditHint(""), 2000);
-                                                }}
-                                            >
-                                                Réinitialiser
-                                            </button>
-                                            <span className="text-gray-500 dark:text-gray-400">
-                                                Astuce : <strong>Ctrl+S</strong> sauvegarde. (Sauvegarde locale dans ce navigateur)
-                                            </span>
-                                            {editHint ? <span className="text-gray-500 dark:text-gray-400">{editHint}</span> : null}
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="relative pl-8 md:pl-10 border-l-2 border-dashed border-primary/30 dark:border-primary/20 pb-12 last:border-0">
-                                    <div className={`absolute -left-[9px] top-0 size-[18px] rounded-full ${dotClass} border-4 border-white dark:border-background-dark shadow-sm`}></div>
-
-                                    {/* CHANGED: children are now editable per-page */}
-                                    <EditableRegion
-                                        ref={regionApiRef}
-                                        storageKey={`emc_page_html:${current}`}
-                                        className="flex flex-col gap-8"
-                                    >
-                                        {children}
-                                    </EditableRegion>
-                                </div>
-
-                                <BottomArrowsNav prev={prev} next={next} />
-                            </div>
-                        </div>
-                    </main>
-                </div>
-            );
-        };
-
-        const CompteRenduCard = ({ variant = 'primary', children }) => {
-            const color = variant === 'alert' ? 'text-alert' : 'text-primary';
-            const border = variant === 'alert' ? 'border-alert/20' : 'border-gray-100 dark:border-gray-800';
-            const bg = variant === 'alert' ? 'barred-bg' : '';
-            const icon = variant === 'alert' ? 'error' : 'edit_note';
-
-            return (
-                <div className={`bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border ${border} ${bg}`.trim()}>
-                    <div className={`flex items-center gap-3 mb-4 ${color}`.trim()}>
-                        <span className="material-symbols-outlined">{icon}</span>
-                        <span className="text-sm font-bold uppercase tracking-wider font-sans">Compte-rendu</span>
-                    </div>
-                    {children}
-                </div>
-            );
-        };
-
-        const RecitCard = ({ children }) => {
-            return (
-                <div className="bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
-                    <div className="flex items-center gap-3 mb-4 text-primary">
-                        <span className="material-symbols-outlined">auto_stories</span>
-                        <span className="text-sm font-bold uppercase tracking-wider font-sans">Récit</span>
-                    </div>
-                    {children}
-                </div>
-            );
-        };
-
-        const InlineRef = ({ n }) => {
-            return (
-                <sup className="ml-1 align-super text-xs text-primary font-sans">
-                    <a className="hover:underline" href={`#src-${n}`} aria-label={`Référence ${n}`}>[{n}]</a>
-                </sup>
-            );
-        };
-
-        const SourcesCard = ({ title = 'Références', sources = [] }) => {
-            if (!sources || sources.length === 0) return null;
-
-            return (
-                <div className="bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
-                    <div className="flex items-center gap-3 mb-4 text-primary">
-                        <span className="material-symbols-outlined">library_books</span>
-                        <span className="text-sm font-bold uppercase tracking-wider font-sans">{title}</span>
-                    </div>
-                    <ol className="list-decimal pl-5 space-y-3 text-sm text-gray-700 dark:text-gray-300 font-sans">
-                        {sources.map((s) => (
+                <div className="glass-card p-6 rounded-xl mt-8 opacity-90 hover:opacity-100 transition-opacity">
+                    <h4 className="flex items-center gap-2 text-xs font-bold uppercase text-slate-500 mb-4">
+                        <span className="material-symbols-outlined text-sm">menu_book</span>
+                        {title}
+                    </h4>
+                    <ol className="list-decimal pl-5 space-y-3 text-sm text-slate-300 font-sans">
+                        {list.map((s) => (
                             <li key={s.n} id={`src-${s.n}`} className="scroll-mt-28">
                                 <span className="font-medium">{s.authors}</span>
                                 {s.date ? <span> ({s.date})</span> : null}
@@ -855,7 +265,173 @@
             );
         };
 
-        // --- Séance 1 ---
+        const PosNegGrid = ({ positive, difficulty, solutions }) => (
+            <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="glass-card p-6 rounded-2xl border border-emerald-500/30 bg-emerald-900/10">
+                        <div className="flex items-center gap-2 mb-3 text-emerald-300">
+                            <span className="material-symbols-outlined">check_circle</span>
+                            <span className="font-bold text-sm uppercase tracking-wider">Points Positifs</span>
+                        </div>
+                        <p className="text-slate-200 leading-snug">{positive}</p>
+                    </div>
+                    <div className="glass-card p-6 rounded-2xl border border-amber-500/30 bg-amber-900/10">
+                        <div className="flex items-center gap-2 mb-3 text-amber-300">
+                            <span className="material-symbols-outlined">warning</span>
+                            <span className="font-bold text-sm uppercase tracking-wider">Difficultés</span>
+                        </div>
+                        <p className="text-slate-200 leading-snug whitespace-pre-line">{difficulty}</p>
+                    </div>
+                </div>
+                {solutions && (
+                    <div className="glass-card p-6 rounded-2xl border border-blue-500/30 bg-blue-900/10">
+                        <div className="flex items-center gap-2 mb-3 text-blue-300">
+                            <span className="material-symbols-outlined">lightbulb</span>
+                            <span className="font-bold text-sm uppercase tracking-wider">Pistes & Solutions</span>
+                        </div>
+                        <p className="text-slate-200 leading-snug">{solutions}</p>
+                    </div>
+                )}
+            </div>
+        );
+
+        const NavArrows = ({ prev, next }) => {
+            const location = useLocation();
+            const isHome = location.pathname === '/';
+
+            const go = (to) => {
+                if (!to) return;
+                const id = to.replace('/', '');
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="flex justify-between items-center mt-16 pt-8 border-t border-white/10">
+                    {prev ? (
+                        isHome ? (
+                            <button onClick={() => go(prev.to)} className="group flex items-center gap-3 text-slate-400 hover:text-white transition-colors text-left">
+                                <span className="material-symbols-outlined p-2 rounded-full border border-white/10 group-hover:bg-white/10">arrow_upward</span>
+                                <span className="text-sm font-bold uppercase tracking-widest">{prev.label}</span>
+                            </button>
+                        ) : (
+                            <Link to={prev.to} className="group flex items-center gap-3 text-slate-400 hover:text-white transition-colors">
+                                <span className="material-symbols-outlined p-2 rounded-full border border-white/10 group-hover:bg-white/10">arrow_back</span>
+                                <span className="text-sm font-bold uppercase tracking-widest">{prev.label}</span>
+                            </Link>
+                        )
+                    ) : <div />}
+
+                    {next ? (
+                        isHome ? (
+                            <button onClick={() => go(next.to)} className="group flex items-center gap-3 text-primary hover:text-emerald-300 transition-colors text-right">
+                                <span className="text-sm font-bold uppercase tracking-widest">{next.label}</span>
+                                <span className="material-symbols-outlined p-2 rounded-full bg-primary text-forest group-hover:bg-emerald-300 transition-colors">arrow_downward</span>
+                            </button>
+                        ) : (
+                            <Link to={next.to} className="group flex items-center gap-3 text-primary hover:text-emerald-300 transition-colors">
+                                <span className="text-sm font-bold uppercase tracking-widest">{next.label}</span>
+                                <span className="material-symbols-outlined p-2 rounded-full bg-primary text-forest group-hover:bg-emerald-300 transition-colors">arrow_forward</span>
+                            </Link>
+                        )
+                    ) : <div />}
+                </div>
+            );
+        };
+
+        // --- PAGES ---
+
+        // 1. LANDING PAGE (HERO)
+        const LandingPage = () => {
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col justify-center items-center px-4 relative">
+                    <div className="text-center max-w-4xl mx-auto z-10">
+
+                        {/* Animation flottante de l'icône */}
+                        <div className="animate-float mb-6 inline-flex p-4 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
+                            <span className="material-symbols-outlined text-6xl text-primary drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]">forest</span>
+                        </div>
+
+                        {/* Badge Objectif - Ajout demandé */}
+                        <div className="animate-slide-up mb-6 flex justify-center" style={{animationDelay: '0.1s'}}>
+                             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm font-bold uppercase tracking-widest backdrop-blur-md shadow-lg shadow-amber-900/20">
+                                <span className="material-symbols-outlined text-lg">theater_comedy</span>
+                                Objectif : Création Théâtrale
+                            </div>
+                        </div>
+
+                        <h1 className="animate-slide-up font-serif font-black text-white mb-6 tracking-tighter drop-shadow-2xl leading-[0.95]">
+                            <span className="block text-sm md:text-base font-sans font-bold uppercase tracking-[0.35em] text-white/70 mb-3">
+                                Pièce de théâtre
+                            </span>
+                            <span className="block text-5xl md:text-7xl lg:text-8xl">
+                                Projet
+                            </span>
+                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-200 to-primary text-6xl md:text-8xl lg:text-9xl">
+                                Amazonie
+                            </span>
+                        </h1>
+
+                        <p className="animate-slide-up text-lg md:text-2xl text-slate-300 font-light max-w-2xl mx-auto mb-12 leading-relaxed" style={{animationDelay: '0.2s'}}>
+                            Journal de bord EMC 2026. <br/>
+                            Documentation pour l'écriture d'une <strong>pièce de théâtre engagée</strong> sur la résistance de l'Amazonie et du peuple <strong>Asháninka</strong>.
+                        </p>
+
+                        <div className="animate-slide-up flex flex-col md:flex-row gap-4 justify-center items-center" style={{animationDelay: '0.4s'}}>
+                            <button onClick={() => scrollToSection('seance-1')} className="group relative px-8 py-4 bg-primary text-forest font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(52,211,153,0.4)]">
+                                <span className="relative z-10 flex items-center gap-2">
+                                    Commencer la lecture
+                                    <span className="material-symbols-outlined">arrow_downward</span>
+                                </span>
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            </button>
+                            <button onClick={() => scrollToSection('seance-4')} className="px-8 py-4 rounded-full border border-white/20 text-white hover:bg-white/10 transition-colors font-medium backdrop-blur-sm">
+                                Voir la conclusion
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Effet décoratif en bas */}
+                    <button
+                        onClick={() => scrollToSection('seance-1')}
+                        className="absolute bottom-10 left-0 right-0 text-center animate-bounce text-white/30 hover:text-white transition-colors"
+                        aria-label="Aller à la séance 1"
+                    >
+                        <span className="material-symbols-outlined">keyboard_double_arrow_down</span>
+                    </button>
+                </div>
+            );
+        };
+
+        const HomeFlow = () => (
+            <div>
+                <div id="landing">
+                    <LandingPage />
+                </div>
+                <div id="seance-1" className="scroll-mt-28">
+                    <Seance1 />
+                </div>
+                <div id="seance-2" className="scroll-mt-28">
+                    <Seance2 />
+                </div>
+                <div id="inter-seance" className="scroll-mt-28">
+                    <InterSeance />
+                </div>
+                <div id="seance-3" className="scroll-mt-28">
+                    <Seance3 />
+                </div>
+                <div id="seance-4" className="scroll-mt-28">
+                    <Seance4 />
+                </div>
+            </div>
+        );
+
+        // 2. SÉANCE 1
         const Seance1 = () => {
             const sources = [
                 {
@@ -892,79 +468,78 @@
             ];
 
             return (
-                <SeanceTemplate
-                    current="/"
-                    title="SÉANCE 1 : Constitution du groupe et premières pistes"
-                    subtitle="Définir notre sujet et nos rôles."
-                    dot="primary"
-                    prev={null}
-                    next={{ to: '/seance-2', label: 'Séance 2' }}
-                >
-                    <CompteRenduCard>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Formation de l'équipe :</strong> Le groupe a été formé par tirage au sort. Nous avons pris du temps pour organiser notre dynamique de travail.
-                        </p>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Choix du sujet :</strong> Nous avons convergé vers une thématique environnementale et choisi <strong className="text-primary font-bold">l'Amazonie</strong>.
-                        </p>
-                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
-                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-gray-500">theater_comedy</span>
-                                Piste de scénario (idée initiale)
-                            </h3>
-                            <p className="text-base text-gray-600 dark:text-gray-300">
-                                <strong className="text-forest-dark dark:text-gray-100 font-bold">Ébauche :</strong> opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg.
-                                <span className="ml-1">Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg.</span>
-                                <InlineRef n={1} />
-                            </p>
-                        </div>
-                    </CompteRenduCard>
-
-                    {/* Image 1 : Forêt amazonienne */}
-                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
-                        <img 
-                            src="https://images.unsplash.com/photo-1593069567131-53a0614dde1d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                            alt="Forêt amazonienne luxuriante" 
-                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
+                <div className="max-w-4xl mx-auto px-6 pb-20">
+                    <ContentSection>
+                        <SectionHeader
+                            title="SÉANCE 1 : Constitution du groupe et premières pistes"
+                            subtitle="Définir notre sujet et nos rôles."
+                            number="1"
                         />
-                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">La canopée amazonienne, poumon vert de la planète menacé par la déforestation</figcaption>
-                    </figure>
 
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                Le groupe a été formé par tirage au sort. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode,
-                                et définir rapidement un sujet exploitable pour l’EMC.
+                        <Card title="Compte-rendu" icon="edit_note" type="info">
+                            <p className="text-lg leading-relaxed mb-4">
+                                <strong className="font-bold">Formation de l'équipe :</strong> Le groupe a été formé par tirage au sort. Nous avons pris du temps pour organiser notre dynamique de travail.
                             </p>
-                            <p>
-                                L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables.
-                                On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines),
-                                de l’autre la protection de la forêt, des populations autochtones et de la biodiversité.
-                                <span className="ml-1">Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses qui donnent des faits et des enjeux concrets.</span>
-                                <InlineRef n={2} />
-                                <InlineRef n={4} />
+                            <p className="text-lg leading-relaxed mb-6">
+                                <strong className="font-bold">Choix du sujet :</strong> Nous avons convergé vers une thématique environnementale, notre professeure nous explique qu'on ne lui a jamais présenté un projet comme celui-ci et choisi <strong className="text-primary font-bold">l'Amazonie</strong>.
                             </p>
-                            <p>
-                                On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg.
-                                À ce stade, l’objectif était surtout de poser un conflit clair et une progression de scènes, quitte à ajuster ensuite pour rester crédibles.
-                                <span className="ml-1">On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos vérifications nous ont ensuite obligés à corriger.</span>
-                                <InlineRef n={3} />
-                            </p>
-                        </div>
-                    </RecitCard>
+                            <div className="bg-black/20 p-5 rounded-lg border border-white/10">
+                                <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                    <span className="material-symbols-outlined text-slate-300">theater_comedy</span>
+                                    Piste de scénario (idée initiale)
+                                </h3>
+                                <p className="text-base text-slate-200">
+                                    <strong className="font-bold">Ébauche :</strong> Opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg.
+                                    <span className="ml-1">Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg, on pense que ça conviendrait parfaitement à une pièce.</span>
+                                    <InlineRef n={1} />
+                                </p>
+                            </div>
+                        </Card>
 
-                    <PosNegGrid
-                        positive="La dynamique de groupe est bonne. Le sujet Amazonie offre beaucoup de ressources et permet d'aborder l'EMC sous plusieurs angles."
-                        difficulty="Intégrer Greta Thunberg de façon réaliste dans une scène au Brésil paraît difficile : son rôle est plus symbolique qu'actif sur le terrain."
-                    />
+                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                            <img
+                                src="https://images.unsplash.com/photo-1593069567131-53a0614dde1d?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt="Forêt amazonienne luxuriante"
+                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                            />
+                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">La canopée amazonienne, poumon vert de la planète menacé par la déforestation.</figcaption>
+                        </figure>
 
-                    <SourcesCard sources={sources} />
-                </SeanceTemplate>
+                        <Card title="Récit" icon="auto_stories">
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    Le groupe a été formé par tirage au sort. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode, et définir rapidement un sujet exploitable pour l’EMC.
+                                </p>
+                                <p>
+                                    L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables. On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines), de l’autre la protection de la forêt, des populations autochtones et de la biodiversité. Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses qui donnent des faits et des enjeux concrets.
+                                    <InlineRef n={2} /><InlineRef n={4} />
+                                </p>
+                                <p>
+                                    On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg. Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg, on pense que ça conviendrait parfaitement à une pièce. On pourrait jouer son discours devant l’Onu ou devant le gouvernement brésilien pour manifester pour la protection de l’Amazonie.
+                                </p>
+                                <p>
+                                    À ce stade, l’objectif était surtout de poser un conflit clair. On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), et pas vraiment au Brésil directement ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos recherches nous ont ensuite obligés à corriger.
+                                    <InlineRef n={3} />
+                                </p>
+                            </div>
+                        </Card>
+
+                        <PosNegGrid
+                            positive="La dynamique de groupe est bonne. Le sujet Amazonie offre beaucoup de ressources et nous permet d'aborder le projet sous plusieurs angles."
+                            difficulty="Intégrer Greta Thunberg de façon réaliste dans une scène au Brésil paraît difficile : son rôle est plus symbolique qu'actif sur le terrain."
+                            solutions="Si on veut vraiment intégrer Greta Thunberg il faut le faire de manière intelligente."
+                        />
+
+                        <Sources list={sources} />
+
+                        <NavArrows next={{to: '/seance-2', label: 'Séance 2'}} />
+                    </ContentSection>
+                </div>
             );
         };
 
-        // --- Séance 2 ---
+        // 3. SÉANCE 2
         const Seance2 = () => {
             const sources = [
                 {
@@ -1034,73 +609,71 @@
             ];
 
             return (
-                <SeanceTemplate
-                    current="/seance-2"
-                    title="SÉANCE 2 : Confrontation au réel et réajustements"
-                    subtitle="Analyse critique du scénario et décisions structurantes."
-                    dot="primary"
-                    prev={{ to: '/', label: 'Séance 1' }}
-                    next={{ to: '/inter-seance', label: 'Inter-Séance' }}
-                >
-                    <CompteRenduCard>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
-                        </p>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme <em>(décision prise après vérification documentaire)</em>. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
-                        </p>
-                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
-                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-gray-500">edit</span>
-                                Atelier d'écriture
-                            </h3>
-                            <p className="text-base text-gray-600 dark:text-gray-300">Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.</p>
-                        </div>
-                    </CompteRenduCard>
-
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ?
-                            </p>
-                            <p>
-                                En confrontant notre histoire à des informations factuelles (sur les peuples autochtones et la déforestation), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
-                                <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={5} />
-                            </p>
-                            <p>
-                                C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie et ses prises de parole (et en comparant avec ses déplacements/publications), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit.
-                                <span className="ml-1">Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.</span>
-                                <InlineRef n={6} /><InlineRef n={7} /><InlineRef n={8} />
-                            </p>
-                            <p>
-                                Enfin, ce travail de vérification nous a aidés à rendre le scénario plus “EMC” : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques, conséquences humaines).
-                                <InlineRef n={3} /><InlineRef n={4} />
-                            </p>
-                        </div>
-                    </RecitCard>
-
-                    {/* Image 2 : Rivière amazonienne */}
-                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
-                        <img 
-                            src="https://images.unsplash.com/photo-1694614360428-608d018bb054?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                            alt="Rivière en Amazonie" 
-                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
+                <div className="max-w-4xl mx-auto px-6 pb-20">
+                    <ContentSection>
+                        <SectionHeader
+                            title="SÉANCE 2 : Confrontation au réel et réajustements"
+                            subtitle="Analyse critique du scénario et décisions structurantes."
+                            number="2"
                         />
-                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">Les cours d'eau amazoniens, artères vitales d'un écosystème complexe</figcaption>
-                    </figure>
 
-                    <PosNegGrid
-                        positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
-                        difficulty="L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches."
-                    />
+                        <Card title="Compte-rendu" icon="edit_note" type="info">
+                            <p className="text-lg leading-relaxed mb-4">
+                                <strong className="font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
+                            </p>
+                            <p className="text-lg leading-relaxed mb-6">
+                                <strong className="font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme <em>(décision prise après vérification documentaire)</em>. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
+                            </p>
+                            <p className="text-lg leading-relaxed mb-6">
+                                <strong className="font-bold">Atelier d'écriture :</strong> Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.
+                            </p>
+                        </Card>
 
-                    <SourcesCard sources={sources} />
-                </SeanceTemplate>
+                        <Card title="Récit" icon="auto_stories">
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ?
+                                </p>
+                                <p>
+                                    En confrontant notre histoire à des informations factuelles (sur les peuples autochtones et la déforestation), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
+                                    <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={5} />
+                                </p>
+                                <p>
+                                    C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie et ses prises de parole (et en comparant avec ses déplacements/publications), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit.
+                                    <span className="ml-1">Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.</span>
+                                    <InlineRef n={6} /><InlineRef n={7} /><InlineRef n={8} />
+                                </p>
+                                <p>
+                                    Enfin, ce travail de vérification nous a aidés à rendre le scénario plus “EMC” : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques, conséquences humaines).
+                                    <InlineRef n={3} /><InlineRef n={4} />
+                                </p>
+                            </div>
+                        </Card>
+
+                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                            <img
+                                src="https://images.unsplash.com/photo-1694614360428-608d018bb054?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt="Rivière en Amazonie"
+                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                            />
+                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">Les cours d'eau amazoniens, artères vitales d'un écosystème complexe.</figcaption>
+                        </figure>
+
+                        <PosNegGrid
+                            positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
+                            difficulty="L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches."
+                        />
+
+                        <Sources list={sources} />
+
+                        <NavArrows prev={{to: '/seance-1', label: 'Séance 1'}} next={{to: '/inter-seance', label: 'Inter-Séance'}} />
+                    </ContentSection>
+                </div>
             );
         };
 
-        // --- Inter-Séance (entre 2 et 3) ---
+        // 4. INTER-SEANCE
         const InterSeance = () => {
             const sources = [
                 {
@@ -1129,58 +702,56 @@
             ];
 
             return (
-                <SeanceTemplate
-                    current="/inter-seance"
-                    title="INTER-SÉANCE : Impasse (fausse piste)"
-                    subtitle="Travail à distance : hésitations, piste alternative, puis abandon après vérification des consignes."
-                    dot="alert"
-                    prev={{ to: '/seance-2', label: 'Séance 2' }}
-                    next={{ to: '/seance-3', label: 'Séance 3' }}
-                >
-                    <CompteRenduCard variant="alert">
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Nous avons choisi de parler du premier empereur chinois Qin Shi Huang. 
-                            <InlineRef n={1} />
-                            <InlineRef n={2} />
-                        </p>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après relecture des consignes, on a compris que la piste envisagée était hors-thème (trop ancienne / trop éloignée d’un enjeu actuel). On l'a donc abandonnée.
-                            <InlineRef n={3} />
-                        </p>
-                         <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Retour à l'amazonie :</strong>                                 On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques,
-                                et impacts sur les populations et l’environnement).
-                        </p>
-                       
-                    </CompteRenduCard>
+                <div className="max-w-4xl mx-auto px-6 pb-20">
+                    <ContentSection>
+                        <SectionHeader
+                            title="INTER-SÉANCE : Impasse (fausse piste)"
+                            subtitle="Travail à distance : hésitations, piste alternative, puis abandon après vérification des consignes."
+                            number="Hors-Classe"
+                        />
 
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                Entre les séances, on a essayé d’être “efficaces” en cherchant un nouveau thème. On a trouvé rapidement des informations fiables sur Qin Shi Huang (références encyclopédiques et base d’autorité), ce qui nous a donné l’impression d’avoir un sujet solide.
-                                <InlineRef n={1} /><InlineRef n={2} />
+                        <Card title="Compte-rendu" icon="error" type="alert">
+                            <p className="text-lg leading-relaxed mb-4">
+                                <strong className="font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Nous avons choisi de parler du premier empereur chinois Qin Shi Huang.
+                                <InlineRef n={1} />
+                                <InlineRef n={2} />
                             </p>
-                            <p>
-                                Mais en revenant aux consignes, on a réalisé que ce n’était pas ce qui était attendu : même si les références étaient solides, le sujet ne répondait pas au cadre demandé.
-                                <span className="ml-1">C’est un bon exemple où <strong>les références ne servent pas seulement à “raconter”, elles servent à valider qu’on est dans le bon projet</strong>.</span>
+                            <p className="text-lg leading-relaxed mb-6">
+                                <strong className="font-bold">Vérification :</strong> après relecture des consignes, on a compris que la piste envisagée était hors-thème (trop ancienne / trop éloignée d’un enjeu actuel). On l'a donc abandonnée.
                                 <InlineRef n={3} />
                             </p>
-                        </div>
-                    </RecitCard>
+                            <p className="text-lg leading-relaxed mb-6">
+                                <strong className="font-bold">Retour à l'Amazonie :</strong> On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement).
+                            </p>
+                        </Card>
 
+                        <Card title="Récit" icon="auto_stories" type="info">
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    Entre les séances, on a essayé d’être “efficaces” en cherchant un nouveau thème. On a trouvé rapidement des informations fiables sur Qin Shi Huang (références encyclopédiques et base d’autorité), ce qui nous a donné l’impression d’avoir un sujet solide.
+                                    <InlineRef n={1} /><InlineRef n={2} />
+                                </p>
+                                <p>
+                                    Mais en revenant aux consignes, on a réalisé que ce n’était pas ce qui était attendu : même si les références étaient solides, le sujet ne répondait pas au cadre demandé. C’est un bon exemple où <strong className="font-bold">les références ne servent pas seulement à “raconter”, elles servent à valider qu’on est dans le bon projet</strong>.
+                                    <InlineRef n={3} />
+                                </p>
+                            </div>
+                        </Card>
 
+                        <PosNegGrid
+                            positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une recherche constante."
+                            difficulty="Une compréhension initiale insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
+                        />
 
-                    <PosNegGrid
-                        positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une recherche constante."
-                        difficulty="Une compréhension initiale insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
-                    />
+                        <Sources list={sources} />
 
-                    <SourcesCard sources={sources} />
-                </SeanceTemplate>
+                        <NavArrows prev={{to: '/seance-2', label: 'Séance 2'}} next={{to: '/seance-3', label: 'Séance 3'}} />
+                    </ContentSection>
+                </div>
             );
         };
 
-        // --- Séance 3 ---
+        // 5. SÉANCE 3
         const Seance3 = () => {
             const sources = [
                 {
@@ -1189,7 +760,7 @@
                     title: "Giovanni Falcone: magistrat italien tué par la Mafia (1939-1992)",
                     publisher: 'Wikipédia',
                     url: 'https://fr.wikipedia.org/wiki/Giovanni_Falcone'
-                    
+
                 },
                 {
                     n: 2,
@@ -1218,262 +789,222 @@
             ];
 
             return (
-                <SeanceTemplate
-                    current="/seance-3"
-                    title="SÉANCE 3 : Impasse et recentrage"
-                    subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
-                    dot="danger"
-                    prev={{ to: '/inter-seance', label: 'Inter-Séance' }}
-                    next={{ to: '/seance-4', label: 'Séance 4' }}
-                >
-                    <CompteRenduCard>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-4">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
-                        </p>
-                        <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6">
-                            <strong className="text-forest-dark dark:text-gray-100 font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme <em>(décision prise après vérification documentaire)</em>. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
-                        </p>
-                        <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700">
-                            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-gray-500">edit</span>
-                                Atelier d'écriture
-                            </h3>
-                            <p className="text-base text-gray-600 dark:text-gray-300">Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.</p>
-                        </div>
-                    </CompteRenduCard>
-
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                En séance 3, on a tenté une nouvelle piste : la mafia italienne (liée à l’histoire familiale de Pauline). Pour vérifier qu’on ne restait pas au niveau “film/séries”, on a cherché des repères généraux et institutionnels sur la mafia et sur l’assassinat de Giovanni Falcone.
-                                <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={3} /><InlineRef n={4} />
-                            </p>
-                            <p>
-                                Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne…
-                                <span className="ml-1">On a compris qu’on risquait de simplifier à l’excès et de perdre le fil EMC.</span>
-                                Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif.
-                                <strong className="ml-1">Décision : abandonner et revenir à l’Amazonie.</strong>
-                            </p>
-                            <p>
-                                On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation, montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité.
-                                <span className="ml-1">Autrement dit : après deux fausses pistes, on s’est fixé une règle simple : <strong>chaque scène doit pouvoir être appuyée par au moins une référence</strong>.</span>
-                            </p>
-                        </div>
-                    </RecitCard>
-
-                    {/* Image 3 : Biodiversité amazonienne */}
-                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
-                        <img 
-                            src="https://plus.unsplash.com/premium_photo-1687440854310-b58abd7fe9f4?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                            alt="Biodiversité en Amazonie" 
-                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
+                <div className="max-w-4xl mx-auto px-6 pb-20">
+                    <ContentSection>
+                        <SectionHeader
+                            title="SÉANCE 3 : Impasse et recentrage"
+                            subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
+                            number="3"
                         />
-                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">L'écosystème amazonien, trésor de biodiversité au cœur des tensions économiques et environnementales</figcaption>
-                    </figure>
 
-                    <PosNegGrid
-                        positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
-                        difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage."
-                    />
+                        <Card title="Récit" icon="auto_stories" type="info">
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    En séance 3, on a tenté une nouvelle piste : la mafia italienne (liée à l’histoire familiale de Pauline). Pour vérifier qu’on ne restait pas au niveau “film/séries”, on a cherché des repères généraux et institutionnels sur la mafia et sur l’assassinat de Giovanni Falcone.
+                                    <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={3} /><InlineRef n={4} />
+                                </p>
+                                <p>
+                                    Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne… On a compris qu’on risquait de simplifier à l’excès et de perdre le fil EMC. Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif. Décision : abandonner et revenir à l’Amazonie.
+                                </p>
+                                <p>
+                                    On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation, montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité. Autrement dit : après deux fausses pistes, on s’est fixé une règle simple : <strong>chaque scène doit pouvoir être appuyée par au moins une référence</strong>.
+                                </p>
+                            </div>
+                        </Card>
 
-                    <SourcesCard sources={sources} />
-                </SeanceTemplate>
+                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                            <img
+                                src="https://plus.unsplash.com/premium_photo-1687440854310-b58abd7fe9f4?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt="Biodiversité en Amazonie"
+                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                            />
+                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">L'écosystème amazonien, trésor de biodiversité au cœur des tensions économiques et environnementales.</figcaption>
+                        </figure>
+
+                        <PosNegGrid
+                            positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
+                            difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage."
+                        />
+
+                        <Sources list={sources} />
+
+                        <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
+                    </ContentSection>
+                </div>
             );
         };
 
-
-        // --- Séance 4 ---
+        // 6. SÉANCE 4
         const Seance4 = () => {
             const sources = [
                 {
                     n: 1,
-                    authors: 'Document de cours (travail de groupe)',
-                    date: 'consulté en 2026',
-                    title: 'Dossier de travail — Asháninka / barrage Pakitzapango (notes et idées de mise en scène)',
-                    publisher: 'EMC — support interne',
+                    authors: 'Le Monde',
+                    date: '02/12/2015',
+                    title: 'En Amazonie, les Ashaninka, guerriers de la paix et de la forêt',
+                    publisher: 'Le Monde',
+                    url: 'https://www.lemonde.fr/cop21/article/2015/12/02/en-amazonie-les-ashaninka-guerriers-de-la-paix-et-de-la-foret_4822330_4527432.html'
                 },
                 {
                     n: 2,
-                    authors: 'ARTE Éducation',
+                    authors: 'Instituto Socioambiental (ISA)',
                     date: 'consulté en 2026',
-                    title: 'Gardiens de la forêt : Brésil — Replanter l’Amazonie (vidéo)',
-                    publisher: 'educ.arte.tv',
-                    url: 'https://educ.arte.tv/program/gardiens-de-la-foret-bresil-replanter-l-amazonie'
+                    title: 'Ashaninka - Povos Indígenas no Brasil',
+                    publisher: 'pib.socioambiental.org',
+                    url: 'https://pib.socioambiental.org/es/Povo:Ashaninka'
                 },
                 {
                     n: 3,
-                    authors: 'franceinfo',
+                    authors: 'ARTE Éducation',
                     date: 'consulté en 2026',
-                    title: 'Un projet de barrage menace la forêt amazonienne',
-                    publisher: 'franceinfo',
-                    url: 'https://www.franceinfo.fr/monde/ameriques/un-projet-de-barrage-menace-la-foret-amazonienne_3070557.html'
+                    title: 'Gardiens de la forêt : Brésil — Replanter l’Amazonie',
+                    publisher: 'campus.arte.tv',
+                    url: 'https://campus.arte.tv/program/gardiens-de-la-foret-bresil-replanter-l-amazonie'
                 },
                 {
                     n: 4,
+                    authors: 'Constitution brésilienne',
+                    date: '1988',
+                    title: 'Article 231 - Droits des peuples autochtones',
+                    publisher: 'Gouvernement du Brésil',
+                },
+                {
+                    n: 5,
                     authors: 'Goldman Environmental Prize',
-                    date: 'consulté en 2026',
-                    title: 'Ruth Buendía (campagne contre les projets de barrages sur le fleuve Ene)',
+                    title: 'Ruth Buendía',
                     publisher: 'goldmanprize.org',
                     url: 'https://www.goldmanprize.org/recipient/ruth-buendia/'
                 },
                 {
-                    n: 5,
-                    authors: 'Instituto Socioambiental (ISA) — PIB',
-                    date: 'consulté en 2026',
-                    title: 'Constitution brésilienne (1988) — repères sur les droits des peuples autochtones (art. 231)',
-                    publisher: 'pib.socioambiental.org',
-                    url: 'https://pib.socioambiental.org/en/Constitution'
-                },
-                {
                     n: 6,
-                    authors: 'Terras Indígenas no Brasil (ISA)',
-                    date: 'consulté en 2026',
-                    title: 'Terra Indígena Kampa do Rio Amônia (Acre) — informations générales',
-                    publisher: 'terrasindigenas.org.br',
-                    url: 'https://terrasindigenas.org.br/pt-br/terras-indígenas/3716'
-                },
-                {
-                    n: 7,
                     authors: 'Survival International',
-                    date: 'consulté en 2026',
-                    title: 'Galerie photo Asháninka (crédit de l’image utilisée dans la séance 4)',
+                    title: 'Crédit photo (Asháninka)',
                     publisher: 'survivalinternational.org',
                     url: 'https://www.survivalinternational.org/galleries/ashaninka'
-                },
-                {
-                    n: 8,
-                    authors: 'Survival International',
-                    date: 'consulté en 2026',
-                    title: 'Photographie (fichier) — Asháninka',
-                    publisher: 'assets.survivalinternational.org',
-                    url: 'https://assets.survivalinternational.org/pictures/1786/width1800-f0f2c0a2d8cb2472cec7ce13b43e1d33.jpg'
-                },
+                }
             ];
 
             return (
-                <SeanceTemplate
-                    current="/seance-4"
-                    title="SÉANCE 4 : Choix des Asháninka et première trame"
-                    subtitle="Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture."
-                    dot="primary"
-                    prev={{ to: '/seance-3', label: 'Séance 3' }}
-                    next={null}
-                >
-                    <CompteRenduCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                Après la séance 3, on ne voulait plus rester au niveau “Amazonie” en général : il nous fallait un <strong>cas précis</strong> et un <strong>conflit</strong> qu’on puisse jouer sans caricaturer.
-                                On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène (des situations, des enjeux, des mots qui sonnent juste au théâtre) et ce qui devait rester au rang d’arrière-plan.
-                                <InlineRef n={1} />
-                            </p>
-                            <p>
-                                À ce moment-là, l’idée du <strong>barrage</strong> nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre.
-                                On a cherché une formulation claire du problème pour en faire un conflit central, puis on a noté ce que ça impliquait pour notre intrigue (qu’est-ce qui change concrètement, qui parle, qui décide, qu’est-ce qui est contesté).
-                                <InlineRef n={3} />
-                            </p>
-                            <p>
-                                Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan.
-                                Et pour notre personnage “adjuvant”, on s’est inspirés d’un parcours d’engagement existant, sans copier une personne, juste pour rendre crédible l’idée d’organisation et de mobilisation.
-                                <InlineRef n={5} /><InlineRef n={4} />
-                            </p>
-                            <p>
-                                En fin de séance, on a posé une première trame pour l’ouverture : <strong>forêt</strong> (sons, lumière) puis <strong>rupture</strong> (machines) — et tout de suite après, un échange où l’enjeu est dit clairement.
-                                On s’est aussi laissés une “liste mentale” de ce qu’on doit encore verrouiller à la prochaine séance (vocabulaire, précision des lieux, cohérence des dates), pour que le texte tienne autant sur la scène que sur le plan factuel.
-                            </p>
-                            <p className="text-base text-gray-700 dark:text-gray-300 italic">
-                                Illustration : photo de Survival International choisie pour rester sur une image documentaire, avec crédit noté dans les références.
-                                <InlineRef n={7} /><InlineRef n={8} />
-                            </p>
-                        </div>
-                    </CompteRenduCard>
-
-                    <figure className="bg-white dark:bg-[#1a3324] p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden group">
-                        <img
-                            src="https://assets.survivalinternational.org/pictures/1786/width1800-f0f2c0a2d8cb2472cec7ce13b43e1d33.jpg"
-                            alt="Communauté asháninka en Amazonie"
-                            className="w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
+                <div className="max-w-4xl mx-auto px-6 pb-20">
+                    <ContentSection>
+                        <SectionHeader
+                            title="SÉANCE 4 : Choix des Asháninka et première trame"
+                            subtitle="Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture."
+                            number="4"
                         />
-                        <figcaption className="text-sm text-gray-600 dark:text-gray-400 mt-3 text-center font-sans italic">
-                            Photo documentaire liée aux Asháninka. Crédit : Survival International <InlineRef n={7} />
-                        </figcaption>
-                    </figure>
 
-                    <RecitCard>
-                        <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200">
-                            <p>
-                                En séance 4, on a enfin trouvé une idée qui nous permettait d’être à la fois <strong>précis</strong> et <strong>jouable</strong> : partir des Asháninka, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire.
-                                <InlineRef n={1} />
+                        <Card title="Compte-rendu" icon="edit_note" type="info">
+                            <p className="text-lg leading-relaxed mb-4">
+                                <strong className="font-bold">Recherche :</strong> Après la séance 3, nous étions en recherche d'un cas précis et un conflit qu’on pouvait jouer sans caricaturer. On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène.
                             </p>
-                            <p>
-                                On a commencé par poser le décor à partir de repères concrets : les Asháninka vivent entre le Pérou et le Brésil, et certaines communautés sont situées dans des terres indigènes identifiées.
-                                <span className="ml-1">Ça nous a évité de les présenter comme un “peuple vague de la forêt” : on sait où on place la scène, et pourquoi.</span>
-                                <InlineRef n={6} />
+                            <p className="text-lg leading-relaxed mb-4">
+                                <strong className="font-bold">Boussole :</strong> À ce moment-là, l’idée du barrage nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre.
                             </p>
-                            <p>
-                                Ensuite, les lectures sur le barrage de Pakitzapango nous ont donné <strong>un conflit central</strong> : un projet d’infrastructure qui noierait une partie de la forêt et menacerait l’équilibre d’un peuple installé dans la région depuis très longtemps.
-                                <span className="ml-1">À partir de là, on a reformulé notre scénario : il ne s’agit pas de “sauver la planète”, mais de montrer un choix politique et ses conséquences humaines.</span>
-                                <InlineRef n={3} />
+                            <p className="text-lg leading-relaxed mb-4">
+                                <strong className="font-bold">Cadre juridique :</strong> Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan.
                             </p>
-                            <p>
-                                Pour ne pas écrire uniquement “à l’émotion”, on a aussi cherché un cadre de droits : au Brésil, la Constitution reconnaît des protections spécifiques liées aux terres indigènes.
-                                <span className="ml-1">Ça nous a aidés à écrire des répliques crédibles (revendications, légitimité, limites de l’État) et à construire un débat plutôt qu’un simple affrontement.</span>
-                                <InlineRef n={5} />
+                            <p className="text-lg leading-relaxed">
+                                <strong className="font-bold">Ouverture :</strong> En fin de séance, on a posé une première trame pour l’ouverture : forêt (sons, lumière) puis rupture (machines) — et tout de suite après, un échange où l’enjeu est dit clairement.
                             </p>
-                            <p>
-                                Enfin, on a transformé ces repères en mise en scène : une <strong>scène d’ouverture</strong> très sensorielle (sons de la forêt, lumière verte, torche), brutalement interrompue par l’arrivée des machines.
-                                <span className="ml-1">Et pour notre “adjuvant”, on s’est inspirés d’exemples réels d’organisation et de mobilisation, afin de montrer comment une communauté peut se structurer face à un projet imposé.</span>
-                                <InlineRef n={2} /><InlineRef n={4} />
-                            </p>
-                        </div>
-                    </RecitCard>
+                        </Card>
 
-                    <PosNegGrid
-                        positive="Le thème devient concret : un lieu, un peuple, un enjeu clair, et une première scène écrite avec des repères vérifiés."
-                        difficulty="Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues."
-                    />
+                        <Card title="Récit" icon="auto_stories" type="info">
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    Lors de la 4ème séance, on a enfin trouvé une idée parfaitement adaptable grâce à Hector en pièce de théâtre : partir des <strong className="text-primary font-bold">Asháninka</strong>, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire. <InlineRef n={1} />
+                                </p>
+                                <p>
+                                    On a commencé des recherches générales : Les Ashaninka constituent le plus grand peuple indigène d'Amazonie du Sud, répartis entre le Brésil (État d'Acre) et le Pérou. Leur histoire est celle d'une résistance armée : depuis les années 1980, ils ont affronté des mouvements de guérilla révolutionnaire, tout en combattant simultanément la déforestation systématique, le trafic de bois, l'extraction minière et l'accaparement des terres. <InlineRef n={2} />
+                                </p>
+                                <div>
+                                    <p>
+                                        Leur lutte actuelle se cristallise autour du projet de barrage hydroélectrique de Pakitzapango (2 200 mégawatts). Ce projet, né d'un accord énergétique entre le Brésil et le Pérou, représente une menace vitale :
+                                    </p>
+                                    <ul className="list-disc ml-6 mt-2 text-slate-300">
+                                        <li><strong className="text-white">Destruction environnementale :</strong> Le barrage noierait environ 100 000 hectares de forêt primaire.</li>
+                                        <li><strong className="text-white">Impact humain :</strong> Il contraindrait des milliers d’Asháninka à l’exode, brisant l’équilibre d'un peuple vivant en autarcie.</li>
+                                    </ul>
+                                </div>
 
-                    <SourcesCard sources={sources} />
-                </SeanceTemplate>
+                                <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10 my-6">
+                                    <img
+                                        src="https://assets.survivalinternational.org/pictures/1786/width1800-f0f2c0a2d8cb2472cec7ce13b43e1d33.jpg"
+                                        alt="Communauté asháninka en Amazonie"
+                                        className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                        loading="lazy"
+                                    />
+                                    <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">
+                                        Photo documentaire liée aux Asháninka. Crédit : Survival International <InlineRef n={6} />
+                                    </figcaption>
+                                </figure>
+
+                                <p>
+                                    Le combat des Asháninka n'est pas seulement physique, il est politique et médiatique. <strong>Ruth Buendía</strong>, ancienne présidente du Centre Asháninka de la rivière Ene, est devenue l'icône de cette résistance. Grâce à son travail avec l'ONG CARE, elle a réussi à freiner ce projet dévastateur, ce qui lui a valu le prestigieux <strong>Prix Goldman</strong> pour l'environnement. <InlineRef n={5} />
+                                </p>
+                                <p>
+                                    À partir de là, on a reformulé notre scénario : il ne s’agit plus de “sauver la planète”, mais de montrer comment un choix politique a des conséquences humaines.
+                                </p>
+                                <p>
+                                    Loin de l'image de "peuple de la forêt", les Asháninka utilisent des outils contemporains pour sensibiliser le monde. Ils collaborent à des projets documentaires et éducatifs (comme avec ARTE Éducation) dans un documentaire très intéressant <a href="https://campus.arte.tv/program/gardiens-de-la-foret-bresil-replanter-l-amazonie" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Gardiens de la forêt</a> que j’ai regardé et qui m’a permis de comprendre leur mode de vie et leurs actions de reforestation. <InlineRef n={3} />
+                                </p>
+                                <div>
+                                    <p>Ces vidéos servent à :</p>
+                                    <ul className="list-disc ml-6 mt-2 text-slate-300">
+                                        <li>Documenter la réalité de leur habitat face à la déforestation.</li>
+                                        <li>Revendiquer la reconnaissance de leurs savoirs traditionnels auprès de l'ONU.</li>
+                                        <li>Mobiliser la solidarité internationale pour protéger le "poumon vert" de la planète.</li>
+                                    </ul>
+                                </div>
+                                <p>
+                                    De plus Leur combat s'appuie sur des bases juridiques solides, notamment la Constitution brésilienne de 1988, qui reconnaît enfin les droits des peuples autochtones. <InlineRef n={4} />
+                                </p>
+                                <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-slate-200 bg-white/5 p-4 rounded-r-lg">
+                                    « Les terres indigènes sont inaliénables et indisponibles, et les droits qui y sont attachés sont imprescriptibles. »
+                                    <footer className="text-sm mt-2 not-italic text-slate-400">— Article 231, § 4 de la Constitution brésilienne</footer>
+                                </blockquote>
+                                <p>
+                                    Cette base légale permet aux Asháninka de transformer leurs revendications en véritables débats de société, opposant la légitimité de l'État aux droits fondamentaux des populations locales.
+                                </p>
+                            </div>
+                        </Card>
+
+                        <PosNegGrid
+                            positive="Le thème devient concret : un lieu, un peuple, un enjeu clair, et une première scène écrite avec des repères vérifiés."
+                            difficulty="Même si on a bien trouvé notre thème on a encore un peu de retard il faut commencer à écrire le scénario."
+                            solutions="Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues."
+                        />
+
+                        <Sources list={sources} title="Sources de la séance" />
+
+                        <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} />
+                    </ContentSection>
+                </div>
             );
         };
 
-
+        // APPLICATION PRINCIPALE
         const App = () => {
-            // ADD: persist edit mode toggle
-            const [editMode, setEditMode] = useState(() => {
-                try { return localStorage.getItem('emc_edit_mode') === '1'; } catch (_) { return false; }
-            });
-
-            useEffect(() => {
-                try { localStorage.setItem('emc_edit_mode', editMode ? '1' : '0'); } catch (_) {}
-            }, [editMode]);
-
             return (
-                <EditModeContext.Provider value={{ editMode, setEditMode }}>
-                    <MemoryRouter>
+                <HashRouter>
+                    <Navbar />
+                    <Background />
+                    <div className="pt-10">
                         <Routes>
-                            <Route path="/" element={<Seance1 />} />
+                            <Route path="/" element={<HomeFlow />} />
+                            <Route path="/seance-1" element={<Seance1 />} />
                             <Route path="/seance-2" element={<Seance2 />} />
                             <Route path="/inter-seance" element={<InterSeance />} />
                             <Route path="/seance-3" element={<Seance3 />} />
                             <Route path="/seance-4" element={<Seance4 />} />
                         </Routes>
-                    </MemoryRouter>
-                </EditModeContext.Provider>
+                    </div>
+                </HashRouter>
             );
         };
 
-        const root = createRoot(document.getElementById('root'));
+        const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
-    </script>
-
-    <!-- System preference detection for dark mode (Runs outside React to prevent FOUC) -->
-    <script>
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
     </script>
 </body>
 </html>

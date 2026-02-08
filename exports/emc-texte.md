@@ -1,0 +1,454 @@
+# Texte extrait de emc.html
+
+Exporté le 07/02/2026 19:14:18
+
+## Textes (entre balises)
+
+- Journal de Bord - Amazonie Project
+- Chargement…
+- ' + escapeHtml(details) + '
+- ') : ''; root.innerHTML = '
+- ' + escapeHtml(title) + '
+- ' + ' Astuce : ouvre le fichier via un serveur local (ex.
+- py -m http.server 8000
+- ) puis va sur
+- http://localhost:8000/emc.html
+- . ' + ' Si tu es sur un réseau filtré (lycée), les CDNs
+- unpkg.com
+- cdn.tailwindcss.com
+- peuvent être bloqués.' + '
+- ' + detailHtml + '
+- l.to === current); const baseLink = 'text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal'; const activeLink = "text-primary text-base font-bold leading-normal relative after:content-[''] after:absolute after:bottom-[-22px] after:left-0 after:w-full after:h-[2px] after:bg-primary"; return (
+- forest
+- Carnet de Bord EMC
+- Accueil
+- Séances
+- expand_more
+- menu
+- arrow_back
+- arrow_forward
+- Navigation
+- Statut du Projet
+- check_circle
+- Points Positifs
+- warning
+- Difficultés
+- Journal de Bord
+- chevron_right
+- Compte-rendu
+- auto_stories
+- Récit
+- library_books
+- Formation de l'équipe :
+- Le groupe a été formé par tirage au sort. Nous avons pris du temps pour organiser notre dynamique de travail.
+- Choix du sujet :
+- Nous avons convergé vers une thématique environnementale et choisi
+- l'Amazonie
+- theater_comedy
+- Piste de scénario (idée initiale)
+- Ébauche :
+- opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg.
+- Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg.
+- La canopée amazonienne, poumon vert de la planète menacé par la déforestation
+- Le groupe a été formé par tirage au sort. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode, et définir rapidement un sujet exploitable pour l’EMC.
+- L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables. On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines), de l’autre la protection de la forêt, des populations autochtones et de la biodiversité.
+- Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses qui donnent des faits et des enjeux concrets.
+- On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg. À ce stade, l’objectif était surtout de poser un conflit clair et une progression de scènes, quitte à ajuster ensuite pour rester crédibles.
+- On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos vérifications nous ont ensuite obligés à corriger.
+- Analyse :
+- Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
+- Décision majeure :
+- le personnage de Greta a été supprimé pour plus de réalisme
+- (décision prise après vérification documentaire)
+- . Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
+- edit
+- Atelier d'écriture
+- Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.
+- Pendant la séance 2, on a relu le scénario en se posant une question simple :
+- qu’est-ce qu’on peut justifier avec des éléments vérifiables
+- et qu’est-ce qui relève d’une intuition trop fragile ?
+- En confrontant notre histoire à des informations factuelles (sur les peuples autochtones et la déforestation), on a compris que la scène devait surtout mettre en avant des acteurs
+- directement impliqués
+- : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
+- C’est aussi à ce moment-là que nos recherches ont
+- changé notre point de vue
+- sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie et ses prises de parole (et en comparant avec ses déplacements/publications), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit.
+- Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.
+- Enfin, ce travail de vérification nous a aidés à rendre le scénario plus “EMC” : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques, conséquences humaines).
+- Les cours d'eau amazoniens, artères vitales d'un écosystème complexe
+- Remise en question :
+- N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Nous avons choisi de parler du premier empereur chinois Qin Shi Huang.
+- Vérification :
+- après relecture des consignes, on a compris que la piste envisagée était hors-thème (trop ancienne / trop éloignée d’un enjeu actuel). On l'a donc abandonnée.
+- Retour à l'amazonie :
+- On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement).
+- Entre les séances, on a essayé d’être “efficaces” en cherchant un nouveau thème. On a trouvé rapidement des informations fiables sur Qin Shi Huang (références encyclopédiques et base d’autorité), ce qui nous a donné l’impression d’avoir un sujet solide.
+- Mais en revenant aux consignes, on a réalisé que ce n’était pas ce qui était attendu : même si les références étaient solides, le sujet ne répondait pas au cadre demandé.
+- C’est un bon exemple où
+- les références ne servent pas seulement à “raconter”, elles servent à valider qu’on est dans le bon projet
+- En séance 3, on a tenté une nouvelle piste : la mafia italienne (liée à l’histoire familiale de Pauline). Pour vérifier qu’on ne restait pas au niveau “film/séries”, on a cherché des repères généraux et institutionnels sur la mafia et sur l’assassinat de Giovanni Falcone.
+- Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne…
+- On a compris qu’on risquait de simplifier à l’excès et de perdre le fil EMC.
+- Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif.
+- Décision : abandonner et revenir à l’Amazonie.
+- On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation, montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité.
+- Autrement dit : après deux fausses pistes, on s’est fixé une règle simple :
+- chaque scène doit pouvoir être appuyée par au moins une référence
+- L'écosystème amazonien, trésor de biodiversité au cœur des tensions économiques et environnementales
+- Après la séance 3, on ne voulait plus rester au niveau “Amazonie” en général : il nous fallait un
+- cas précis
+- et un
+- conflit
+- qu’on puisse jouer sans caricaturer. On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène (des situations, des enjeux, des mots qui sonnent juste au théâtre) et ce qui devait rester au rang d’arrière-plan.
+- À ce moment-là, l’idée du
+- barrage
+- nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre. On a cherché une formulation claire du problème pour en faire un conflit central, puis on a noté ce que ça impliquait pour notre intrigue (qu’est-ce qui change concrètement, qui parle, qui décide, qu’est-ce qui est contesté).
+- Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan. Et pour notre personnage “adjuvant”, on s’est inspirés d’un parcours d’engagement existant, sans copier une personne, juste pour rendre crédible l’idée d’organisation et de mobilisation.
+- En fin de séance, on a posé une première trame pour l’ouverture :
+- forêt
+- (sons, lumière) puis
+- rupture
+- (machines) — et tout de suite après, un échange où l’enjeu est dit clairement. On s’est aussi laissés une “liste mentale” de ce qu’on doit encore verrouiller à la prochaine séance (vocabulaire, précision des lieux, cohérence des dates), pour que le texte tienne autant sur la scène que sur le plan factuel.
+- Illustration : photo de Survival International choisie pour rester sur une image documentaire, avec crédit noté dans les références.
+- Photo documentaire liée aux Asháninka. Crédit : Survival International
+- En séance 4, on a enfin trouvé une idée qui nous permettait d’être à la fois
+- précis
+- et
+- jouable
+- : partir des Asháninka, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire.
+- On a commencé par poser le décor à partir de repères concrets : les Asháninka vivent entre le Pérou et le Brésil, et certaines communautés sont situées dans des terres indigènes identifiées.
+- Ça nous a évité de les présenter comme un “peuple vague de la forêt” : on sait où on place la scène, et pourquoi.
+- Ensuite, les lectures sur le barrage de Pakitzapango nous ont donné
+- un conflit central
+- : un projet d’infrastructure qui noierait une partie de la forêt et menacerait l’équilibre d’un peuple installé dans la région depuis très longtemps.
+- À partir de là, on a reformulé notre scénario : il ne s’agit pas de “sauver la planète”, mais de montrer un choix politique et ses conséquences humaines.
+- Pour ne pas écrire uniquement “à l’émotion”, on a aussi cherché un cadre de droits : au Brésil, la Constitution reconnaît des protections spécifiques liées aux terres indigènes.
+- Ça nous a aidés à écrire des répliques crédibles (revendications, légitimité, limites de l’État) et à construire un débat plutôt qu’un simple affrontement.
+- Enfin, on a transformé ces repères en mise en scène : une
+- scène d’ouverture
+- très sensorielle (sons de la forêt, lumière verte, torche), brutalement interrompue par l’arrivée des machines.
+- Et pour notre “adjuvant”, on s’est inspirés d’exemples réels d’organisation et de mobilisation, afin de montrer comment une communauté peut se structurer face à un projet imposé.
+
+## Textes (attributs: aria-label/title/placeholder/alt)
+
+- Ouvrir le menu
+- Références
+- SÉANCE 1 : Constitution du groupe et premières pistes
+- Forêt amazonienne luxuriante
+- SÉANCE 2 : Confrontation au réel et réajustements
+- Rivière en Amazonie
+- INTER-SÉANCE : Impasse (fausse piste)
+- SÉANCE 3 : Impasse et recentrage
+- Biodiversité en Amazonie
+- SÉANCE 4 : Choix des Asháninka et première trame
+- Communauté asháninka en Amazonie
+
+## Textes (littéraux JS filtrés)
+
+- light
+- fr
+- utf-8
+- width=device-width, initial-scale=1.0
+- viewport
+- preconnect
+- stylesheet
+- tailwind-config
+- class
+- primary
+- #11d452
+- primary-dark
+- #0ea640
+- background-light
+- #f6f8f6
+- background-dark
+- card-light
+- #ffffff
+- card-dark
+- #1a2e22
+- text-main
+- text-dark
+- #f0f4f2
+- muted-green
+- #61896f
+- forest-dark
+- #1e3a29
+- earth-light
+- #e8e6df
+- alert
+- #ef4444
+- alert-soft
+- #fef2f2
+- danger
+- #e3342f
+- paper
+- paper-dark
+- #1a2c20
+- display
+- Newsreader
+- serif
+- sans
+- Noto Sans
+- sans-serif
+- body
+- DEFAULT
+- 0.25rem
+- lg
+- 0.5rem
+- xl
+- 0.75rem
+- 2xl
+- 1rem
+- full
+- 9999px
+- soft
+- 0 4px 20px -2px rgba(0, 0, 0, 0.05)
+- div
+- hidden
+- none
+- tw-fallback
+- style
+- :root{--primary:#11d452;--forest:#1e3a29;--bg:#f6f8f6;--border:#e0e4e2;--text:#111813;}
+- html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:"Noto Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+- a{color:var(--primary);text-decoration:none;}
+- a:hover{text-decoration:underline;}
+- code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}
+- header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);}
+- main{padding:24px 16px;}
+- h1,h2,h3{color:var(--forest);}
+- /* Minimal utility fallbacks for the most used classes */
+- [class~="bg-background-light"]{background:var(--bg);}
+- [class~="bg-white"]{background:#fff;}
+- [class~="text-primary"]{color:var(--primary);}
+- [class~="text-forest-dark"]{color:var(--forest);}
+- [class~="border"]{border:1px solid var(--border);}
+- [class~="border-gray-100"],[class~="border-gray-200"]{border-color:var(--border);}
+- [class~="shadow-sm"]{box-shadow:0 1px 2px rgba(0,0,0,0.06);}
+- [class~="rounded-lg"]{border-radius:0.5rem;}
+- [class~="rounded-xl"]{border-radius:0.75rem;}
+- [class~="p-4"]{padding:1rem;}
+- [class~="p-5"]{padding:1.25rem;}
+- [class~="p-6"]{padding:1.5rem;}
+- [class~="mb-2"]{margin-bottom:0.5rem;}
+- [class~="mb-3"]{margin-bottom:0.75rem;}
+- [class~="mb-4"]{margin-bottom:1rem;}
+- [class~="mb-6"]{margin-bottom:1.5rem;}
+- [class~="mb-10"]{margin-bottom:2.5rem;}
+- [class~="space-y-3"] > * + *{margin-top:0.75rem;}
+- [class~="space-y-4"] > * + *{margin-top:1rem;}
+- /* Basic layout helpers */
+- [class~="flex"]{display:flex;}
+- [class~="flex-col"]{flex-direction:column;}
+- [class~="items-center"]{align-items:center;}
+- [class~="justify-between"]{justify-content:space-between;}
+- [class~="gap-2"]{gap:0.5rem;}
+- [class~="gap-3"]{gap:0.75rem;}
+- [class~="gap-4"]{gap:1rem;}
+- fallback
+- ok
+- boot-status
+- [data-tw-indicator]
+- data-tw-indicator
+- true
+- 8px 0 0
+- Style: Tailwind OK.
+- Style: mode secours (Tailwind non chargé).
+- DOMContentLoaded
+- root
+- font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px; color: #111813;
+- max-width: 900px; margin: 0 auto;
+- font-size: 20px; font-weight: 800; margin: 0 0 8px;
+- /g, '"') .replace(/'/g, '''); } function showBootError(title, details) { var root = document.getElementById('root'); if (!root) return; var detailHtml = details ? ('<pre style=
+- >' + escapeHtml(details) + '</pre>') : ''; root.innerHTML = '<div style=
+- >' + ' <div style=
+- >' + ' <h1 style=
+- >' + escapeHtml(title) + '</h1>' + ' <p style=
+- + stack : '')); } catch (_) { // ignore } }); window.addEventListener('unhandledrejection', function (event) { try { var reason = event && event.reason; var details = reason && (reason.stack || reason.message) ? (reason.stack || reason.message) : String(reason); showBootError('Promesse rejetée (unhandledrejection)', details); } catch (_) { // ignore } }); // If core libs don't arrive (blocked CDNs), surface a helpful message. setTimeout(function () { if (!window.React || !window.ReactDOM || !window.ReactRouterDOM) { showBootError( 'Dépendances externes non chargées', 'React/ReactDOM/ReactRouterDOM ne sont pas disponibles. Cela arrive quand le réseau bloque les CDNs (unpkg/tailwind) ou en ouverture directe via file://.' ); } }, 2500); })(); </script> <!-- React Dependencies --> <script src=
+- crossorigin=
+- ></script> <script src=
+- > const { useState } = React; const { createRoot } = ReactDOM; const { MemoryRouter, Routes, Route, Link } = ReactRouterDOM; const TopHeader = ({ current }) => { const [mobileOpen, setMobileOpen] = useState(false); const [seancesOpen, setSeancesOpen] = useState(false); const seanceLinks = [ { to: '/', label: 'Séance 1' }, { to: '/seance-2', label: 'Séance 2' }, { to: '/inter-seance', label: 'Inter-Séance' }, { to: '/seance-3', label: 'Séance 3' }, { to: '/seance-4', label: 'Séance 4' }, ]; const isActive = (path) => current === path; const isSeancesSection = seanceLinks.some((l) => l.to === current); const baseLink = 'text-forest-dark dark:text-gray-300 hover:text-primary transition-colors text-base font-medium leading-normal'; const activeLink =
+- ; return ( <header className=
+- > <div className=
+- > <span className=
+- >forest</span> </div> <h2 className=
+- >Carnet de Bord EMC</h2> </div> <div className=
+- > <nav className=
+- > <Link className={isActive('/') ? activeLink : baseLink} to=
+- >Accueil</Link> <div className=
+- > <button type=
+- className={isSeancesSection ? activeLink : baseLink} onClick={() => setSeancesOpen((v) => !v)} > Séances <span className=
+- >expand_more</span> </button> {seancesOpen && ( <div className=
+- onMouseLeave={() => setSeancesOpen(false)} > {seanceLinks.map((item) => ( <Link key={item.to} to={item.to} className=
+- onClick={() => setSeancesOpen(false)} > {item.label} </Link> ))} </div> )} </div> </nav> <button type=
+- className=
+- onClick={() => setMobileOpen((v) => !v)} aria-label=
+- >menu</span> </button> </div> </div> {mobileOpen && ( <div className=
+- > <Link className=
+- to=
+- onClick={() => setMobileOpen(false)}>Accueil</Link> <div className=
+- >Séances</div> {seanceLinks.map((item) => ( <Link key={item.to} className=
+- to={item.to} onClick={() => setMobileOpen(false)} > {item.label} </Link> ))} </div> </div> )} </header> ); }; const BottomArrowsNav = ({ prev, next }) => { return ( <div className=
+- > {prev ? ( <Link className=
+- to={prev.to}> <div className=
+- >arrow_back</span> </div> <span className=
+- >{prev.label}</span> </Link> ) : ( <div /> )} {next ? ( <Link className=
+- to={next.to}> <span className=
+- >{next.label}</span> <div className=
+- >arrow_forward</span> </div> </Link> ) : ( <div /> )} </div> ); }; const SeancesSidebar = ({ current }) => { const links = [ { to: '/', label: 'Séance 1' }, { to: '/seance-2', label: 'Séance 2' }, { to: '/inter-seance', label: 'Inter-Séance' }, { to: '/seance-3', label: 'Séance 3' }, { to: '/seance-4', label: 'Séance 4' }, ]; const base =
+- ; const active =
+- ; // Calcul dynamique du pourcentage en fonction de la page actuelle const progressMap = { '/': 20, '/seance-2': 40, '/inter-seance': 60, '/seance-3': 80, '/seance-4': 100 }; const progress = progressMap[current] || 20; const isComplete = progress === 100; return ( <aside className=
+- > <div> <p className=
+- >Navigation</p> <nav className=
+- > {links.map((l) => ( <Link key={l.to} className={current === l.to ? active : base} to={l.to}> {l.label} </Link> ))} </nav> </div> <div className=
+- > <p className=
+- >Statut du Projet</p> <div className=
+- > {!isComplete && <span className=
+- ></span>} <span className={`relative inline-flex rounded-full h-3 w-3 ${isComplete ? 'bg-green-500' : 'bg-primary'}`}></span> </span> <span className=
+- >{isComplete ? 'Terminé' : 'En cours'}</span> </div> <div className=
+- > <div className={`h-1.5 rounded-full ${isComplete ? 'bg-green-500' : 'bg-primary'}`} style={{ width: `${progress}%` }}></div> </div> <p className=
+- >{progress}% complété</p> </div> </aside> ); }; const PosNegGrid = ({ positive, difficulty }) => { return ( <div className=
+- ></div> <div className=
+- >check_circle</span> <span className=
+- >Points Positifs</span> </div> <p className=
+- >{positive}</p> </div> </div> <div className=
+- >warning</span> <span className=
+- >Difficultés</span> </div> <p className=
+- >{difficulty}</p> </div> </div> </div> ); }; const SeanceTemplate = ({ current, title, subtitle, dot = 'primary', children, prev, next }) => { const dotClass = dot === 'alert' ? 'bg-alert' : dot === 'danger' ? 'bg-danger' : 'bg-primary'; return ( <div className=
+- > <TopHeader current={current} /> <main className=
+- > <SeancesSidebar current={current} /> <div className=
+- > <span>Journal de Bord</span> <span className=
+- >chevron_right</span> <span className=
+- >{title.split(':')[0]}</span> </div> <div className=
+- > <h1 className=
+- >{title}</h1> <p className=
+- >{subtitle}</p> </div> <div className=
+- > <div className={`absolute -left-[9px] top-0 size-[18px] rounded-full ${dotClass} border-4 border-white dark:border-background-dark shadow-sm`}></div> <div className=
+- > {children} </div> </div> <BottomArrowsNav prev={prev} next={next} /> </div> </div> </main> </div> ); }; const CompteRenduCard = ({ variant = 'primary', children }) => { const color = variant === 'alert' ? 'text-alert' : 'text-primary'; const border = variant === 'alert' ? 'border-alert/20' : 'border-gray-100 dark:border-gray-800'; const bg = variant === 'alert' ? 'barred-bg' : ''; const icon = variant === 'alert' ? 'error' : 'edit_note'; return ( <div className={`bg-white dark:bg-[#1a3324] p-6 md:p-8 rounded-xl shadow-sm border ${border} ${bg}`.trim()}> <div className={`flex items-center gap-3 mb-4 ${color}`.trim()}> <span className=
+- >{icon}</span> <span className=
+- >Compte-rendu</span> </div> {children} </div> ); }; const RecitCard = ({ children }) => { return ( <div className=
+- >auto_stories</span> <span className=
+- >Récit</span> </div> {children} </div> ); }; const InlineRef = ({ n }) => { return ( <sup className=
+- > <a className=
+- href={`#src-${n}`} aria-label={`Référence ${n}`}>[{n}]</a> </sup> ); }; const SourcesCard = ({ title = 'Références', sources = [] }) => { if (!sources || sources.length === 0) return null; return ( <div className=
+- >library_books</span> <span className=
+- >{title}</span> </div> <ol className=
+- > {sources.map((s) => ( <li key={s.n} id={`src-${s.n}`} className=
+- >{s.authors}</span> {s.date ? <span> ({s.date})</span> : null} <span> — </span> <span className=
+- >{s.title}</span> {s.publisher ? <span>, {s.publisher}</span> : null} {s.url ? ( <span> <span>. </span> <a className=
+- href={s.url} target=
+- rel=
+- title=
+- subtitle=
+- dot=
+- prev={null} next={{ to: '/seance-2', label: 'Séance 2' }} > <CompteRenduCard> <p className=
+- > <strong className=
+- >Formation de l'équipe :</strong> Le groupe a été formé par tirage au sort. Nous avons pris du temps pour organiser notre dynamique de travail. </p> <p className=
+- >Choix du sujet :</strong> Nous avons convergé vers une thématique environnementale et choisi <strong className=
+- >l'Amazonie</strong>. </p> <div className=
+- > <h3 className=
+- >theater_comedy</span> Piste de scénario (idée initiale) </h3> <p className=
+- >Ébauche :</strong> opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg. <span className=
+- >Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg.</span> <InlineRef n={1} /> </p> </div> </CompteRenduCard> {/* Image 1 : Forêt amazonienne */} <figure className=
+- > <img src=
+- alt=
+- loading=
+- /> <figcaption className=
+- >La canopée amazonienne, poumon vert de la planète menacé par la déforestation</figcaption> </figure> <RecitCard> <div className=
+- > <p> Le groupe a été formé par tirage au sort. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode, et définir rapidement un sujet exploitable pour l’EMC. </p> <p> L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables. On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines), de l’autre la protection de la forêt, des populations autochtones et de la biodiversité. <span className=
+- >Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses qui donnent des faits et des enjeux concrets.</span> <InlineRef n={2} /> <InlineRef n={4} /> </p> <p> On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg. À ce stade, l’objectif était surtout de poser un conflit clair et une progression de scènes, quitte à ajuster ensuite pour rester crédibles. <span className=
+- >On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU), ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos vérifications nous ont ensuite obligés à corriger.</span> <InlineRef n={3} /> </p> </div> </RecitCard> <PosNegGrid positive=
+- aborder l
+- difficulty=
+- actif sur le terrain." /> <SourcesCard sources={sources} /> </SeanceTemplate> ); }; // --- Séance 2 --- const Seance2 = () => { const sources = [ { n: 1, authors:
+- homme (OHCHR)
+- oct. 2009
+- Les populations autochtones revendiquent la reconnaissance de leurs savoirs traditionnels pour gérer l'environnement
+- ONU — OHCHR (FR)
+- Amnesty International
+- 26 nov. 2019
+- Brésil. Il faut mettre fin à l'élevage illégal de bétail qui alimente la destruction de la forêt tropicale amazonienne
+- Amnesty International (FR)
+- Pauline Fricot (avec AFP)
+- 24 nov. 2021
+- Malgré les promesses de Jair Bolsonaro, la déforestation en Amazonie n'a pas cessé d'augmenter
+- Novethic
+- Brésil. Risque d'effusion de sang en Amazonie si les autorités ne protègent pas les peuples indigènes
+- Haut-Commissariat des Nations unies aux droits de l'homme (OHCHR)
+- Dans la forêt amazonienne, une tribu autochtone se bat pour sa survie
+- Encyclopaedia Britannica
+- consulté en 2026
+- Greta Thunberg (biographie)
+- Britannica
+- Greta Thunberg
+- Compte Instagram officiel (publications et déplacements)
+- Instagram
+- Poynter — International Fact-Checking Network (IFCN)
+- 18 déc. 2019
+- Hoaxes about Greta Thunberg go after her family, image and activism. But why?
+- Poynter
+- /seance-2
+- SÉANCE 2 : Confrontation au réel et réajustements
+- Analyse critique du scénario et décisions structurantes.
+- Séance 1
+- /inter-seance
+- Inter-Séance
+- text-forest-dark dark:text-gray-100 font-bold
+- absence d
+- histoire. </p> <div className="bg-background-light dark:bg-black/20 p-5 rounded-lg border border-gray-200 dark:border-gray-700"> <h3 className="font-bold text-lg mb-3 flex items-center gap-2"> <span className="material-symbols-outlined text-gray-500">edit</span> Atelier d
+- text-base text-gray-600 dark:text-gray-300
+- ml-1
+- Rivière en Amazonie
+- w-full h-80 object-cover rounded-lg group-hover:scale-105 transition-transform duration-500
+- lazy
+- eau amazoniens, artères vitales d
+- L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu.
+- L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches.
+- Bibliothèque nationale de France (BnF)
+- Notice d’autorité : Qin Shi Huangdi (259?-210 av. J.-C.)
+- data.bnf.fr
+- Qin Shihuang (emperor of Qin dynasty)
+- Consignes du projet EMC
+- Document de consignes (ENT / cahier de texte / feuille distribuée)
+- Cours (interne)
+- INTER-SÉANCE : Impasse (fausse piste)
+- Travail à distance : hésitations, piste alternative, puis abandon après vérification des consignes.
+- Séance 2
+- /seance-3
+- Séance 3
+- étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Nous avons choisi de parler du premier empereur chinois Qin Shi Huang. <InlineRef n={1} /> <InlineRef n={2} /> </p> <p className="text-lg leading-relaxed text-forest-dark dark:text-gray-200 mb-6"> <strong className="text-forest-dark dark:text-gray-100 font-bold">Vérification :</strong> après relecture des consignes, on a compris que la piste envisagée était hors-thème (trop ancienne / trop éloignée d’un enjeu actuel). On l
+- amazonie :</strong> On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le limiter (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement). </p> </CompteRenduCard> <RecitCard> <div className="space-y-4 text-lg leading-relaxed text-forest-dark dark:text-gray-200"> <p> Entre les séances, on a essayé d’être “efficaces” en cherchant un nouveau thème. On a trouvé rapidement des informations fiables sur Qin Shi Huang (références encyclopédiques et base d’autorité), ce qui nous a donné l’impression d’avoir un sujet solide. <InlineRef n={1} /><InlineRef n={2} /> </p> <p> Mais en revenant aux consignes, on a réalisé que ce n’était pas ce qui était attendu : même si les références étaient solides, le sujet ne répondait pas au cadre demandé. <span className="ml-1">C’est un bon exemple où <strong>les références ne servent pas seulement à “raconter”, elles servent à valider qu’on est dans le bon projet</strong>.</span> <InlineRef n={3} /> </p> </div> </RecitCard> <PosNegGrid positive="La communication à distance montre une vraie volonté d
+- /> <SourcesCard sources={sources} /> </SeanceTemplate> ); }; // --- Séance 3 --- const Seance3 = () => { const sources = [ { n: 1, authors: 'Wikipédia', title:
+- Amazonie." dot="danger" prev={{ to:
+- , label:
+- }} next={{ to:
+- Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires.
+- Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage.
+- Document de cours (travail de groupe)
+- Dossier de travail — Asháninka / barrage Pakitzapango (notes et idées de mise en scène)
+- EMC — support interne
+- ARTE Éducation
+- Gardiens de la forêt : Brésil — Replanter l’Amazonie (vidéo)
+- educ.arte.tv
+- franceinfo
+- Un projet de barrage menace la forêt amazonienne
+- Goldman Environmental Prize
+- Ruth Buendía (campagne contre les projets de barrages sur le fleuve Ene)
+- goldmanprize.org
+- Instituto Socioambiental (ISA) — PIB
+- Constitution brésilienne (1988) — repères sur les droits des peuples autochtones (art. 231)
+- pib.socioambiental.org
+- Terras Indígenas no Brasil (ISA)
+- Terra Indígena Kampa do Rio Amônia (Acre) — informations générales
+- terrasindigenas.org.br
+- Survival International
+- Galerie photo Asháninka (crédit de l’image utilisée dans la séance 4)
+- survivalinternational.org
+- Photographie (fichier) — Asháninka
+- assets.survivalinternational.org
+- /seance-4
+- SÉANCE 4 : Choix des Asháninka et première trame
+- Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture.
+- Communauté asháninka en Amazonie
+- Le thème devient concret : un lieu, un peuple, un enjeu clair, et une première scène écrite avec des repères vérifiés.
+- Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues.
+- (prefers-color-scheme: dark)
+- dark
