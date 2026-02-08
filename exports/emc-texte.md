@@ -375,7 +375,6 @@ Exporté le 07/02/2026 19:14:18
 - Haut-Commissariat des Nations unies aux droits de l'homme (OHCHR)
 - Dans la forêt amazonienne, une tribu autochtone se bat pour sa survie
 - Encyclopaedia Britannica
-- consulté en 2026
 - Greta Thunberg (biographie)
 - Britannica
 - Greta Thunberg
