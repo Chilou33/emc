@@ -283,15 +283,17 @@
                         <p className="text-slate-200 leading-snug whitespace-pre-line">{difficulty}</p>
                     </div>
                 </div>
-                {solutions && (
-                    <div className="glass-card p-6 rounded-2xl border border-blue-500/30 bg-blue-900/10">
-                        <div className="flex items-center gap-2 mb-3 text-blue-300">
-                            <span className="material-symbols-outlined">lightbulb</span>
-                            <span className="font-bold text-sm uppercase tracking-wider">Pistes & Solutions</span>
-                        </div>
-                        <p className="text-slate-200 leading-snug">{solutions}</p>
+                <div className="glass-card p-6 rounded-2xl border border-blue-500/30 bg-blue-900/10">
+                    <div className="flex items-center gap-2 mb-3 text-blue-300">
+                        <span className="material-symbols-outlined">lightbulb</span>
+                        <span className="font-bold text-sm uppercase tracking-wider">Pistes & Solutions</span>
                     </div>
-                )}
+                    {solutions ? (
+                        <p className="text-slate-200 leading-snug whitespace-pre-line">{solutions}</p>
+                    ) : (
+                        <p className="text-slate-300/80 leading-snug italic">À compléter.</p>
+                    )}
+                </div>
             </div>
         );
 
