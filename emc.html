@@ -474,7 +474,7 @@
                     // Alt + H = Home
                     if (e.altKey && e.key === 'h') {
                         e.preventDefault();
-                        window.location.hash = '/';
+                        window.location.href = '#/';
                     }
                     // Alt + T = Scroll to top
                     if (e.altKey && e.key === 't') {
@@ -498,7 +498,7 @@
                 const updateProgress = () => {
                     const scrollTop = window.scrollY;
                     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const scrolled = (scrollTop / docHeight) * 100;
+                    const scrolled = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
                     setProgress(scrolled);
                 };
 
