@@ -1,5 +1,28 @@
+# Test files
+test-*.mjs
+validate-*.mjs
+
+# Node modules
 node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test artifacts
 playwright-report/
 test-results/
 *.png
 *.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+/tmp/
+*.tmp

@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Journal de bord EMC 2026 - Documentation pour l'écriture d'une pièce de théâtre engagée sur la résistance de l'Amazonie et du peuple Asháninka">
+    <meta name="theme-color" content="#022c22">
     <title>Projet Amazonie - Journal de Bord</title>
 
+    <!-- Resource hints for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/history@5/umd/history.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <!-- Tailwind config must be set before loading the CDN script -->
@@ -34,9 +41,10 @@
                         serif: ['Newsreader', 'serif'],
                     },
                     animation: {
-                        'fade-in': 'fadeIn 1.5s ease-out forwards',
-                        'slide-up': 'slideUp 1s ease-out forwards',
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
                         'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -44,12 +52,16 @@
                             '100%': { opacity: '1' },
                         },
                         slideUp: {
-                            '0%': { transform: 'translateY(40px)', opacity: '0' },
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(52, 211, 153, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(52, 211, 153, 0.6)' },
                         }
                     }
                 }
@@ -64,28 +76,64 @@
             color: #e2e8f0;
             overflow-x: hidden;
         }
-        /* Effet de verre global */
+        /* Effet de verre global - Amélioré */
         .glass-panel {
-            background: rgba(20, 40, 30, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(20, 40, 30, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s ease, background 0.3s ease;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
         }
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
         }
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #022c22; }
-        ::-webkit-scrollbar-thumb { background: #34d399; border-radius: 4px; }
+        /* Scrollbar - Amélioré */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #011611; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #34d399, #059669); 
+            border-radius: 5px; 
+            border: 2px solid #011611;
+        }
+        ::-webkit-scrollbar-thumb:hover { 
+            background: linear-gradient(180deg, #10b981, #047857); 
+        }
+        /* Amélioration de la lisibilité */
+        p { line-height: 1.7; }
+        h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
+        /* Animation de chargement */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .loading-skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        /* Gradient de fond de secours pendant le chargement de l'image */
+        .bg-loading {
+            background: linear-gradient(135deg, #022c22 0%, #014a3a 50%, #022c22 100%);
+        }
+        /* Respect des préférences de mouvement réduit */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -174,12 +222,70 @@
             );
         };
 
+        // Indicateur de progression visuel
+        const ProgressIndicator = () => {
+            const location = useLocation();
+            const [scrollProgress, setScrollProgress] = useState(0);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    const winScroll = document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    setScrollProgress(scrolled);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            if (location.pathname === '/') return null;
+
+            return (
+                <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-forest/50">
+                    <div 
+                        className="h-full bg-gradient-to-r from-primary via-emerald-400 to-primary transition-all duration-150 shadow-[0_0_10px_rgba(52,211,153,0.5)]"
+                        style={{ width: `${scrollProgress}%` }}
+                    />
+                </div>
+            );
+        };
+
+        // Bouton de retour en haut
+        const ScrollToTop = () => {
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                const toggleVisibility = () => {
+                    setIsVisible(window.pageYOffset > 300);
+                };
+                window.addEventListener('scroll', toggleVisibility);
+                return () => window.removeEventListener('scroll', toggleVisibility);
+            }, []);
+
+            const scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            if (!isVisible) return null;
+
+            return (
+                <button
+                    onClick={scrollToTop}
+                    className="fixed bottom-8 right-8 z-50 p-4 rounded-full bg-primary/90 text-forest hover:bg-primary hover:scale-110 transition-all shadow-lg hover:shadow-[0_0_30px_rgba(52,211,153,0.6)] animate-fade-in"
+                    aria-label="Retour en haut"
+                >
+                    <span className="material-symbols-outlined text-2xl">arrow_upward</span>
+                </button>
+            );
+        };
+
         // Fond d'écran animé
         const Background = () => (
-            <div className="fixed inset-0 z-[-1] overflow-hidden">
+            <div className="fixed inset-0 z-[-1] overflow-hidden bg-loading">
                 <img
                     src="https://images.unsplash.com/photo-1583470790878-4f4f3811a01f?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="Jungle"
+                    alt="Jungle amazonienne"
+                    loading="eager"
                     className="absolute w-full h-full object-cover opacity-60 animate-fade-in scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-forest via-forest/80 to-transparent mix-blend-multiply"></div>
@@ -195,12 +301,12 @@
         );
 
         const SectionHeader = ({ title, subtitle, number }) => (
-            <div className="mb-10 pt-24 md:pt-32 text-center">
-                <div className="inline-block px-3 py-1 mb-4 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest">
+            <div className="mb-12 pt-24 md:pt-32 text-center">
+                <div className="inline-block px-4 py-2 mb-5 rounded-full border-2 border-primary/40 bg-primary/10 text-primary text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/20">
                     Séance {number}
                 </div>
-                <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-4 drop-shadow-lg">{title}</h1>
-                <p className="text-xl text-slate-300 max-w-2xl mx-auto font-serif italic border-b border-primary/30 pb-4 inline-block">{subtitle}</p>
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-white mb-5 drop-shadow-2xl leading-tight">{title}</h1>
+                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-serif italic border-b-2 border-primary/40 pb-4 inline-block">{subtitle}</p>
             </div>
         );
 
@@ -218,11 +324,11 @@
 
             return (
                 <div className={`glass-card p-6 md:p-8 rounded-2xl mb-6 ${styles[type]}`}>
-                    <div className="flex items-center gap-3 mb-4">
-                        <span className={`material-symbols-outlined ${iconColors[type]}`}>{icon}</span>
-                        <h3 className="text-sm font-bold uppercase tracking-wider text-slate-400">{title}</h3>
+                    <div className="flex items-center gap-3 mb-5">
+                        <span className={`material-symbols-outlined text-3xl ${iconColors[type]}`}>{icon}</span>
+                        <h3 className="text-base font-bold uppercase tracking-wider text-slate-300">{title}</h3>
                     </div>
-                    <div className="text-slate-200 leading-relaxed font-sans text-lg space-y-4">
+                    <div className="text-slate-200 leading-relaxed font-sans text-base md:text-lg space-y-4">
                         {children}
                     </div>
                 </div>
@@ -377,15 +483,15 @@
                             Documentation pour l'écriture d'une <strong>pièce de théâtre engagée</strong> sur la résistance de l'Amazonie et du peuple <strong>Asháninka</strong>.
                         </p>
 
-                        <div className="animate-slide-up flex flex-col md:flex-row gap-4 justify-center items-center" style={{animationDelay: '0.4s'}}>
-                            <button onClick={() => scrollToSection('seance-1')} className="group relative px-8 py-4 bg-primary text-forest font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(52,211,153,0.4)]">
-                                <span className="relative z-10 flex items-center gap-2">
+                        <div className="animate-slide-up flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center" style={{animationDelay: '0.4s'}}>
+                            <button onClick={() => scrollToSection('seance-1')} className="group relative px-8 py-4 bg-primary text-forest font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(52,211,153,0.6)] text-base sm:text-lg">
+                                <span className="relative z-10 flex items-center justify-center gap-2">
                                     Commencer la lecture
                                     <span className="material-symbols-outlined">arrow_downward</span>
                                 </span>
                                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                             </button>
-                            <button onClick={() => scrollToSection('seance-4')} className="px-8 py-4 rounded-full border border-white/20 text-white hover:bg-white/10 transition-colors font-medium backdrop-blur-sm">
+                            <button onClick={() => scrollToSection('seance-4')} className="px-8 py-4 rounded-full border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all font-medium backdrop-blur-sm text-base sm:text-lg">
                                 Voir la conclusion
                             </button>
                         </div>
@@ -974,8 +1080,10 @@
         const App = () => {
             return (
                 <HashRouter>
+                    <ProgressIndicator />
                     <Navbar />
                     <Background />
+                    <ScrollToTop />
                     <div className="pt-10">
                         <Routes>
                             <Route path="/" element={<HomeFlow />} />
