@@ -4,17 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projet Amazonie - Journal de Bord</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Journal de bord d'un projet EMC sur l'Amazonie : découvrez notre parcours de recherche sur les Asháninka et la protection de la forêt amazonienne.">
+    <meta name="keywords" content="Amazonie, Asháninka, déforestation, environnement, peuples autochtones, EMC, éducation">
+    <meta name="author" content="Groupe EMC - Projet Amazonie">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Projet Amazonie - Journal de Bord">
+    <meta property="og:description" content="Journal de bord d'un projet EMC sur l'Amazonie : découvrez notre parcours de recherche sur les Asháninka et la protection de la forêt amazonienne.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1583470790878-4f4f3811a01f?q=80&w=1200">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Projet Amazonie - Journal de Bord">
+    <meta name="twitter:description" content="Journal de bord d'un projet EMC sur l'Amazonie : découvrez notre parcours de recherche sur les Asháninka et la protection de la forêt amazonienne.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1583470790878-4f4f3811a01f?q=80&w=1200">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌳</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/history@5/umd/history.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
     <!-- Tailwind config must be set before loading the CDN script -->
@@ -86,6 +106,22 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #022c22; }
         ::-webkit-scrollbar-thumb { background: #34d399; border-radius: 4px; }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Link hover effect */
+        a {
+            transition: color 0.2s ease;
+        }
+        
+        /* Image loading optimization */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -341,6 +377,115 @@
             );
         };
 
+        // Progress Indicator
+        const ProgressIndicator = () => {
+            const [progress, setProgress] = useState(0);
+
+            useEffect(() => {
+                const updateProgress = () => {
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrolled = (scrollTop / docHeight) * 100;
+                    setProgress(scrolled);
+                };
+
+                window.addEventListener('scroll', updateProgress);
+                return () => window.removeEventListener('scroll', updateProgress);
+            }, []);
+
+            return (
+                <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-forest/30">
+                    <div 
+                        className="h-full bg-gradient-to-r from-primary via-emerald-400 to-primary transition-all duration-100 ease-out shadow-[0_0_10px_rgba(52,211,153,0.5)]"
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+            );
+        };
+
+        // Scroll to Top Button
+        const ScrollToTop = () => {
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                const toggleVisibility = () => {
+                    setIsVisible(window.scrollY > 500);
+                };
+
+                window.addEventListener('scroll', toggleVisibility);
+                return () => window.removeEventListener('scroll', toggleVisibility);
+            }, []);
+
+            const scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            return (
+                <button
+                    onClick={scrollToTop}
+                    className={`fixed bottom-8 right-8 z-50 p-4 rounded-full bg-primary text-forest shadow-lg hover:bg-emerald-400 transition-all duration-300 hover:shadow-[0_0_30px_rgba(52,211,153,0.5)] ${
+                        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16 pointer-events-none'
+                    }`}
+                    aria-label="Retour en haut"
+                >
+                    <span className="material-symbols-outlined">arrow_upward</span>
+                </button>
+            );
+        };
+
+        // Footer Component
+        const Footer = () => {
+            const location = useLocation();
+            const isHome = location.pathname === '/';
+            
+            return (
+                <footer className="glass-panel border-t border-white/10 mt-20 py-12">
+                    <div className="max-w-4xl mx-auto px-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                            <div>
+                                <h3 className="flex items-center gap-2 font-serif font-bold text-lg text-white mb-4">
+                                    <span className="material-symbols-outlined text-primary">forest</span>
+                                    À propos
+                                </h3>
+                                <p className="text-slate-300 text-sm leading-relaxed">
+                                    Ce journal de bord documente notre projet EMC 2026 sur l'Amazonie et le peuple Asháninka. Un travail de recherche pour une pièce de théâtre engagée.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h3 className="font-serif font-bold text-lg text-white mb-4">Navigation</h3>
+                                <ul className="space-y-2 text-sm">
+                                    <li><Link to="/" className="text-slate-300 hover:text-primary transition-colors">Accueil</Link></li>
+                                    <li><Link to="/seance-1" className="text-slate-300 hover:text-primary transition-colors">Séance 1</Link></li>
+                                    <li><Link to="/seance-2" className="text-slate-300 hover:text-primary transition-colors">Séance 2</Link></li>
+                                    <li><Link to="/inter-seance" className="text-slate-300 hover:text-primary transition-colors">Inter-Séance</Link></li>
+                                    <li><Link to="/seance-3" className="text-slate-300 hover:text-primary transition-colors">Séance 3</Link></li>
+                                    <li><Link to="/seance-4" className="text-slate-300 hover:text-primary transition-colors">Séance 4</Link></li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h3 className="font-serif font-bold text-lg text-white mb-4">Ressources</h3>
+                                <p className="text-slate-300 text-sm leading-relaxed mb-3">
+                                    Toutes les sources sont référencées à la fin de chaque séance pour garantir la qualité de notre documentation.
+                                </p>
+                                <div className="flex items-center gap-2 text-xs text-slate-400">
+                                    <span className="material-symbols-outlined text-sm">verified</span>
+                                    <span>Sources vérifiées</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className="pt-8 border-t border-white/10 text-center">
+                            <p className="text-slate-400 text-sm">
+                                © 2026 Projet EMC Amazonie • Fait avec <span className="text-red-400">♥</span> pour la protection de l'environnement
+                            </p>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
         // --- PAGES ---
 
         // 1. LANDING PAGE (HERO)
@@ -425,6 +570,7 @@
                 <div id="seance-4" className="scroll-mt-28">
                     <Seance4 />
                 </div>
+                <Footer />
             </div>
         );
 
@@ -976,16 +1122,18 @@
         const App = () => {
             return (
                 <HashRouter>
+                    <ProgressIndicator />
                     <Navbar />
                     <Background />
+                    <ScrollToTop />
                     <div className="pt-10">
                         <Routes>
                             <Route path="/" element={<HomeFlow />} />
-                            <Route path="/seance-1" element={<Seance1 />} />
-                            <Route path="/seance-2" element={<Seance2 />} />
-                            <Route path="/inter-seance" element={<InterSeance />} />
-                            <Route path="/seance-3" element={<Seance3 />} />
-                            <Route path="/seance-4" element={<Seance4 />} />
+                            <Route path="/seance-1" element={<><Seance1 /><Footer /></>} />
+                            <Route path="/seance-2" element={<><Seance2 /><Footer /></>} />
+                            <Route path="/inter-seance" element={<><InterSeance /><Footer /></>} />
+                            <Route path="/seance-3" element={<><Seance3 /><Footer /></>} />
+                            <Route path="/seance-4" element={<><Seance4 /><Footer /></>} />
                         </Routes>
                     </div>
                 </HashRouter>
