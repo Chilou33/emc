@@ -9,6 +9,12 @@ node_modules/
 *.log
 npm-debug.log*
 
+# Test artifacts
+playwright-report/
+test-results/
+*.png
+*.zip
+
 # OS files
 .DS_Store
 Thumbs.db

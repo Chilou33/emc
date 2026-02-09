@@ -88,9 +88,7 @@
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-                        background 0.3s ease,
-                        box-shadow 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
         }
         .glass-card:hover {
             background: rgba(255, 255, 255, 0.1);
@@ -120,6 +118,21 @@
             background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
             background-size: 1000px 100%;
             animation: shimmer 2s infinite;
+        }
+        /* Gradient de fond de secours pendant le chargement de l'image */
+        .bg-loading {
+            background: linear-gradient(135deg, #022c22 0%, #014a3a 50%, #022c22 100%);
+        }
+        /* Respect des préférences de mouvement réduit */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
@@ -268,10 +281,10 @@
 
         // Fond d'écran animé
         const Background = () => (
-            <div className="fixed inset-0 z-[-1] overflow-hidden">
+            <div className="fixed inset-0 z-[-1] overflow-hidden bg-loading">
                 <img
                     src="https://images.unsplash.com/photo-1583470790878-4f4f3811a01f?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    alt="Jungle"
+                    alt="Jungle amazonienne"
                     loading="eager"
                     className="absolute w-full h-full object-cover opacity-60 animate-fade-in scale-105"
                 />
