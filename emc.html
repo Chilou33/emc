@@ -157,6 +157,43 @@
         .skip-to-content:focus {
             top: 1rem;
         }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .fixed, nav, button, .scroll-to-top {
+                display: none !important;
+            }
+            
+            .glass-panel, .glass-card {
+                background: white !important;
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+            }
+            
+            a {
+                text-decoration: underline;
+                color: black !important;
+            }
+            
+            img {
+                max-width: 100%;
+                page-break-inside: avoid;
+            }
+            
+            h1, h2, h3 {
+                page-break-after: avoid;
+                color: black !important;
+            }
+            
+            .material-symbols-outlined {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -545,16 +582,26 @@
                                 <p className="text-slate-300 text-sm leading-relaxed mb-3">
                                     Toutes les sources sont référencées à la fin de chaque séance pour garantir la qualité de notre documentation.
                                 </p>
-                                <div className="flex items-center gap-2 text-xs text-slate-400">
+                                <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">
                                     <span className="material-symbols-outlined text-sm">verified</span>
                                     <span>Sources vérifiées</span>
+                                </div>
+                                <div className="mt-4 p-3 bg-white/5 rounded-lg border border-white/10">
+                                    <p className="text-xs text-slate-400 mb-2 font-semibold">Raccourcis clavier ⌨️</p>
+                                    <ul className="text-xs text-slate-300 space-y-1">
+                                        <li><kbd className="px-1.5 py-0.5 bg-white/10 rounded text-xs">Alt + H</kbd> Accueil</li>
+                                        <li><kbd className="px-1.5 py-0.5 bg-white/10 rounded text-xs">Alt + T</kbd> Haut de page</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                         
                         <div className="pt-8 border-t border-white/10 text-center">
-                            <p className="text-slate-400 text-sm">
+                            <p className="text-slate-400 text-sm mb-2">
                                 © 2026 Projet EMC Amazonie • Fait avec <span className="text-red-400">♥</span> pour la protection de l'environnement
+                            </p>
+                            <p className="text-slate-500 text-xs">
+                                Dernière mise à jour : Février 2026
                             </p>
                         </div>
                     </div>
