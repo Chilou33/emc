@@ -141,8 +141,11 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useContext, createContext } = React;
         const { HashRouter, Routes, Route, Link, useLocation } = ReactRouterDOM;
+
+        // Context pour gérer l'unicité des IDs par séance
+        const SessionContext = createContext(null);
 
         // --- COMPOSANTS DE BASE ---
 
@@ -335,11 +338,27 @@
             );
         };
 
-        const InlineRef = ({ n }) => (
-            <sup className="ml-1 align-super text-xs text-primary font-sans">
-                <a className="hover:underline" href={`#src-${n}`} aria-label={`Référence ${n}`}>[{n}]</a>
-            </sup>
-        );
+        const InlineRef = ({ n }) => {
+            const prefix = useContext(SessionContext);
+            const targetId = prefix ? `src-${prefix}-${n}` : `src-${n}`;
+            
+            const scrollToSource = (e) => {
+                e.preventDefault();
+                const element = document.getElementById(targetId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Ajoute un petit effet visuel temporaire sur la cible
+                    element.classList.add('bg-white/10');
+                    setTimeout(() => element.classList.remove('bg-white/10'), 2000);
+                }
+            };
+
+            return (
+                <sup className="ml-1 align-super text-xs text-primary font-sans cursor-pointer">
+                    <span className="hover:underline" onClick={scrollToSource} aria-label={`Référence ${n}`}>[{n}]</span>
+                </sup>
+            );
+        };
 
         const Sources = ({ title = 'Sources & Références', list }) => {
             if (!list || list.length === 0) return null;
@@ -480,7 +499,7 @@
 
                         <p className="animate-slide-up text-lg md:text-2xl text-slate-300 font-light max-w-2xl mx-auto mb-12 leading-relaxed" style={{animationDelay: '0.2s'}}>
                             Journal de bord EMC 2026. <br/>
-                            Documentation pour l'écriture d'une <strong>pièce de théâtre engagée</strong> sur la résistance de l'Amazonie et du peuple <strong>Asháninka</strong>.
+                            Documentation pour l'écriture d'une <strong>pièce de théâtre engagée</strong> sur l'Amazonie et le peuple <strong>Asháninka</strong>.
                         </p>
 
                         <div className="animate-slide-up flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center" style={{animationDelay: '0.4s'}}>
@@ -569,43 +588,15 @@
             ];
 
             return (
-                <div className="max-w-4xl mx-auto px-6 pb-20">
-                    <ContentSection>
-                        <SectionHeader
-                            title="SÉANCE 1 : Constitution du groupe et premières pistes"
+                <SessionContext.Provider value="s1">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                                title="SÉANCE 1 : Constitution du groupe et premières pistes"
                             subtitle="Définir notre sujet et nos rôles."
                             number="1"
                         />
 
-                        <Card title="Compte-rendu" icon="edit_note" type="info">
-                            <p className="text-lg leading-relaxed mb-4">
-                                <strong className="font-bold">Formation de l'équipe :</strong> Le groupe a été formé par tirage au sort. Nous avons pris du temps pour organiser notre dynamique de travail.
-                            </p>
-                            <p className="text-lg leading-relaxed mb-6">
-                                <strong className="font-bold">Choix du sujet :</strong> Nous avons convergé vers une thématique environnementale, notre professeure nous explique qu'on ne lui a jamais présenté un projet comme celui-ci et choisi <strong className="text-primary font-bold">l'Amazonie</strong>.
-                            </p>
-                            <div className="bg-black/20 p-5 rounded-lg border border-white/10">
-                                <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-slate-300">theater_comedy</span>
-                                    Piste de scénario (idée initiale)
-                                </h3>
-                                <p className="text-base text-slate-200">
-                                    <strong className="font-bold">Ébauche :</strong> Opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée (ensuite remise en cause) d'intégrer Greta Thunberg.
-                                    <span className="ml-1">Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg, on pense que ça conviendrait parfaitement à une pièce.</span>
-                                    <InlineRef n={1} />
-                                </p>
-                            </div>
-                        </Card>
-
-                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
-                            <img
-                                src="https://c.files.bbci.co.uk/1531B/production/_110111868_gretabolsopromo.jpg"
-                                alt="Jair Bolsonaro et Greta Thunberg - tension médiatique 2019"
-                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
-                            />
-                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">La tension médiatique entre Jair Bolsonaro et Greta Thunberg en 2019 — un conflit symbolique pertinent pour notre scénario.</figcaption>
-                        </figure>
 
                         <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
                             <img
@@ -620,33 +611,52 @@
                         <Card title="Récit" icon="auto_stories">
                             <div className="space-y-4 text-lg leading-relaxed">
                                 <p>
-                                    Le groupe a été formé par tirage au sort. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode, et définir rapidement un sujet exploitable pour l’EMC.
+                                    Le groupe a été formé par tirage au sort. Notre groupe est composé de Hector, Jad, Eliés, Farès, Pauline et moi-même. Dès le début, on a clarifié la façon de travailler : répartir les tâches, se mettre d’accord sur une méthode, et définir rapidement un sujet exploitable pour la création d'une pièce de théâtre.
                                 </p>
                                 <p>
-                                    L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables. On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines), de l’autre la protection de la forêt, des populations autochtones et de la biodiversité. Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses qui donnent des faits et des enjeux concrets. On garde en tête que ce type de sources (presse, ONG) peut avoir un angle (urgence, sensibilisation) : on les utilise donc en les recoupant et en distinguant faits/chiffres et interprétations.
-                                    <InlineRef n={2} /><InlineRef n={4} />
+                                    L’Amazonie s’est imposée parce qu’elle permet d’aborder un conflit actuel avec des acteurs identifiables. Étant le plus grand poumon vert de la planète Notre professeure nous a également expliqué qu’on ne lui avait jamais présenté un projet de ce type, ce qui a renforcé notre choix. On a cadré l’opposition principale : d’un côté des décisions politiques et des intérêts économiques liés à l’exploitation (agriculture, bois, mines), de l’autre la protection de la forêt, des populations autochtones et de la biodiversité. Pour éviter de rester dans des idées “générales”, on s’est appuyés dès le départ sur des articles/synthèses <InlineRef n={2} /><InlineRef n={4} /> qui donnent des faits et des enjeux concrets. On garde en tête que ce type de sources (presse, ONG) peut avoir un angle (urgence, sensibilisation) : on les utilise donc en les recoupant et en distinguant les faits et chiffres des interprétations.
+                                </p>
+                                <div className="bg-black/20 p-5 rounded-lg border border-white/10">
+                                    <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-slate-300">theater_comedy</span>
+                                        Piste de scénario (idée initiale)
+                                    </h3>
+                                    <p className="text-base text-slate-200">
+                                        <strong className="font-bold">Ébauche :</strong> Opposition entre Jair Bolsonaro (politique de déforestation) et les peuples autochtones, avec l'idée d'intégrer Greta Thunberg.
+                                        <span className="ml-1">Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg <InlineRef n={1} />, on pense que ça conviendrait parfaitement à une pièce.</span>
+                                    </p>
+                                </div>
+                                <p>
+                                    On pourrait jouer son discours devant l'ONU (ou face à un représentant du gouvernement brésilien) pour manifester pour la protection de l’Amazonie.
                                 </p>
                                 <p>
-                                    On a rédigé une première piste de scénario : Bolsonaro face aux peuples autochtones, avec l’idée (provisoire) d’intégrer Greta Thunberg. Exemple de tension médiatique : en 2019, Bolsonaro a publiquement insulté Greta Thunberg, on pense que ça conviendrait parfaitement à une pièce. On pourrait jouer son discours devant l’Onu ou devant le gouvernement brésilien pour manifester pour la protection de l’Amazonie.
-                                </p>
-                                <p>
-                                    À ce stade, l’objectif était surtout de poser un conflit clair. On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU). Son discours filmé est une source primaire utile pour situer son rôle public, mais ça ne prouve pas une action “sur place” au Brésil, ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos recherches nous ont ensuite obligés à corriger.
-                                    <InlineRef n={3} />
+                                    À ce stade, l’objectif était surtout de poser un conflit clair. On a noté un point à vérifier : Greta est surtout une figure de mobilisation internationale (par exemple à l’ONU). Son discours filmé <InlineRef n={3} /> est une source primaire utile pour situer son rôle public, mais ça ne prouve pas une action “sur place” au Brésil, ce qui rend sa présence “sur le terrain” moins évidente — et c’est précisément ce que nos recherches nous ont ensuite obligés à corriger.
                                 </p>
                             </div>
+                            
+                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                            <img
+                                src="https://c.files.bbci.co.uk/1531B/production/_110111868_gretabolsopromo.jpg"
+                                alt="Jair Bolsonaro et Greta Thunberg - tension médiatique 2019"
+                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                            />
+                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">La tension médiatique entre Jair Bolsonaro et Greta Thunberg en 2019 — un conflit symbolique pertinent pour notre scénario.</figcaption>
+                        </figure>
                         </Card>
 
                         <PosNegGrid
-                            positive="La dynamique de groupe est bonne. Le sujet Amazonie offre beaucoup de ressources et nous permet d'aborder le projet sous plusieurs angles."
-                            difficulty="Intégrer Greta Thunberg de façon réaliste dans une scène au Brésil paraît difficile : son rôle est plus symbolique qu'actif sur le terrain."
-                            solutions="Si on veut vraiment intégrer Greta Thunberg il faut le faire de manière intelligente."
+                            positive="La dynamique de groupe est bonne. La thématique de l'Amazonie offre beaucoup de ressources et nous permet d'aborder le projet sous plusieurs angles."
+                            difficulty="Intégrer Greta Thunberg de façon réaliste dans une scène au Brésil paraît difficile : en effet son action au Brésil n'est que limitée."
+                            solutions="Il faut approfondir nos recherches pour décider si l'on veut réellement l'intégrer car on passerait plus dans un coté fictif plutôt que factuel. Si on veut vraiment intégrer Greta Thunberg il faut le faire de manière intelligente."
                         />
 
                         <Sources list={sources} />
 
                         <NavArrows next={{to: '/seance-2', label: 'Séance 2'}} />
-                    </ContentSection>
-                </div>
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider>
             );
         };
 
@@ -717,44 +727,36 @@
                 },
             ];
 
-            return (
-                <div className="max-w-4xl mx-auto px-6 pb-20">
-                    <ContentSection>
-                        <SectionHeader
+            returSessionContext.Provider value="s2">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                            <SectionHeader
                             title="SÉANCE 2 : Confrontation au réel et réajustements"
                             subtitle="Analyse critique du scénario et décisions structurantes."
                             number="2"
                         />
 
-                        <Card title="Compte-rendu" icon="edit_note" type="info">
-                            <p className="text-lg leading-relaxed mb-4">
-                                <strong className="font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
-                            </p>
-                            <p className="text-lg leading-relaxed mb-6">
-                                <strong className="font-bold">Décision majeure :</strong> le personnage de Greta a été supprimé pour plus de réalisme <em>(décision prise après vérification documentaire)</em>. Malgré l'absence d'Hector, nous avons continué à structurer l'histoire.
-                            </p>
-                            <p className="text-lg leading-relaxed mb-6">
-                                <strong className="font-bold">Atelier d'écriture :</strong> Le groupe débat sur la pertinence des personnages secondaires et clarifie les scènes clés.
-                            </p>
-                        </Card>
-
                         <Card title="Récit" icon="auto_stories">
                             <div className="space-y-4 text-lg leading-relaxed">
                                 <p>
-                                    Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ? On a aussi appris à hiérarchiser nos sources : institutions/encyclopédies pour les faits stables, presse/ONG pour comprendre l’actualité et les alertes (avec un angle possible), et réseaux sociaux comme simples indices à recouper.
+                                    <strong className="font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
                                 </p>
                                 <p>
-                                    En confrontant notre histoire à des informations factuelles (sur les peuples autochtones et la déforestation), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
-                                    <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={5} />
+                                    <strong className="font-bold">Atelier de recherche :</strong> Le groupe recherche des informations sur les peuples autochtones. Pour trouver ceux qui sont directement concernés par la déforestation, et que l'on pourrait représenter.
                                 </p>
                                 <p>
-                                    C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie et ses prises de parole (et en comparant avec ses déplacements/publications), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit. Par exemple, Instagram est utile pour repérer des dates/lieux, mais ce n’est pas une preuve exhaustive (posts sélectionnés, pas une “trace officielle”) : on a donc privilégié des sources plus stables et des articles de fact-checking.
+                                    Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ? 
+                                </p>
+                                <p>
+                                    En confrontant notre histoire à des informations factuelles (sur les peuples autochtones <InlineRef n={1} /><InlineRef n={5} /> et la déforestation <InlineRef n={2} />), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
+                                </p>
+                                <p>
+                                    C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie <InlineRef n={6} /> et ses prises de parole (et en comparant avec ses déplacements/publications <InlineRef n={7} />), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit. Par exemple, Instagram est utile pour repérer des dates/lieux, mais ce n’est pas une preuve exhaustive (posts sélectionnés, pas une “trace officielle”) : on a donc privilégié des sources plus stables et des articles de fact-checking <InlineRef n={8} />.
                                     <span className="ml-1">Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.</span>
-                                    <InlineRef n={6} /><InlineRef n={7} /><InlineRef n={8} />
                                 </p>
                                 <p>
-                                    Enfin, ce travail de vérification nous a aidés à rendre le scénario plus “EMC” : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques, conséquences humaines).
-                                    <InlineRef n={3} /><InlineRef n={4} />
+                                    Enfin, ce travail de vérification nous a aidés à rendre le scénario plus cohérent : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques <InlineRef n={3} />,et leurs conséquences humaines <InlineRef n={4} />).
                                 </p>
                             </div>
                         </Card>
@@ -776,8 +778,9 @@
 
                         <Sources list={sources} />
 
-                        <NavArrows prev={{to: '/seance-1', label: 'Séance 1'}} next={{to: '/inter-seance', label: 'Inter-Séance'}} />
-                    </ContentSection>
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider/ContentSection>
                 </div>
             );
         };
@@ -814,46 +817,36 @@
                 },
             ];
 
-            return (
-                <div className="max-w-4xl mx-auto px-6 pb-20">
-                    <ContentSection>
-                        <SectionHeader
+            returSessionContext.Provider value="is">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                            <SectionHeader
                             title="INTER-SÉANCE : "
                             subtitle="Travail à distance : hésitations, piste alternative."
                             number="Hors-Classe"
                         />
 
-                        <Card title="Compte-rendu" icon="error" type="alert">
-                            <p className="text-lg leading-relaxed mb-4">
-                                <strong className="font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Nous avons choisi de parler du premier empereur chinois Qin Shi Huang.
-                                <InlineRef n={1} />
-                                <InlineRef n={2} />
-                            </p>
-                            <p className="text-lg leading-relaxed mb-6">
-                                <strong className="font-bold">Vérification :</strong> après s'être souvenu des consignes, on a compris que la piste envisagée était hors-thème (trop ancienne ). On l'a donc abandonnée.
-                                <InlineRef n={3} />
-                            </p>
-                            <p className="text-lg leading-relaxed mb-6">
-                                <strong className="font-bold">Retour à l'Amazonie :</strong> On est revenus à l’Amazonie avec un objectif plus précis : garder le sujet, mais mieux le cadrer (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement).
-                            </p>
-                        </Card>
-
                         <Card title="Récit" icon="auto_stories" type="info">
                             <div className="space-y-4 text-lg leading-relaxed">
                                 <p>
-                                    Entre les séances, on a essayé d’être “efficaces” en cherchant un nouveau thème. On a trouvé rapidement des informations fiables sur Qin Shi Huang (références encyclopédiques et base d’autorité), ce qui nous a donné l’impression d’avoir un sujet solide.
-                                    <InlineRef n={1} /><InlineRef n={2} />
+                                    <strong className="font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Jad a eu l’idée de  parler du premier empereur chinois Qin Shi Huang <InlineRef n={1} /><InlineRef n={2} />.
+                                </p>
+                                                                    On a donc commencé nos recherches et on a rapidement trouvé  des informations fiables sur Qin Shi Huang (références encyclopédiques <InlineRef n={2} /> et base d’autorité <InlineRef n={1} />), ce qui nous a donné l’impression d’avoir un sujet solide.
+                                <p>
+                                    <strong className="font-bold">Vérification :</strong> Après s'être remémoré les consignes <InlineRef n={3} />, on a compris que la piste envisagée était hors-thème (trop ancienne). On l'a donc abandonnée.
                                 </p>
                                 <p>
-                                    Mais en revenant aux consignes, on a réalisé que ce n’était pas ce qui était attendu : même si les références étaient solides, le sujet ne répondait pas au cadre demandé. C’est un bon exemple où <strong className="font-bold">les références ne servent pas seulement à “raconter”, elles servent à valider qu’on est dans le bon projet</strong> — et où l’on voit une limite : une source très fiable peut être inutile si elle ne répond pas à la problématique EMC.
-                                    <InlineRef n={3} />
+                                    <strong className="font-bold">Retour à l'Amazonie :</strong> On est revenus au sujet Amazonien avec un objectif plus précis : garder le sujet, mais mieux le cadrer (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement).
+                                </p>
+                                <p>Ce travail à distance a été inutile : on a perdu du temps. Cependant, cette expérience nous a permis de mieux comprendre les consignes et de renforcer notre capacité à critiquer nos idées avant de les développer.
                                 </p>
                             </div>
                         </Card>
 
                         <PosNegGrid
-                            positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une recherche constante."
-                            difficulty="Une compréhension initiale insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
+                            positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une volonté de recherche constante."
+                            difficulty="Une compréhension insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
                         />
 
                         <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
@@ -868,8 +861,9 @@
 
                         <Sources list={sources} />
 
-                        <NavArrows prev={{to: '/seance-2', label: 'Séance 2'}} next={{to: '/seance-3', label: 'Séance 3'}} />
-                    </ContentSection>
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider/ContentSection>
                 </div>
             );
         };
@@ -916,10 +910,11 @@
                     url: 'https://major-prepa.com/wp-content/uploads/2022/12/mafia-italo-americaine-1024x805.jpg'
                 },
             ];
-
-            return (
-                <div className="max-w-4xl mx-auto px-6 pb-20">
-                    <ContentSection>
+SessionContext.Provider value="s3">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                        <ContentSection>
                         <SectionHeader
                             title="SÉANCE 3 : Impasse et recentrage"
                             subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
@@ -929,14 +924,15 @@
                         <Card title="Récit" icon="auto_stories" type="info">
                             <div className="space-y-4 text-lg leading-relaxed">
                                 <p>
-                                    En séance 3, on a tenté une nouvelle piste : la mafia italienne (liée à l’histoire familiale de Pauline). Pour vérifier qu’on ne restait pas au niveau “film/séries”, on a cherché des repères généraux et institutionnels sur la mafia et sur l’assassinat de Giovanni Falcone. Wikipédia nous a surtout servi de point de départ (vocabulaire, dates à vérifier), et on a recoupé avec des sources journalistiques et institutionnelles.
-                                    <InlineRef n={1} /><InlineRef n={2} /><InlineRef n={3} /><InlineRef n={4} />
+                                    En séance 3, on a tenté une nouvelle piste : la mafia italienne car Pauline a des origines italiennes. On a cherché des repères généraux et institutionnels sur la mafia <InlineRef n={2} /><InlineRef n={4} /> et sur l’assassinat de Giovanni Falcone <InlineRef n={1} /><InlineRef n={3} />. Wikipédia nous a surtout servi de point de départ (vocabulaire, dates à vérifier), et on a recoupé avec des sources journalistiques et institutionnelles. Au départ, notre professeure n'était pas convaincue. Mais en lui expliquant que l'on pourrait vraiment essayer de faire quelque chose d'original, elle a approuvé notre idée. 
                                 </p>
                                 <p>
-                                    Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne… On a compris qu’on risquait de simplifier à l’excès et de perdre le fil EMC. Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif. Décision : abandonner et revenir à l’Amazonie.
+                                    Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne… On a compris qu’on risquait de devoir simplifier à l’excès et de perdre le coté factuel. Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif. Décision : abandonner et revenir à l’Amazonie.
                                 </p>
                                 <p>
-                                    On a repris l’Amazonie en visant un scénario plus cadré : expliquer les mécanismes de la déforestation, montrer les arguments économiques et les décisions politiques, puis représenter les conséquences sur les populations et la biodiversité. Autrement dit : après deux fausses pistes, on s’est fixé une règle simple : <strong>chaque scène doit pouvoir être appuyée par au moins une référence</strong>.
+                                    On a continuer sur l'Amazonie.
+
+On a continué nos recherches. De mon côté j'ai trouvé plusieurs documents intéressants expliquant la déforestation et les modes de vie des populations autochtones et leur histoire, sachant que s'il va bien, les autochtones sont vraiment une partie intégrante de l'histoire de l'Amazonie, notamment au Brésil</strong>.
                                 </p>
                             </div>
                         </Card>
@@ -957,8 +953,9 @@
                         />
 
                         <Sources list={sources} />
-
-                        <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
+    </ContentSection>
+                    </div>
+                </SessionContext.Provider   <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
                     </ContentSection>
                 </div>
             );
@@ -1011,39 +1008,36 @@
                     url: 'https://www.survivalinternational.org/galleries/ashaninka'
                 }
             ];
-
-            return (
-                <div className="max-w-4xl mx-auto px-6 pb-20">
-                    <ContentSection>
+SessionContext.Provider value="s4">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                        <ContentSection>
                         <SectionHeader
                             title="SÉANCE 4 : Choix des Asháninka et première trame"
                             subtitle="Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture."
                             number="4"
                         />
 
-                        <Card title="Compte-rendu" icon="edit_note" type="info">
-                            <p className="text-lg leading-relaxed mb-4">
-                                <strong className="font-bold">Recherche :</strong> Après la séance 3, nous étions en recherche d'un cas précis et un conflit qu’on pouvait jouer sans caricaturer. On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène.
-                            </p>
-                            <p className="text-lg leading-relaxed mb-4">
-                                <strong className="font-bold">Boussole :</strong> À ce moment-là, l’idée du barrage nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre.
-                            </p>
-                            <p className="text-lg leading-relaxed mb-4">
-                                <strong className="font-bold">Cadre juridique :</strong> Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan.
-                            </p>
-                            <p className="text-lg leading-relaxed">
-                                <strong className="font-bold">Ouverture :</strong> En fin de séance, on a posé une première trame pour l’ouverture : forêt (sons, lumière) puis rupture (machines) — et tout de suite après, un échange où l’enjeu est dit clairement.
-                            </p>
-                        </Card>
-
                         <Card title="Récit" icon="auto_stories" type="info">
                             <div className="space-y-4 text-lg leading-relaxed">
                                 <p>
-                                    Lors de la 4ème séance, on a enfin trouvé une idée parfaitement adaptable grâce à Hector en pièce de théâtre : partir des <strong className="text-primary font-bold">Asháninka</strong>, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire. <InlineRef n={1} />
+                                    Lors de la 4ème séance, on a enfin trouvé une idée parfaitement adaptable grâce à Hector en pièce de théâtre : partir des <strong className="text-primary font-bold">Asháninka</strong> <InlineRef n={1} />, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire.
                                 </p>
                                 <p>
-                                    On a commencé des recherches générales : Les Ashaninka constituent le plus grand peuple indigène d'Amazonie du Sud, répartis entre le Brésil (État d'Acre) et le Pérou. Leur histoire est celle d'une résistance armée : depuis les années 1980, ils ont affronté des mouvements de guérilla révolutionnaire, tout en combattant simultanément la déforestation systématique, le trafic de bois, l'extraction minière et l'accaparement des terres. On a privilégié une source spécialisée (ISA) pour ces repères, tout en gardant à l’esprit qu’un article de presse peut mettre l’accent sur un récit/portrait (utile au théâtre, mais à recouper pour les faits).
-                                    <InlineRef n={2} />
+                                    <strong className="font-bold">Recherche :</strong> Après la séance 3, nous étions en recherche d'un cas précis et un conflit qu’on pouvait jouer sans caricaturer. On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène.
+                                </p>
+                                <p>
+                                    <strong className="font-bold">Boussole :</strong> À ce moment-là, l’idée du barrage nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre.
+                                </p>
+                                <p>
+                                    <strong className="font-bold">Cadre juridique :</strong> Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan.
+                                </p>
+                                <p>
+                                    <strong className="font-bold">Ouverture :</strong> En fin de séance, on a posé une première trame pour l’ouverture : forêt (sons, lumière) puis rupture (machines) — et tout de suite après, un échange où l’enjeu est dit clairement.
+                                </p>
+                                <p>
+                                    On a commencé des recherches générales : Les Ashaninka constituent le plus grand peuple indigène d'Amazonie du Sud, répartis entre le Brésil (État d'Acre) et le Pérou. Leur histoire est celle d'une résistance armée : depuis les années 1980, ils ont affronté des mouvements de guérilla révolutionnaire, tout en combattant simultanément la déforestation systématique, le trafic de bois, l'extraction minière et l'accaparement des terres. On a privilégié une source spécialisée (ISA <InlineRef n={2} />) pour ces repères, tout en gardant à l’esprit qu’un article de presse peut mettre l’accent sur un récit/portrait (utile au théâtre, mais à recouper pour les faits).
                                 </p>
                                 <div>
                                     <p>
@@ -1068,13 +1062,13 @@
                                 </figure>
 
                                 <p>
-                                    Le combat des Asháninka n'est pas seulement physique, il est politique et médiatique. <strong>Ruth Buendía</strong>, ancienne présidente du Centre Asháninka de la rivière Ene, est devenue l'icône de cette résistance. Grâce à son travail avec l'ONG CARE, elle a réussi à freiner ce projet dévastateur, ce qui lui a valu le prestigieux <strong>Prix Goldman</strong> pour l'environnement. <InlineRef n={5} />
+                                    Le combat des Asháninka n'est pas seulement physique, il est politique et médiatique. <strong>Ruth Buendía</strong>, ancienne présidente du Centre Asháninka de la rivière Ene, est devenue l'icône de cette résistance. Grâce à son travail avec l'ONG CARE, elle a réussi à freiner ce projet dévastateur, ce qui lui a valu le prestigieux <strong>Prix Goldman</strong> pour l'environnement <InlineRef n={5} />.
                                 </p>
                                 <p>
                                     À partir de là, on a reformulé notre scénario : il ne s’agit plus de “sauver la planète”, mais de montrer comment un choix politique a des conséquences humaines.
                                 </p>
                                 <p>
-                                    Loin de l'image de "peuple de la forêt", les Asháninka utilisent des outils contemporains pour sensibiliser le monde. Ils collaborent à des projets documentaires et éducatifs (comme avec ARTE Éducation) dans un documentaire très intéressant <a href="https://campus.arte.tv/program/gardiens-de-la-foret-bresil-replanter-l-amazonie" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Gardiens de la forêt</a> que j’ai regardé et qui m’a permis de comprendre leur mode de vie et leurs actions de reforestation. <InlineRef n={3} />
+                                    Loin de l'image de "peuple de la forêt", les Asháninka utilisent des outils contemporains pour sensibiliser le monde. Ils collaborent à des projets documentaires et éducatifs (comme avec ARTE Éducation) dans un documentaire très intéressant <a href="https://campus.arte.tv/program/gardiens-de-la-foret-bresil-replanter-l-amazonie" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">Gardiens de la forêt</a> <InlineRef n={3} /> que j’ai regardé et qui m’a permis de comprendre leur mode de vie et leurs actions de reforestation.
                                 </p>
                                 <div>
                                     <p>Ces vidéos servent à :</p>
@@ -1085,7 +1079,7 @@
                                     </ul>
                                 </div>
                                 <p>
-                                    De plus Leur combat s'appuie sur des bases juridiques solides, notamment la Constitution brésilienne de 1988, qui reconnaît enfin les droits des peuples autochtones. <InlineRef n={4} />
+                                    De plus Leur combat s'appuie sur des bases juridiques solides, notamment la Constitution brésilienne de 1988 <InlineRef n={4} />, qui reconnaît enfin les droits des peuples autochtones.
                                 </p>
                                 <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-slate-200 bg-white/5 p-4 rounded-r-lg">
                                     « Les terres indigènes sont inaliénables et indisponibles, et les droits qui y sont attachés sont imprescriptibles. »
@@ -1103,8 +1097,9 @@
                             solutions="Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues."
                         />
 
-                        <Sources list={sources} title="Sources de la séance" />
-
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider
                         <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} />
                     </ContentSection>
                 </div>
