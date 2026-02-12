@@ -643,6 +643,7 @@
                             />
                             <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">La tension médiatique entre Jair Bolsonaro et Greta Thunberg en 2019 — un conflit symbolique pertinent pour notre scénario.</figcaption>
                         </figure>
+                        <p> Nous avons choisi la période de la présidence de Jair Bolsonaro car elle marque un tournant politique critique. Sous sa présidence au Brésil, les organismes de protection de l'environnement (comme l'IBAMA) ont vu leurs budgets réduits, favorisant un sentiment d'impunité pour les orpailleurs et les bûcherons illégaux. C'est ce climat politique qui servira de toile de fond à notre pièce : la lutte n'est pas juste contre des braconniers, mais contre un système qui laisse faire. </p>
                         </Card>
 
                         <PosNegGrid
@@ -727,61 +728,61 @@
                 },
             ];
 
-            returSessionContext.Provider value="s2">
+            return (
+                <SessionContext.Provider value="s2">
                     <div className="max-w-4xl mx-auto px-6 pb-20">
                         <ContentSection>
                             <SectionHeader
-                            <SectionHeader
-                            title="SÉANCE 2 : Confrontation au réel et réajustements"
-                            subtitle="Analyse critique du scénario et décisions structurantes."
-                            number="2"
-                        />
-
-                        <Card title="Récit" icon="auto_stories">
-                            <div className="space-y-4 text-lg leading-relaxed">
-                                <p>
-                                    <strong className="font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
-                                </p>
-                                <p>
-                                    <strong className="font-bold">Atelier de recherche :</strong> Le groupe recherche des informations sur les peuples autochtones. Pour trouver ceux qui sont directement concernés par la déforestation, et que l'on pourrait représenter.
-                                </p>
-                                <p>
-                                    Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ? 
-                                </p>
-                                <p>
-                                    En confrontant notre histoire à des informations factuelles (sur les peuples autochtones <InlineRef n={1} /><InlineRef n={5} /> et la déforestation <InlineRef n={2} />), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
-                                </p>
-                                <p>
-                                    C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie <InlineRef n={6} /> et ses prises de parole (et en comparant avec ses déplacements/publications <InlineRef n={7} />), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit. Par exemple, Instagram est utile pour repérer des dates/lieux, mais ce n’est pas une preuve exhaustive (posts sélectionnés, pas une “trace officielle”) : on a donc privilégié des sources plus stables et des articles de fact-checking <InlineRef n={8} />.
-                                    <span className="ml-1">Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.</span>
-                                </p>
-                                <p>
-                                    Enfin, ce travail de vérification nous a aidés à rendre le scénario plus cohérent : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques <InlineRef n={3} />,et leurs conséquences humaines <InlineRef n={4} />).
-                                </p>
-                            </div>
-                        </Card>
-
-                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
-                            <img
-                                src="https://images.unsplash.com/photo-1694614360428-608d018bb054?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt="Rivière en Amazonie"
-                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
+                                title="SÉANCE 2 : Confrontation au réel et réajustements"
+                                subtitle="Analyse critique du scénario et décisions structurantes."
+                                number="2"
                             />
-                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">Les cours d'eau amazoniens, artères vitales d'un écosystème complexe.</figcaption>
-                        </figure>
 
-                        <PosNegGrid
-                            positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
-                            difficulty="L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches."
-                        />
+                            <Card title="Récit" icon="auto_stories">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        <strong className="font-bold">Analyse :</strong> Nous avons relu notre scénario et discuté des contraintes de mise en scène (cohérence, réalisme, rôles utiles).
+                                    </p>
+                                    <p>
+                                        <strong className="font-bold">Atelier de recherche :</strong> Le groupe recherche des informations sur les peuples autochtones, pour trouver ceux qui sont directement concernés par la déforestation et que l'on pourrait représenter.
+                                    </p>
+                                    <p>
+                                        Pendant la séance 2, on a relu le scénario en se posant une question simple : <strong>qu’est-ce qu’on peut justifier avec des éléments vérifiables</strong> et qu’est-ce qui relève d’une intuition trop fragile ?
+                                    </p>
+                                    <p>
+                                        En confrontant notre histoire à des informations factuelles (sur les peuples autochtones <InlineRef n={1} /><InlineRef n={5} /> et la déforestation <InlineRef n={2} />), on a compris que la scène devait surtout mettre en avant des acteurs <strong>directement impliqués</strong> : représentants politiques, acteurs économiques locaux, ONG, communautés autochtones.
+                                    </p>
+                                    <p>
+                                        C’est aussi à ce moment-là que nos recherches ont <strong>changé notre point de vue</strong> sur Greta Thunberg : on avait imaginé l’utiliser comme personnage “sur place”, mais en vérifiant sa biographie <InlineRef n={6} /> et ses prises de parole (et en comparant avec ses déplacements/publications <InlineRef n={7} />), on n’a pas trouvé de confirmation suffisamment solide permettant d’appuyer une présence au Brésil / en Amazonie dans notre récit.
+                                        <span className="ml-1">Par exemple, Instagram est utile pour repérer des dates/lieux, mais ce n’est pas une preuve exhaustive (posts sélectionnés, pas une “trace officielle”) : on a donc privilégié des sources plus stables et des articles de fact-checking <InlineRef n={8} />.</span>
+                                        <span className="ml-1">Résultat : plutôt que de risquer une scène contestable, on l’a supprimée et on a renforcé les scènes centrées sur le conflit local.</span>
+                                    </p>
+                                    <p>
+                                        Enfin, ce travail de vérification nous a aidés à rendre le scénario plus cohérent : on ne raconte pas seulement un affrontement, on montre des mécanismes (justifications économiques, responsabilités politiques <InlineRef n={3} />, et leurs conséquences humaines <InlineRef n={4} />).
+                                    </p>
+                                </div>
+                            </Card>
 
-                        <Sources list={sources} />
+                            <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                                <img
+                                    src="https://images.unsplash.com/photo-1694614360428-608d018bb054?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                    alt="Rivière en Amazonie"
+                                    className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
+                                />
+                                <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">Les cours d'eau amazoniens, artères vitales d'un écosystème complexe.</figcaption>
+                            </figure>
 
+                            <PosNegGrid
+                                positive="L'autocritique a solidifié l'intrigue : le scénario est plus cohérent après la suppression d'un personnage superflu."
+                                difficulty="L'absence d'un membre ralentit l'avancée et oblige à clarifier la répartition des tâches."
+                            />
+
+                            <Sources list={sources} />
+                            <NavArrows prev={{to: '/seance-1', label: 'Séance 1'}} next={{to: '/inter-seance', label: 'Inter-Séance'}} />
                         </ContentSection>
                     </div>
-                </SessionContext.Provider/ContentSection>
-                </div>
+                </SessionContext.Provider>
             );
         };
 
@@ -817,54 +818,56 @@
                 },
             ];
 
-            returSessionContext.Provider value="is">
+            return (
+                <SessionContext.Provider value="is">
                     <div className="max-w-4xl mx-auto px-6 pb-20">
                         <ContentSection>
                             <SectionHeader
-                            <SectionHeader
-                            title="INTER-SÉANCE : "
-                            subtitle="Travail à distance : hésitations, piste alternative."
-                            number="Hors-Classe"
-                        />
-
-                        <Card title="Récit" icon="auto_stories" type="info">
-                            <div className="space-y-4 text-lg leading-relaxed">
-                                <p>
-                                    <strong className="font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Jad a eu l’idée de  parler du premier empereur chinois Qin Shi Huang <InlineRef n={1} /><InlineRef n={2} />.
-                                </p>
-                                                                    On a donc commencé nos recherches et on a rapidement trouvé  des informations fiables sur Qin Shi Huang (références encyclopédiques <InlineRef n={2} /> et base d’autorité <InlineRef n={1} />), ce qui nous a donné l’impression d’avoir un sujet solide.
-                                <p>
-                                    <strong className="font-bold">Vérification :</strong> Après s'être remémoré les consignes <InlineRef n={3} />, on a compris que la piste envisagée était hors-thème (trop ancienne). On l'a donc abandonnée.
-                                </p>
-                                <p>
-                                    <strong className="font-bold">Retour à l'Amazonie :</strong> On est revenus au sujet Amazonien avec un objectif plus précis : garder le sujet, mais mieux le cadrer (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement).
-                                </p>
-                                <p>Ce travail à distance a été inutile : on a perdu du temps. Cependant, cette expérience nous a permis de mieux comprendre les consignes et de renforcer notre capacité à critiquer nos idées avant de les développer.
-                                </p>
-                            </div>
-                        </Card>
-
-                        <PosNegGrid
-                            positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une volonté de recherche constante."
-                            difficulty="Une compréhension insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
-                        />
-
-                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
-                            <img
-                                src="https://histoiresroyales.fr/wp-content/uploads/2021/03/empereur-chine-histoire-terre-cuite-armee-dynastie-qin-1200x900.jpg"
-                                alt="Armée de Terre Cuite de la Dynastie Qin"
-                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
+                                title="INTER-SÉANCE"
+                                subtitle="Travail à distance : hésitations, piste alternative."
+                                number="Hors-Classe"
                             />
-                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">L'Armée de Terre Cuite de Qin Shi Huang — illustration de la grandeur de l'empire ancien, piste finalement abandonnée pour recentrer sur l'Amazonie.</figcaption>
-                        </figure>
 
-                        <Sources list={sources} />
+                            <Card title="Récit" icon="auto_stories" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        <strong className="font-bold">Remise en question :</strong> N'étant plus sûrs de notre sujet "Amazonie", nous avons cherché à distance une alternative. Jad a eu l’idée de parler du premier empereur chinois Qin Shi Huang <InlineRef n={1} /><InlineRef n={2} />.
+                                    </p>
+                                    <p>
+                                        On a donc commencé nos recherches et on a rapidement trouvé des informations fiables sur Qin Shi Huang (références encyclopédiques <InlineRef n={2} /> et base d’autorité <InlineRef n={1} />), ce qui nous a donné l’impression d’avoir un sujet solide.
+                                    </p>
+                                    <p>
+                                        <strong className="font-bold">Vérification :</strong> Après s'être remémoré les consignes <InlineRef n={3} />, on a compris que la piste envisagée était hors-thème (trop ancienne). On l'a donc abandonnée.
+                                    </p>
+                                    <p>
+                                        <strong className="font-bold">Retour à l'Amazonie :</strong> On est revenus au sujet Amazonien avec un objectif plus précis : garder le sujet, mais mieux le cadrer (décisions politiques, intérêts économiques, et impacts sur les populations et l’environnement).
+                                    </p>
+                                    <p>
+                                        Ce travail à distance a été inutile : on a perdu du temps. Cependant, cette expérience nous a permis de mieux comprendre les consignes et de renforcer notre capacité à critiquer nos idées avant de les développer.
+                                    </p>
+                                </div>
+                            </Card>
 
+                            <PosNegGrid
+                                positive="La communication à distance montre une vraie volonté d'implication dans le projet et montre une volonté de recherche constante."
+                                difficulty="Une compréhension insuffisante des consignes nous a fait perdre du temps sur une piste hors-sujet."
+                            />
+
+                            <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                                <img
+                                    src="https://histoiresroyales.fr/wp-content/uploads/2021/03/empereur-chine-histoire-terre-cuite-armee-dynastie-qin-1200x900.jpg"
+                                    alt="Armée de Terre Cuite de la Dynastie Qin"
+                                    className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
+                                />
+                                <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">L'Armée de Terre Cuite de Qin Shi Huang — illustration de la grandeur de l'empire ancien, piste finalement abandonnée pour recentrer sur l'Amazonie.</figcaption>
+                            </figure>
+
+                            <Sources list={sources} />
+                            <NavArrows prev={{to: '/seance-2', label: 'Séance 2'}} next={{to: '/seance-3', label: 'Séance 3'}} />
                         </ContentSection>
                     </div>
-                </SessionContext.Provider/ContentSection>
-                </div>
+                </SessionContext.Provider>
             );
         };
 
@@ -909,55 +912,176 @@
                     publisher: 'major-prepa.com',
                     url: 'https://major-prepa.com/wp-content/uploads/2022/12/mafia-italo-americaine-1024x805.jpg'
                 },
+                {
+                    n: 6,
+                    authors: 'Greenpeace France',
+                    title: 'Soja : comprendre les impacts et les enjeux',
+                    publisher: 'greenpeace.fr',
+                    url: 'https://www.greenpeace.fr/soja/'
+                },
+                {
+                    n: 7,
+                    authors: 'Parc amazonien de Guyane',
+                    title: "Suivi de l’évolution de l’orpaillage illégal",
+                    publisher: 'parc-amazonien-guyane.fr',
+                    url: 'https://www.parc-amazonien-guyane.fr/fr/des-actions/surveiller-le-territoire/protection-des-patrimoines-naturels/suivi-de-levolution-de-lorpaillage-illegal'
+                },
+                {
+                    n: 8,
+                    authors: 'Wikipédia',
+                    title: 'Feux de forêt de 2019 en Amazonie',
+                    publisher: 'Wikipédia',
+                    url: 'https://fr.wikipedia.org/wiki/Feux_de_for%C3%AAt_de_2019_en_Amazonie'
+                },
+                {
+                    n: 9,
+                    authors: 'World Resources Institute (WRI)',
+                    title: 'Deforestation & Agriculture (Global Forest Review)',
+                    publisher: 'gfr.wri.org',
+                    url: 'https://gfr.wri.org/forest-extent-indicators/deforestation-agriculture'
+                },
+                {
+                    n: 10,
+                    authors: 'PubMed Central (NIH)',
+                    title: 'Article scientifique (PMC3550269)',
+                    publisher: 'pmc.ncbi.nlm.nih.gov',
+                    url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC3550269/'
+                },
+                {
+                    n: 11,
+                    authors: 'Mongabay',
+                    date: 'déc. 2022',
+                    title: 'Despite 11% drop in 2022, Amazon deforestation rate has soared under Bolsonaro',
+                    publisher: 'news.mongabay.com',
+                    url: 'https://news.mongabay.com/2022/12/despite-11-drop-in-2022-amazon-deforestation-rate-has-soared-under-bolsonaro/'
+                },
+                {
+                    n: 12,
+                    authors: 'Observatório do Clima',
+                    title: 'Bolsonaro ends government with 60% increase in Amazon deforestation',
+                    publisher: 'oc.eco.br',
+                    url: 'https://oc.eco.br/en/bolsonaro-ends-government-with-60-increase-in-amazon-deforestation/'
+                },
+                {
+                    n: 13,
+                    authors: 'Greenpeace',
+                    title: 'Photo : incendie / défrichement en Amazonie (illustration)',
+                    publisher: 'greenpeace.org',
+                    url: 'https://www.greenpeace.org/static/planet4-international-stateless/2022/09/fbc851c4-gp1szphr_-1024x683.jpg'
+                },
             ];
-SessionContext.Provider value="s3">
+
+            return (
+                <SessionContext.Provider value="s3">
                     <div className="max-w-4xl mx-auto px-6 pb-20">
                         <ContentSection>
                             <SectionHeader
-                        <ContentSection>
-                        <SectionHeader
-                            title="SÉANCE 3 : Impasse et recentrage"
-                            subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
-                            number="3"
-                        />
-
-                        <Card title="Récit" icon="auto_stories" type="info">
-                            <div className="space-y-4 text-lg leading-relaxed">
-                                <p>
-                                    En séance 3, on a tenté une nouvelle piste : la mafia italienne car Pauline a des origines italiennes. On a cherché des repères généraux et institutionnels sur la mafia <InlineRef n={2} /><InlineRef n={4} /> et sur l’assassinat de Giovanni Falcone <InlineRef n={1} /><InlineRef n={3} />. Wikipédia nous a surtout servi de point de départ (vocabulaire, dates à vérifier), et on a recoupé avec des sources journalistiques et institutionnelles. Au départ, notre professeure n'était pas convaincue. Mais en lui expliquant que l'on pourrait vraiment essayer de faire quelque chose d'original, elle a approuvé notre idée. 
-                                </p>
-                                <p>
-                                    Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne… On a compris qu’on risquait de devoir simplifier à l’excès et de perdre le coté factuel. Le professeur a confirmé que c’était trop complexe et trop éloigné de notre objectif. Décision : abandonner et revenir à l’Amazonie.
-                                </p>
-                                <p>
-                                    On a continuer sur l'Amazonie.
-
-On a continué nos recherches. De mon côté j'ai trouvé plusieurs documents intéressants expliquant la déforestation et les modes de vie des populations autochtones et leur histoire, sachant que s'il va bien, les autochtones sont vraiment une partie intégrante de l'histoire de l'Amazonie, notamment au Brésil</strong>.
-                                </p>
-                            </div>
-                        </Card>
-
-                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
-                            <img
-                                src="https://major-prepa.com/wp-content/uploads/2022/12/mafia-italo-americaine-1024x805.jpg"
-                                alt="Structures de la Mafia Italo-Américaine"
-                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
+                                title="SÉANCE 3 : Impasse et recentrage"
+                                subtitle="Tentatives, validation professeur, puis retour à l'Amazonie."
+                                number="3"
                             />
-                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">La Mafia Italo-Américaine — organisation complexe finalement jugée trop complexe comme piste dramaturgique, d'où le retour à l'Amazonie.</figcaption>
-                        </figure>
 
-                        <PosNegGrid
-                            positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
-                            difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage."
-                        />
+                            <Card title="Récit" icon="auto_stories" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        En séance 3, on a tenté une nouvelle piste : la mafia italienne car Pauline a des origines italiennes. On a cherché des repères généraux et institutionnels sur la mafia <InlineRef n={2} /><InlineRef n={4} /> et sur l’assassinat de Giovanni Falcone <InlineRef n={1} /><InlineRef n={3} />. Wikipédia nous a surtout servi de point de départ (vocabulaire, dates à vérifier), et on a recoupé avec des sources journalistiques et institutionnelles. Au départ, notre professeure n'était pas convaincue. Mais en lui expliquant que l'on pourrait vraiment essayer de faire quelque chose d'original, elle a approuvé notre idée.
+                                    </p>
+                                    <p>
+                                        Et justement, ces repères nous ont montré que le sujet est immense : structures criminelles, contexte politique, justice, histoire italienne… On a compris qu’on risquait de devoir simplifier à l’excès et de perdre le coté factuel. La professeure a confirmé que c’était trop complexe et trop éloigné de notre objectif. Décision : abandonner et revenir à l’Amazonie.
+                                    </p>
+                                    <p>
+                                        Ensuite, on a continué nos recherches sur l'Amazonie. De mon côté, j'ai trouvé plusieurs documents intéressants expliquant la déforestation et les modes de vie des populations autochtones et leur histoire. On retient surtout que les peuples autochtones font partie intégrante de l'histoire de l'Amazonie, notamment au Brésil.
+                                    </p>
+                                </div>
+                            </Card>
 
-                        <Sources list={sources} />
-    </ContentSection>
+                            <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                                <img
+                                    src="https://major-prepa.com/wp-content/uploads/2022/12/mafia-italo-americaine-1024x805.jpg"
+                                    alt="Structures de la Mafia Italo-Américaine"
+                                    className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
+                                />
+                                <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">La Mafia Italo-Américaine — organisation complexe finalement jugée trop complexe comme piste dramaturgique, d'où le retour à l'Amazonie.</figcaption>
+                            </figure>
+
+                            <PosNegGrid
+                                positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires."
+                                difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage."
+                            />
+
+                            <Card title={'Comprendre la déforestation : le "Front pionnier"'} icon="account_tree" type="info">
+                                <div className="space-y-5 text-lg leading-relaxed">
+                                    <p>
+                                        Pour écrire des dialogues justes, nous avons dû comprendre comment on détruit une forêt aussi immense. Ce n'est pas juste
+                                        « couper des arbres » : c'est un système économique complet, souvent décrit comme un <strong className="text-primary font-bold">front pionnier</strong>,
+                                        qui avance par étapes et transforme la forêt en infrastructures, en filières d'extraction et en terres exploitables <InlineRef n={9} /><InlineRef n={10} />.
+                                    </p>
+
+                                    <div className="space-y-3">
+                                        <h3 className="text-white font-serif text-2xl">1. L’infrastructure (la « cicatrice »)</h3>
+                                        <p>
+                                            Tout commence souvent par une décision politique : tracer une route (comme la Transamazonienne ou la BR-163).
+                                        </p>
+                                        <p>
+                                            <strong className="font-bold">Le mécanisme :</strong> la route éventre la forêt et crée un accès. Dès qu'une route est tracée,
+                                            la déforestation se propage de chaque côté en « arêtes de poisson » (visible par satellite) <InlineRef n={10} />.
+                                        </p>
+                                        <p>
+                                            <strong className="font-bold">Pertinence pour la pièce :</strong> c'est l'argument du personnage politique (« nous apportons le développement
+                                            et la communication »). Pour les Asháninka, c'est le début de l'invasion.
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <h3 className="text-white font-serif text-2xl">2. Le bois précieux (l’écrémage)</h3>
+                                        <p>Avant de tout raser, on vole ce qui coûte cher.</p>
+                                        <p>
+                                            <strong className="font-bold">Le mécanisme :</strong> des bûcherons illégaux pénètrent dans les zones protégées pour couper sélectivement
+                                            les arbres de haute valeur (comme l’acajou). Ils ouvrent des pistes clandestines qui serviront ensuite aux autres.
+                                        </p>
+                                        <p>
+                                            <strong className="font-bold">Pertinence pour la pièce :</strong> c'est une menace directe pour les leaders indigènes qui patrouillent leur territoire.
+                                            Le trafic de bois est un moteur de violence et d'intimidation dans de nombreuses zones.
+                                        </p>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <h3 className="text-white font-serif text-2xl">3. L’élevage bovin (le rouleau compresseur)</h3>
+                                        <p>
+                                            C'est l'une des causes principales, souvent présentée comme majoritaire (jusqu’à ~80% selon les estimations et les périmètres)
+                                            <InlineRef n={9} /><InlineRef n={6} />.
+                                        </p>
+                                        <p>
+                                            <strong className="font-bold">Le mécanisme :</strong> on utilise la technique du « couper-brûler ». On abat les arbres restants, on laisse sécher,
+                                            et on met le feu pour « nettoyer » la terre et planter de l'herbe. Ces incendies deviennent souvent incontrôlables, comme lors des feux de 2019
+                                            <InlineRef n={8} />.
+                                        </p>
+                                        <p>
+                                            <strong className="font-bold">Pertinence pour la pièce :</strong> c'est l'argument économique de l'exportation (« nourrir le monde avec notre bœuf »).
+                                            Le feu devient une arme de terreur pour chasser les animaux… et parfois les habitants.
+                                        </p>
+                                    </div>
+                                </div>
+                            </Card>
+
+                            <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                                <img
+                                    src="https://www.greenpeace.org/static/planet4-international-stateless/2022/09/fbc851c4-gp1szphr_-1024x683.jpg"
+                                    alt="Incendie / défrichement en Amazonie (illustration)"
+                                    className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                    loading="lazy"
+                                />
+                                <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">
+                                    Illustration du « couper-brûler » et du front pionnier <InlineRef n={13} />.
+                                </figcaption>
+                            </figure>
+
+                            <Sources list={sources} />
+                            <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
+                        </ContentSection>
                     </div>
-                </SessionContext.Provider   <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
-                    </ContentSection>
-                </div>
+                </SessionContext.Provider>
             );
         };
 
@@ -1008,19 +1132,19 @@ On a continué nos recherches. De mon côté j'ai trouvé plusieurs documents in
                     url: 'https://www.survivalinternational.org/galleries/ashaninka'
                 }
             ];
-SessionContext.Provider value="s4">
+
+            return (
+                <SessionContext.Provider value="s4">
                     <div className="max-w-4xl mx-auto px-6 pb-20">
                         <ContentSection>
                             <SectionHeader
-                        <ContentSection>
-                        <SectionHeader
-                            title="SÉANCE 4 : Choix des Asháninka et première trame"
-                            subtitle="Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture."
-                            number="4"
-                        />
+                                title="SÉANCE 4 : Choix des Asháninka et première trame"
+                                subtitle="Trouver un cas précis, cadrer l’enjeu, puis écrire la scène d’ouverture."
+                                number="4"
+                            />
 
-                        <Card title="Récit" icon="auto_stories" type="info">
-                            <div className="space-y-4 text-lg leading-relaxed">
+                            <Card title="Récit" icon="auto_stories" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
                                 <p>
                                     Lors de la 4ème séance, on a enfin trouvé une idée parfaitement adaptable grâce à Hector en pièce de théâtre : partir des <strong className="text-primary font-bold">Asháninka</strong> <InlineRef n={1} />, puis construire une intrigue autour d’un projet de barrage menaçant leur territoire.
                                 </p>
@@ -1088,21 +1212,21 @@ SessionContext.Provider value="s4">
                                 <p>
                                     Cette base légale permet aux Asháninka de transformer leurs revendications en véritables débats de société, opposant la légitimité de l'État aux droits fondamentaux des populations locales.
                                 </p>
-                            </div>
-                        </Card>
+                                </div>
+                            </Card>
 
-                        <PosNegGrid
-                            positive="Le thème devient concret : un lieu, un peuple, un enjeu clair, et une première scène écrite avec des repères vérifiés."
-                            difficulty="Même si on a bien trouvé notre thème on a encore un peu de retard il faut commencer à écrire le scénario."
-                            solutions="Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues."
-                        />
+                            <PosNegGrid
+                                positive="Le thème devient concret : un lieu, un peuple, un enjeu clair, et une première scène écrite avec des repères vérifiés."
+                                difficulty="Même si on a bien trouvé notre thème on a encore un peu de retard il faut commencer à écrire le scénario."
+                                solutions="Rester juste : éviter les clichés, bien distinguer ce qui relève de la symbolique (théâtre) et ce qui doit rester factuel dans les dialogues."
+                            />
 
+                            <Sources list={sources} />
+
+                            <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} />
                         </ContentSection>
                     </div>
-                </SessionContext.Provider
-                        <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} />
-                    </ContentSection>
-                </div>
+                </SessionContext.Provider>
             );
         };
 
