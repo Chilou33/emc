@@ -5,7 +5,8 @@
   "scripts": {
     "pw:install": "playwright install --with-deps chromium",
     "open": "node ./playwright/open-site.mjs",
-    "open:local": "node ./playwright/open-site.mjs ./emc.html"
+    "open:local": "node ./playwright/open-site.mjs ./emc.html",
+    "export:texte": "node ./scripts/export-seances-texte.mjs"
   },
   "devDependencies": {
     "playwright": "^1.41.2"

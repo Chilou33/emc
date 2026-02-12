@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
     <link rel="dns-prefetch" href="https://images.unsplash.com">
     
-    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@300;400;500;700&family=Poiret+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
@@ -38,7 +38,8 @@
                     },
                     fontFamily: {
                         sans: ['Noto Sans', 'sans-serif'],
-                        serif: ['Newsreader', 'serif'],
+                        serif: ['Noto Sans', 'sans-serif'],
+                        title: ['Poiret One', 'cursive'],
                     },
                     animation: {
                         'fade-in': 'fadeIn 0.8s ease-out forwards',
@@ -75,6 +76,7 @@
             background-color: #022c22;
             color: #e2e8f0;
             overflow-x: hidden;
+            font-family: 'Noto Sans', sans-serif;
         }
         /* Effet de verre global - Amélioré */
         .glass-panel {
@@ -173,7 +175,7 @@
                 <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isHome ? 'p-6' : 'p-0'}`}>
                     <div className={`mx-auto transition-all duration-500 ${isHome ? 'max-w-6xl rounded-2xl glass-panel px-6 py-4' : 'w-full glass-panel px-6 py-4 rounded-none border-x-0 border-t-0'}`}>
                         <div className="flex items-center justify-between">
-                            <Link to="/" className="flex items-center gap-2 font-serif font-bold text-xl text-white hover:text-primary transition-colors">
+                            <Link to="/" className="flex items-center gap-2 font-sans font-bold text-xl text-white hover:text-primary transition-colors">
                                 <span className="material-symbols-outlined text-primary">forest</span>
                                 <span>Journal de Bord</span>
                             </Link>
@@ -308,8 +310,8 @@
                 <div className="inline-block px-4 py-2 mb-5 rounded-full border-2 border-primary/40 bg-primary/10 text-primary text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/20">
                     Séance {number}
                 </div>
-                <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold text-white mb-5 drop-shadow-2xl leading-tight">{title}</h1>
-                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-serif italic border-b-2 border-primary/40 pb-4 inline-block">{subtitle}</p>
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-bold text-white mb-5 drop-shadow-2xl leading-tight">{title}</h1>
+                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-sans italic border-b-2 border-primary/40 pb-4 inline-block">{subtitle}</p>
             </div>
         );
 
@@ -363,6 +365,8 @@
         const Sources = ({ title = 'Sources & Références', list }) => {
             if (!list || list.length === 0) return null;
 
+            const prefix = useContext(SessionContext);
+
             return (
                 <div className="glass-card p-6 rounded-xl mt-8 opacity-90 hover:opacity-100 transition-opacity">
                     <h4 className="flex items-center gap-2 text-xs font-bold uppercase text-slate-500 mb-4">
@@ -371,7 +375,7 @@
                     </h4>
                     <ol className="list-decimal pl-5 space-y-3 text-sm text-slate-300 font-sans">
                         {list.map((s) => (
-                            <li key={s.n} id={`src-${s.n}`} className="scroll-mt-28">
+                            <li key={s.n} id={prefix ? `src-${prefix}-${s.n}` : `src-${s.n}`} className="scroll-mt-28">
                                 <span className="font-medium">{s.authors}</span>
                                 {s.date ? <span> ({s.date})</span> : null}
                                 <span> — </span>
@@ -490,7 +494,7 @@
                             </div>
                         </div>
 
-                        <h1 className="animate-slide-up font-serif font-black text-white mb-6 tracking-tighter drop-shadow-2xl leading-[0.95]">
+                        <h1 className="animate-slide-up font-title font-black text-white mb-6 tracking-tighter drop-shadow-2xl leading-[0.95]">
 
                             <span className="block text bg-clip-text bg-gradient-to-r from-primary via-emerald-200 to-primary text-6xl md:text-8xl lg:text-9xl">
                                 Amazonie
@@ -1063,12 +1067,6 @@
                                 </div>
                             </Card>
 
-                            <PosNegGrid
-                                positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires. La séance a appris qu'un bon sujet doit être à la fois bien documenté ET dramaturgiquement exploitable. L'échange avec la professeure a permis un arbitrage rapide, devenant un outil méthodologique essentiel. Le retour au sujet Amazonie se fait avec un regard neuf, les recherches complémentaires enrichissent considérablement notre corpus documentaire. Malgré une séance apparemment 'perdue', le groupe maintient sa dynamique et rebondit rapidement."
-                                difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage. La mafia, malgré des sources excellentes, s'avère trop complexe pour éviter les simplifications caricaturales dans un format théâtral court."
-                                solutions="Valider systématiquement la faisabilité dramaturgique d'un sujet avec l'enseignant AVANT d'approfondir les recherches. Établir des critères clairs : faisabilité scénique, capacité à rester factuel, richesse narrative adaptée au format court."
-                            />
-
                             <Card title={'Comprendre la déforestation : le "Front pionnier"'} icon="account_tree" type="info">
                                 <div className="space-y-5 text-lg leading-relaxed">
                                     <p>
@@ -1078,7 +1076,7 @@
                                     </p>
 
                                     <div className="space-y-3">
-                                        <h3 className="text-white font-serif text-2xl">1. L’infrastructure (la « cicatrice »)</h3>
+                                        <h3 className="text-white font-sans text-2xl">1. L’infrastructure (la « cicatrice »)</h3>
                                         <p>
                                             Tout commence souvent par une décision politique : tracer une route (comme la Transamazonienne ou la BR-163).
                                         </p>
@@ -1093,7 +1091,7 @@
                                     </div>
 
                                     <div className="space-y-3">
-                                        <h3 className="text-white font-serif text-2xl">2. Le bois précieux (l’écrémage)</h3>
+                                        <h3 className="text-white font-sans text-2xl">2. Le bois précieux (l’écrémage)</h3>
                                         <p>Avant de tout raser, on vole ce qui coûte cher.</p>
                                         <p>
                                             <strong className="font-bold">Le mécanisme :</strong> des bûcherons illégaux pénètrent dans les zones protégées pour couper sélectivement
@@ -1106,7 +1104,7 @@
                                     </div>
 
                                     <div className="space-y-3">
-                                        <h3 className="text-white font-serif text-2xl">3. L’élevage bovin (le rouleau compresseur)</h3>
+                                        <h3 className="text-white font-sans text-2xl">3. L’élevage bovin (le rouleau compresseur)</h3>
                                         <p>
                                             C'est l'une des causes principales, souvent présentée comme majoritaire (jusqu’à ~80% selon les estimations et les périmètres)
                                             <InlineRef n={9} /><InlineRef n={6} />.
@@ -1135,6 +1133,12 @@
                                     Illustration du « couper-brûler » et du front pionnier <InlineRef n={13} />.
                                 </figcaption>
                             </figure>
+
+                            <PosNegGrid
+                                positive="Le cadrage professeur évite de s'enliser : le groupe rebondit vite et relance les recherches documentaires. La séance a appris qu'un bon sujet doit être à la fois bien documenté ET dramaturgiquement exploitable. L'échange avec la professeure a permis un arbitrage rapide, devenant un outil méthodologique essentiel. Le retour au sujet Amazonie se fait avec un regard neuf, les recherches complémentaires enrichissent considérablement notre corpus documentaire. Malgré une séance apparemment 'perdue', le groupe maintient sa dynamique et rebondit rapidement."
+                                difficulty="Une séance a été consommée sur une fausse piste, créant un retard et un moment de flottement avant le recentrage. La mafia, malgré des sources excellentes, s'avère trop complexe pour éviter les simplifications caricaturales dans un format théâtral court."
+                                solutions="Valider systématiquement la faisabilité dramaturgique d'un sujet avec l'enseignant AVANT d'approfondir les recherches. Établir des critères clairs : faisabilité scénique, capacité à rester factuel, richesse narrative adaptée au format court."
+                            />
 
                             <Sources list={sources} />
                             <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
@@ -1175,6 +1179,7 @@
                     date: '1988',
                     title: 'Article 231 - Droits des peuples autochtones',
                     publisher: 'Gouvernement du Brésil',
+url: 'https://www.wipo.int/wipolex/fr/legislation/details/8755.html'
                 },
                 {
                     n: 5,
@@ -1209,15 +1214,6 @@
                                 </p>
                                 <p>
                                     <strong className="font-bold">Recherche :</strong> Après la séance 3, nous étions en recherche d'un cas précis et un conflit qu’on pouvait jouer sans caricaturer. On est donc repartis de notre dossier de travail pour repérer ce qui pouvait devenir une scène.
-                                </p>
-                                <p>
-                                    <strong className="font-bold">Boussole :</strong> À ce moment-là, l’idée du barrage nous a servi de boussole : au lieu d’écrire “il faut protéger la forêt”, on pouvait écrire une histoire où une décision d’aménagement arrive, où elle bouleverse des vies, et où les personnages doivent répondre.
-                                </p>
-                                <p>
-                                    <strong className="font-bold">Cadre juridique :</strong> Pour éviter un scénario uniquement “à l’émotion”, on a ajouté un repère sur le cadre des droits : ça nous aide à écrire des répliques qui ressemblent à un débat réel (revendication, légitimité, limites de l’État) et pas à un slogan.
-                                </p>
-                                <p>
-                                    <strong className="font-bold">Ouverture :</strong> En fin de séance, on a posé une première trame pour l’ouverture : forêt (sons, lumière) puis rupture (machines) — et tout de suite après, un échange où l’enjeu est dit clairement.
                                 </p>
                                 <p>
                                     On a commencé des recherches générales : Les Ashaninka constituent le plus grand peuple indigène d'Amazonie du Sud, répartis entre le Brésil (État d'Acre) et le Pérou. Leur histoire est celle d'une résistance armée : depuis les années 1980, ils ont affronté des mouvements de guérilla révolutionnaire, tout en combattant simultanément la déforestation systématique, le trafic de bois, l'extraction minière et l'accaparement des terres. On a privilégié une source spécialisée (ISA <InlineRef n={2} />) pour ces repères, tout en gardant à l’esprit qu’un article de presse peut mettre l’accent sur un récit/portrait (utile au théâtre, mais à recouper pour les faits).
