@@ -24,6 +24,10 @@
     <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
+    <!-- Chart.js for data visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
     <!-- Tailwind config must be set before loading the CDN script -->
     <script>
         tailwind = window.tailwind || {};
@@ -162,6 +166,7 @@
                 { to: '/seance-2', id: 'seance-2', label: 'Séance 2' },
                 { to: '/inter-seance', id: 'inter-seance', label: 'Inter' },
                 { to: '/seance-3', id: 'seance-3', label: 'Séance 3' },
+                { to: '/inter-seance-2', id: 'inter-seance-2', label: 'Inter 2' },
                 { to: '/seance-4', id: 'seance-4', label: 'Séance 4' },
             ];
 
@@ -548,6 +553,9 @@
                 </div>
                 <div id="seance-3" className="scroll-mt-28">
                     <Seance3 />
+                </div>
+                <div id="inter-seance-2" className="scroll-mt-28">
+                    <InterSeance2 />
                 </div>
                 <div id="seance-4" className="scroll-mt-28">
                     <Seance4 />
@@ -1017,6 +1025,13 @@
                     publisher: 'greenpeace.org',
                     url: 'https://www.greenpeace.org/static/planet4-international-stateless/2022/09/fbc851c4-gp1szphr_-1024x683.jpg'
                 },
+                {
+                    n: 14,
+                    authors: 'NASA — Scientific Visualization Studio (SVS)',
+                    title: 'Déforestation au Brésil (vue satellite) : motif en « arêtes de poisson »',
+                    publisher: 'svs.gsfc.nasa.gov',
+                    url: 'https://svs.gsfc.nasa.gov/30166'
+                },
             ];
 
             return (
@@ -1082,8 +1097,21 @@
                                         </p>
                                         <p>
                                             <strong className="font-bold">Le mécanisme :</strong> la route éventre la forêt et crée un accès. Dès qu'une route est tracée,
-                                            la déforestation se propage de chaque côté en « arêtes de poisson » (visible par satellite) <InlineRef n={10} />.
+                                            la déforestation se propage de chaque côté en « arêtes de poisson » : une grande route (l’« arête centrale ») et une multitude de pistes secondaires qui partent latéralement, ouvrant des parcelles et des clairières (visible par satellite) <InlineRef n={10} />.
                                         </p>
+
+                                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                                            <img
+                                                src="https://all4trees.org/wp-content/uploads/2019/05/photo_deforestation_bresil_nasa.jpg"
+                                                alt="Déforestation au Brésil : motif en arêtes de poisson visible depuis l’espace"
+                                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                                loading="lazy"
+                                            />
+                                            <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">
+                                                Le motif en « arêtes de poisson » : la route principale sert d’axe, puis les pistes latérales fragmentent la forêt <InlineRef n={14} />.
+                                            </figcaption>
+                                        </figure>
+
                                         <p>
                                             <strong className="font-bold">Pertinence pour la pièce :</strong> c'est l'argument du personnage politique (« nous apportons le développement
                                             et la communication »). Pour les Asháninka, c'est le début de l'invasion.
@@ -1141,7 +1169,284 @@
                             />
 
                             <Sources list={sources} />
-                            <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/seance-4', label: 'Séance 4'}} />
+                            <NavArrows prev={{to: '/inter-seance', label: 'Inter-Séance'}} next={{to: '/inter-seance-2', label: 'Inter 2'}} />
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider>
+            );
+        };
+
+        // INTER-SÉANCE 2 — Données scientifiques GFW
+        const InterSeance2 = () => {
+            const chartBarRef = React.useRef(null);
+            const chartCumulRef = React.useRef(null);
+            const chartBarInstance = React.useRef(null);
+            const chartCumulInstance = React.useRef(null);
+
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Global Forest Watch',
+                    title: 'Brazil Deforestation Dashboard — Tree Cover Loss (2001–2024)',
+                    publisher: 'globalforestwatch.org',
+                    url: 'https://www.globalforestwatch.org/dashboards/country/BRA/'
+                },
+                {
+                    n: 2,
+                    authors: 'Hansen, M. C. et al.',
+                    date: '2013',
+                    title: 'High-Resolution Global Maps of 21st-Century Forest Cover Change',
+                    publisher: 'Science, 342(6160), 850–853',
+                    url: 'https://www.science.org/doi/10.1126/science.1244693'
+                },
+            ];
+
+            // Données nationales Brésil, threshold=30% (Global Forest Watch / UMD Hansen)
+            const years = [2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+            const lossHa = [2746284,3506873,3248391,3848493,3486212,2876674,2621699,2444092,1817716,2688727,1923161,2918560,1945478,2692912,2222655,5378611,4519547,2948393,2696542,3290645,2990030,3308335,2805356,4391695];
+            const lossMha = lossHa.map(v => +(v / 1e6).toFixed(3));
+
+            // Emissions CO₂ (Mg CO₂e) — threshold=30, national
+            const emissionsCO2 = [1221138974,1655445015,1514612804,1915734936,1837203777,1471021700,1273228936,1241345048,930771045,1337904984,989479015,1458966082,988672290,1422902204,1244682472,2631722303,2334531068,1718707376,1532889289,1680953959,1868490743,2082946160,1693710500,2112508857];
+
+            // Cumulé
+            const cumulMha = [];
+            let cumul = 0;
+            lossMha.forEach(v => { cumul += v; cumulMha.push(+cumul.toFixed(3)); });
+
+            // Couleur des barres selon la période politique
+            const barColors = years.map(y => {
+                if (y >= 2019 && y <= 2022) return 'rgba(239,68,68,0.85)';   // Bolsonaro — rouge
+                if (y >= 2004 && y <= 2012) return 'rgba(52,211,153,0.7)';   // PPCDAm — vert
+                if (y >= 2023) return 'rgba(96,165,250,0.75)';               // Lula retour — bleu
+                return 'rgba(148,163,184,0.6)';                               // autre — gris
+            });
+
+            useEffect(() => {
+                // --- GRAPHIQUE 1 : barres annuelles ---
+                if (chartBarInstance.current) chartBarInstance.current.destroy();
+                const ctxBar = chartBarRef.current.getContext('2d');
+                chartBarInstance.current = new Chart(ctxBar, {
+                    type: 'bar',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Perte de couvert forestier (Mha)',
+                            data: lossMha,
+                            backgroundColor: barColors,
+                            borderColor: barColors.map(c => c.replace(/[\d.]+\)$/, '1)')),
+                            borderWidth: 1,
+                            borderRadius: 4,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: ctx => `${ctx.parsed.y.toFixed(2)} Mha (${(ctx.parsed.y * 1e6).toLocaleString('fr-FR')} ha)`
+                                }
+                            },
+                            annotation: {
+                                annotations: {
+                                    ppcdam: {
+                                        type: 'box',
+                                        xMin: 2.5, xMax: 11.5,
+                                        backgroundColor: 'rgba(52,211,153,0.06)',
+                                        borderColor: 'rgba(52,211,153,0.3)',
+                                        borderWidth: 1,
+                                        label: { content: 'Plan PPCDAm (baisse)', display: true, position: 'start', font: { size: 11 }, color: '#34d399' }
+                                    },
+                                    bolsonaro: {
+                                        type: 'box',
+                                        xMin: 17.5, xMax: 21.5,
+                                        backgroundColor: 'rgba(239,68,68,0.06)',
+                                        borderColor: 'rgba(239,68,68,0.3)',
+                                        borderWidth: 1,
+                                        label: { content: 'Bolsonaro', display: true, position: 'start', font: { size: 11 }, color: '#ef4444' }
+                                    },
+                                    lula: {
+                                        type: 'box',
+                                        xMin: 21.5, xMax: 23.5,
+                                        backgroundColor: 'rgba(96,165,250,0.06)',
+                                        borderColor: 'rgba(96,165,250,0.3)',
+                                        borderWidth: 1,
+                                        label: { content: 'Lula (retour)', display: true, position: 'start', font: { size: 11 }, color: '#60a5fa' }
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } } },
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8', callback: v => v + ' Mha' },
+                                title: { display: true, text: 'Millions d\'hectares perdus', color: '#94a3b8' }
+                            }
+                        }
+                    }
+                });
+
+                // --- GRAPHIQUE 2 : cumulé ---
+                if (chartCumulInstance.current) chartCumulInstance.current.destroy();
+                const ctxCumul = chartCumulRef.current.getContext('2d');
+                const gradientCumul = ctxCumul.createLinearGradient(0, 0, 0, 350);
+                gradientCumul.addColorStop(0, 'rgba(239,68,68,0.5)');
+                gradientCumul.addColorStop(1, 'rgba(239,68,68,0.02)');
+
+                chartCumulInstance.current = new Chart(ctxCumul, {
+                    type: 'line',
+                    data: {
+                        labels: years,
+                        datasets: [{
+                            label: 'Perte cumulée (Mha)',
+                            data: cumulMha,
+                            fill: true,
+                            backgroundColor: gradientCumul,
+                            borderColor: 'rgba(239,68,68,0.8)',
+                            borderWidth: 2,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#ef4444',
+                            tension: 0.3,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: ctx => `Total cumulé : ${ctx.parsed.y.toFixed(2)} Mha`
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { size: 11 } } },
+                            y: {
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#94a3b8', callback: v => v + ' Mha' },
+                                title: { display: true, text: 'Perte cumulée (Mha)', color: '#94a3b8' }
+                            }
+                        }
+                    }
+                });
+
+                return () => {
+                    if (chartBarInstance.current) chartBarInstance.current.destroy();
+                    if (chartCumulInstance.current) chartCumulInstance.current.destroy();
+                };
+            }, []);
+
+            // Calculs pour le texte
+            const totalLossMha = cumulMha[cumulMha.length - 1];
+            const maxYear = years[lossMha.indexOf(Math.max(...lossMha))];
+            const maxVal = Math.max(...lossMha);
+            const minYear = years[lossMha.indexOf(Math.min(...lossMha))];
+            const minVal = Math.min(...lossMha);
+            const bolsonaroTotal = lossMha.slice(18, 22).reduce((a, b) => a + b, 0);
+
+            return (
+                <SessionContext.Provider value="is2">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                                title="Recherches personnelles : les chiffres de la déforestation"
+                                subtitle="Analyse de données scientifiques du Global Forest Watch"
+                                number="Inter 2"
+                            />
+
+                            <Card title="Récit — Ma démarche de recherche" icon="psychology" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        Après la séance 3, je voulais aller au-delà des articles et des reportages. Pour que nos dialogues sonnent juste, il me fallait des <strong className="text-primary">chiffres concrets</strong>. J'ai découvert le portail <strong>Global Forest Watch</strong> <InlineRef n={1} />, qui met à disposition les données satellitaires de l'Université du Maryland (Hansen et al.) <InlineRef n={2} /> sur la perte de couvert forestier dans le monde entier.
+                                    </p>
+                                    <p>
+                                        J'ai téléchargé le jeu de données complet pour le Brésil, filtré au seuil de <strong>30 % de couvert arboré</strong> (seuil standard pour les forêts denses), et extrait les chiffres de perte annuelle de 2001 à 2024 — soit 24 années d'observation satellite continue. Les résultats m'ont frappé.
+                                    </p>
+                                </div>
+                            </Card>
+
+                            {/* GRAPHIQUE 1 — Barres annuelles */}
+                            <div className="glass-card p-6 md:p-8 rounded-2xl mb-6 border-white/10">
+                                <div className="flex items-center gap-3 mb-5">
+                                    <span className="material-symbols-outlined text-primary text-2xl" aria-hidden="true">bar_chart</span>
+                                    <h3 className="text-xl md:text-2xl font-bold text-white font-sans">Perte annuelle de couvert forestier au Brésil (2001–2024)</h3>
+                                </div>
+                                <div className="relative w-full" style={{ height: '400px' }}>
+                                    <canvas ref={chartBarRef}></canvas>
+                                </div>
+                                <div className="flex flex-wrap gap-4 mt-5 text-sm text-slate-400">
+                                    <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-emerald-400 inline-block"></span> Plan PPCDAm (2004–2012)</span>
+                                    <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-red-500 inline-block"></span> Présidence Bolsonaro (2019–2022)</span>
+                                    <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-blue-400 inline-block"></span> Retour Lula (2023–…)</span>
+                                    <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full bg-slate-400 inline-block"></span> Autres années</span>
+                                </div>
+                                <p className="text-sm text-slate-400 mt-3 italic">
+                                    Données : Global Forest Watch / Univ. du Maryland — couvert arboré ≥ 30 % <InlineRef n={1} /><InlineRef n={2} />.
+                                </p>
+                            </div>
+
+                            {/* GRAPHIQUE 2 — Cumulé */}
+                            <div className="glass-card p-6 md:p-8 rounded-2xl mb-6 border-white/10">
+                                <div className="flex items-center gap-3 mb-5">
+                                    <span className="material-symbols-outlined text-red-400 text-2xl" aria-hidden="true">trending_up</span>
+                                    <h3 className="text-xl md:text-2xl font-bold text-white font-sans">Perte cumulée de couvert forestier au Brésil</h3>
+                                </div>
+                                <div className="relative w-full" style={{ height: '350px' }}>
+                                    <canvas ref={chartCumulRef}></canvas>
+                                </div>
+                                <p className="text-sm text-slate-400 mt-3 italic">
+                                    En 24 ans, le Brésil a perdu environ <strong className="text-red-400">{totalLossMha.toFixed(1)} millions d'hectares</strong> de couvert forestier — soit plus que la superficie de l'Allemagne <InlineRef n={1} />.
+                                </p>
+                            </div>
+
+                            <Card title="Ce que les données nous apprennent pour la pièce" icon="theater_comedy" type="success">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        Ces graphiques ne sont pas qu'une illustration : ils éclairent directement les <strong className="text-primary">personnages et les dialogues</strong> de notre pièce.
+                                    </p>
+                                    <ul className="list-disc pl-6 space-y-3">
+                                        <li>
+                                            <strong>Le pic de {maxYear}</strong> ({maxVal.toFixed(2)} Mha perdus) correspond à l'explosion sous la présidence Bolsonaro. C'est l'urgence que vit notre personnage Asháninka : une accélération visible, mesurable, terrifiante.
+                                        </li>
+                                        <li>
+                                            <strong>La baisse entre 2004 et 2012</strong> (plan PPCDAm) montre que la déforestation <em>peut</em> reculer quand la volonté politique existe. C'est l'argument que pourrait porter un personnage défendant l'action institutionnelle.
+                                        </li>
+                                        <li>
+                                            <strong>Le creux de {minYear}</strong> ({minVal.toFixed(2)} Mha) prouve qu'une amélioration est possible — mais fragile, puisque la tendance remonte ensuite.
+                                        </li>
+                                        <li>
+                                            <strong>Sur les 4 ans Bolsonaro</strong>, le Brésil a perdu ~{bolsonaroTotal.toFixed(1)} Mha — soit l'équivalent de {(bolsonaroTotal / 0.064).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0')} fois la superficie de Paris. Pour le personnage politique de la pièce, ces chiffres sont des répliques prêtes à l'emploi.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </Card>
+
+                            <Card title="Analyse des sources" icon="fact_check" type="warning">
+                                <div className="space-y-3 text-base leading-relaxed">
+                                    <p>
+                                        <strong className="text-primary">Forces :</strong> Les données proviennent du programme Global Forest Watch / Université du Maryland, basé sur l'imagerie satellite Landsat (résolution 30 m). C'est la <strong>référence mondiale</strong> pour le suivi de la déforestation, publiée dans <em>Science</em> (Hansen et al., 2013) et utilisée par les gouvernements, l'ONU et les ONG. Les données sont ouvertes, vérifiables et mises à jour annuellement.
+                                    </p>
+                                    <p>
+                                        <strong className="text-primary">Limites :</strong> Le seuil de 30 % de couvert arboré ne distingue pas forêt primaire et forêt secondaire (plantations). Les données mesurent la <em>perte de couvert</em>, pas nécessairement la « déforestation » au sens strict (qui exclut les perturbations temporaires). Les chiffres ne capturent pas la dégradation forestière (forêt appauvrie mais pas rasée). Pour notre pièce, ces nuances sont à garder en tête : les ordres de grandeur sont fiables, mais les valeurs exactes dépendent des définitions retenues.
+                                    </p>
+                                    <p>
+                                        <strong className="text-primary">Méthode :</strong> Téléchargement du jeu de données CSV depuis le dashboard GFW, filtrage sur le seuil 30 % (ligne nationale, sans subdivision), et extraction des colonnes de perte annuelle (2001–2024). Les graphiques sont générés directement à partir de ces données brutes, sans transformation ni extrapolation.
+                                    </p>
+                                </div>
+                            </Card>
+
+                            <PosNegGrid
+                                positive="L'apport de données scientifiques quantifiées renforce considérablement la crédibilité de notre travail. Les graphiques rendent la déforestation tangible et permettent de visualiser l'impact des choix politiques — un outil précieux pour écrire des dialogues ancrés dans le réel. La corrélation entre les pics de déforestation et les mandats présidentiels offre une trame dramaturgique naturelle."
+                                difficulty="Les données brutes (CSV de 44 000 lignes) sont complexes à interpréter sans formation en science des données. Le risque est de surinterpréter des corrélations (« la déforestation augmente sous Bolsonaro ») sans tenir compte des facteurs multiples (cours du soja, sécheresse, etc.)."
+                                solutions="Utiliser les données comme des ordres de grandeur dans les dialogues, pas comme des arguments absolus. Croiser avec les sources qualitatives (reportages, témoignages Asháninka) pour donner du sens humain aux chiffres. Mentionner explicitement les limites méthodologiques dans le dossier."
+                            />
+
+                            <Sources list={sources} />
+                            <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} next={{to: '/seance-4', label: 'Séance 4'}} />
                         </ContentSection>
                     </div>
                 </SessionContext.Provider>
@@ -1292,7 +1597,7 @@ url: 'https://www.wipo.int/wipolex/fr/legislation/details/8755.html'
 
                             <Sources list={sources} />
 
-                            <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} />
+                            <NavArrows prev={{to: '/inter-seance-2', label: 'Inter 2'}} />
                         </ContentSection>
                     </div>
                 </SessionContext.Provider>
@@ -1314,6 +1619,7 @@ url: 'https://www.wipo.int/wipolex/fr/legislation/details/8755.html'
                             <Route path="/seance-2" element={<Seance2 />} />
                             <Route path="/inter-seance" element={<InterSeance />} />
                             <Route path="/seance-3" element={<Seance3 />} />
+                            <Route path="/inter-seance-2" element={<InterSeance2 />} />
                             <Route path="/seance-4" element={<Seance4 />} />
                         </Routes>
                     </div>
