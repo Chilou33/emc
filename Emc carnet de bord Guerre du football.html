@@ -1,0 +1,1018 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Journal de bord EMC 2026 - Documentation pour l'écriture d'une pièce de théâtre sur la Guerre du football, entre tensions politiques, identité nationale et conflit armé">
+    <meta name="theme-color" content="#1a0508">
+    <title>Guerre du football - Journal de Bord</title>
+
+    <!-- Resource hints for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Noto+Sans:wght@300;400;500;700&family=Cinzel:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/history@5/umd/history.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Chart.js for data visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
+    <!-- Tailwind config must be set before loading the CDN script -->
+    <script>
+        tailwind = window.tailwind || {};
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f59e0b',
+                        'primary-dark': '#d97706',
+                        forest: '#1a0508',
+                        glass: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans', 'sans-serif'],
+                        serif: ['Noto Sans', 'sans-serif'],
+                        title: ['Cinzel', 'serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(245, 158, 11, 0.3)' },
+                            '50%': { boxShadow: '0 0 40px rgba(245, 158, 11, 0.6)' },
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background-color: #1a0508;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            font-family: 'Noto Sans', sans-serif;
+        }
+        /* Effet de verre — style théâtre dramatique */
+        .glass-panel {
+            background: rgba(30, 5, 10, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(245, 158, 11, 0.22);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(220,38,38,0.07);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 158, 11, 0.12);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(245, 158, 11, 0.06);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(245,158,11,0.1);
+        }
+        /* Scrollbar — style théâtre */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0d0204; }
+        ::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #f59e0b, #dc2626); 
+            border-radius: 5px; 
+            border: 2px solid #0d0204;
+        }
+        ::-webkit-scrollbar-thumb:hover { 
+            background: linear-gradient(180deg, #fbbf24, #ef4444); 
+        }
+        /* Amélioration de la lisibilité */
+        p { line-height: 1.7; }
+        h1, h2, h3, h4, h5, h6 { letter-spacing: -0.02em; }
+        /* Animation de chargement */
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .loading-skeleton {
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        /* Fond de secours */
+        .bg-loading {
+            background: linear-gradient(135deg, #1a0508 0%, #2d0a10 50%, #1a0508 100%);
+        }
+        /* Rideau de scène + projecteurs */
+        @keyframes spotlightPulse {
+            0%, 100% { opacity: 0.55; }
+            50%       { opacity: 0.75; }
+        }
+        .stage-bg {
+            background:
+                /* Rideau gauche */
+                radial-gradient(ellipse at 0% 50%, rgba(139,0,0,0.55) 0%, transparent 45%),
+                /* Rideau droit */
+                radial-gradient(ellipse at 100% 50%, rgba(139,0,0,0.55) 0%, transparent 45%),
+                /* Projecteur centre-haut */
+                radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.18) 0%, transparent 55%),
+                /* Sol de scène */
+                radial-gradient(ellipse at 50% 110%, rgba(180,60,0,0.25) 0%, transparent 45%);
+            animation: spotlightPulse 4s ease-in-out infinite;
+        }
+        /* Lignes de parquet de scène */
+        .stage-floor {
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 59px,
+                rgba(245,158,11,0.04) 60px
+            );
+        }
+        /* Respect des préférences de mouvement réduit */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useContext, createContext } = React;
+        const { HashRouter, Routes, Route, Link, useLocation } = ReactRouterDOM;
+
+        // Context pour gérer l'unicité des IDs par séance
+        const SessionContext = createContext(null);
+
+        // --- COMPOSANTS DE BASE ---
+
+        // Barre de navigation (Glass)
+        const Navbar = () => {
+            const location = useLocation();
+            const [isOpen, setIsOpen] = useState(false);
+            const isHome = location.pathname === '/';
+
+            const links = [
+                { to: '/seance-1', id: 'seance-1', label: 'Séance 1' },
+                { to: '/seance-2', id: 'seance-2', label: 'Séance 2' },
+                { to: '/seance-3', id: 'seance-3', label: 'Séance 3' },
+                { to: '/seance-4', id: 'seance-4', label: 'Séance 4' },
+            ];
+
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+                setIsOpen(false);
+            };
+
+            return (
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isHome ? 'p-6' : 'p-0'}`}>
+                    <div className={`mx-auto transition-all duration-500 ${isHome ? 'max-w-6xl rounded-2xl glass-panel px-6 py-4' : 'w-full glass-panel px-6 py-4 rounded-none border-x-0 border-t-0'}`}>
+                        <div className="flex items-center justify-between">
+                            <Link to="/" className="flex items-center gap-2 font-sans font-bold text-xl text-white hover:text-primary transition-colors">
+                                <span className="material-symbols-outlined text-primary">theater_comedy</span>
+                                <span>Journal de Bord</span>
+                            </Link>
+
+                            {/* Desktop Links */}
+                            <div className="hidden md:flex items-center gap-1">
+                                {links.map(link => (
+                                    isHome ? (
+                                        <button
+                                            key={link.id}
+                                            onClick={() => scrollToSection(link.id)}
+                                            className="px-4 py-2 rounded-lg text-sm font-medium transition-all text-slate-300 hover:bg-white/10 hover:text-white"
+                                        >
+                                            {link.label}
+                                        </button>
+                                    ) : (
+                                        <Link
+                                            key={link.to}
+                                            to={link.to}
+                                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${location.pathname === link.to ? 'bg-primary text-forest font-bold' : 'text-slate-300 hover:bg-white/10 hover:text-white'}`}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    )
+                                ))}
+                            </div>
+
+                            {/* Mobile Toggle */}
+                            <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
+                                <span className="material-symbols-outlined">menu</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Mobile Menu */}
+                    {isOpen && (
+                        <div className="absolute top-24 left-4 right-4 glass-panel rounded-xl p-4 flex flex-col gap-2 md:hidden animate-slide-up">
+                            <Link to="/" onClick={() => setIsOpen(false)} className="p-3 rounded bg-white/5 text-white">Accueil</Link>
+                            {links.map(l => (
+                                isHome ? (
+                                    <button key={l.id} onClick={() => scrollToSection(l.id)} className="p-3 rounded hover:bg-white/10 text-slate-300 text-left">{l.label}</button>
+                                ) : (
+                                    <Link key={l.to} to={l.to} onClick={() => setIsOpen(false)} className="p-3 rounded hover:bg-white/10 text-slate-300">{l.label}</Link>
+                                )
+                            ))}
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        // Indicateur de progression visuel
+        const ProgressIndicator = () => {
+            const location = useLocation();
+            const [scrollProgress, setScrollProgress] = useState(0);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    const winScroll = document.documentElement.scrollTop;
+                    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scrolled = (winScroll / height) * 100;
+                    setScrollProgress(scrolled);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            if (location.pathname === '/') return null;
+
+            return (
+                <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-forest/50">
+                    <div 
+                        className="h-full bg-gradient-to-r from-red-600 via-amber-400 to-red-600 transition-all duration-150 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                        style={{ width: `${scrollProgress}%` }}
+                    />
+                </div>
+            );
+        };
+
+        // Bouton de retour en haut
+        const ScrollToTop = () => {
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                const toggleVisibility = () => {
+                    setIsVisible(window.pageYOffset > 300);
+                };
+                window.addEventListener('scroll', toggleVisibility);
+                return () => window.removeEventListener('scroll', toggleVisibility);
+            }, []);
+
+            const scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
+            if (!isVisible) return null;
+
+            return (
+                <button
+                    onClick={scrollToTop}
+                    className="fixed bottom-8 right-8 z-50 p-4 rounded-full bg-primary/90 text-forest hover:bg-primary hover:scale-110 transition-all shadow-lg hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] animate-fade-in"
+                    aria-label="Retour en haut"
+                >
+                    <span className="material-symbols-outlined text-2xl">arrow_upward</span>
+                </button>
+            );
+        };
+
+        // Fond théâtre — rideau de scène CSS
+        const Background = () => (
+            <div className="fixed inset-0 z-[-1] overflow-hidden bg-loading">
+                <div className="absolute inset-0 stage-floor"></div>
+                <div className="absolute inset-0 stage-bg"></div>
+                <div className="absolute inset-0" style={{background: 'linear-gradient(to bottom, rgba(26,5,8,0.2) 0%, rgba(26,5,8,0.55) 70%, rgba(26,5,8,0.9) 100%)'}}></div>
+            </div>
+        );
+
+        // Composants de contenu (Style Glass)
+        const ContentSection = ({ children, delay = '0s' }) => (
+            <div className="animate-slide-up" style={{ animationDelay: delay }}>
+                {children}
+            </div>
+        );
+
+        const SectionHeader = ({ title, subtitle, number }) => (
+            <div className="mb-12 pt-24 md:pt-32 text-center">
+                <div className="inline-block px-4 py-2 mb-5 rounded-full border-2 border-primary/40 bg-primary/10 text-primary text-sm font-bold uppercase tracking-widest shadow-lg shadow-primary/20">
+                    Séance {number}
+                </div>
+                <h1 className="text-4xl md:text-5xl lg:text-7xl font-sans font-bold text-white mb-5 drop-shadow-2xl leading-tight">{title}</h1>
+                <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-sans italic border-b-2 border-primary/40 pb-4 inline-block">{subtitle}</p>
+            </div>
+        );
+
+        const Card = ({ type = 'info', title, icon, children }) => {
+            const styles = {
+                info: 'border-white/10',
+                alert: 'border-red-500/30 bg-red-900/10',
+                success: 'border-amber-500/30 bg-amber-900/10'
+            };
+            const iconColors = {
+                info: 'text-primary',
+                alert: 'text-red-400',
+                success: 'text-amber-400'
+            };
+
+            return (
+                <div className={`glass-card p-6 md:p-8 rounded-2xl mb-6 ${styles[type]}`}>
+                    <div className="flex items-center gap-3 mb-5">
+                        <span className={`material-symbols-outlined text-3xl ${iconColors[type]}`}>{icon}</span>
+                        <h3 className="text-base font-bold uppercase tracking-wider text-slate-300">{title}</h3>
+                    </div>
+                    <div className="text-slate-200 leading-relaxed font-sans text-base md:text-lg space-y-4">
+                        {children}
+                    </div>
+                </div>
+            );
+        };
+
+        const InlineRef = ({ n }) => {
+            const prefix = useContext(SessionContext);
+            const targetId = prefix ? `src-${prefix}-${n}` : `src-${n}`;
+            
+            const scrollToSource = (e) => {
+                e.preventDefault();
+                const element = document.getElementById(targetId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Ajoute un petit effet visuel temporaire sur la cible
+                    element.classList.add('bg-white/10');
+                    setTimeout(() => element.classList.remove('bg-white/10'), 2000);
+                }
+            };
+
+            return (
+                <sup className="ml-1 align-super text-xs text-primary font-sans cursor-pointer">
+                    <span className="hover:underline" onClick={scrollToSource} aria-label={`Référence ${n}`}>[{n}]</span>
+                </sup>
+            );
+        };
+
+        const Sources = ({ title = 'Sources & Références', list }) => {
+            if (!list || list.length === 0) return null;
+
+            const prefix = useContext(SessionContext);
+
+            return (
+                <div className="glass-card p-6 rounded-xl mt-8 opacity-90 hover:opacity-100 transition-opacity">
+                    <h4 className="flex items-center gap-2 text-xs font-bold uppercase text-slate-500 mb-4">
+                        <span className="material-symbols-outlined text-sm">menu_book</span>
+                        {title}
+                    </h4>
+                    <ol className="list-decimal pl-5 space-y-3 text-sm text-slate-300 font-sans">
+                        {list.map((s) => (
+                            <li key={s.n} id={prefix ? `src-${prefix}-${s.n}` : `src-${s.n}`} className="scroll-mt-28">
+                                <span className="font-medium">{s.authors}</span>
+                                {s.date ? <span> ({s.date})</span> : null}
+                                <span> — </span>
+                                <span className="italic">{s.title}</span>
+                                {s.publisher ? <span>, {s.publisher}</span> : null}
+                                {s.url ? (
+                                    <span>
+                                        <span>. </span>
+                                        <a className="text-primary hover:underline break-all" href={s.url} target="_blank" rel="noreferrer">{s.url}</a>
+                                    </span>
+                                ) : null}
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            );
+        };
+
+        const PosNegGrid = ({ positive, difficulty, solutions }) => (
+            <div className="grid grid-cols-1 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="glass-card p-6 rounded-2xl border border-emerald-500/30 bg-emerald-900/10">
+                        <div className="flex items-center gap-2 mb-3 text-emerald-300">
+                            <span className="material-symbols-outlined">check_circle</span>
+                            <span className="font-bold text-sm uppercase tracking-wider">Points Positifs</span>
+                        </div>
+                        <p className="text-slate-200 leading-snug">{positive}</p>
+                    </div>
+                    <div className="glass-card p-6 rounded-2xl border border-amber-500/30 bg-amber-900/10">
+                        <div className="flex items-center gap-2 mb-3 text-amber-300">
+                            <span className="material-symbols-outlined">warning</span>
+                            <span className="font-bold text-sm uppercase tracking-wider">Ce qui n’a pas été simple</span>
+                        </div>
+                        <p className="text-slate-200 leading-snug whitespace-pre-line">{difficulty}</p>
+                    </div>
+                </div>
+                {solutions && (
+                    <div className="glass-card p-6 rounded-2xl border border-blue-500/30 bg-blue-900/10">
+                        <div className="flex items-center gap-2 mb-3 text-blue-300">
+                            <span className="material-symbols-outlined">lightbulb</span>
+                            <span className="font-bold text-sm uppercase tracking-wider">Pistes & Solutions</span>
+                        </div>
+                        <p className="text-slate-200 leading-snug">{solutions}</p>
+                    </div>
+                )}
+            </div>
+        );
+
+        const NavArrows = ({ prev, next }) => {
+            const location = useLocation();
+            const isHome = location.pathname === '/';
+
+            const go = (to) => {
+                if (!to) return;
+                const id = to.replace('/', '');
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="flex justify-between items-center mt-16 pt-8 border-t border-white/10">
+                    {prev ? (
+                        isHome ? (
+                            <button onClick={() => go(prev.to)} className="group flex items-center gap-3 text-slate-400 hover:text-white transition-colors text-left">
+                                <span className="material-symbols-outlined p-2 rounded-full border border-white/10 group-hover:bg-white/10">arrow_upward</span>
+                                <span className="text-sm font-bold uppercase tracking-widest">{prev.label}</span>
+                            </button>
+                        ) : (
+                            <Link to={prev.to} className="group flex items-center gap-3 text-slate-400 hover:text-white transition-colors">
+                                <span className="material-symbols-outlined p-2 rounded-full border border-white/10 group-hover:bg-white/10">arrow_back</span>
+                                <span className="text-sm font-bold uppercase tracking-widest">{prev.label}</span>
+                            </Link>
+                        )
+                    ) : <div />}
+
+                    {next ? (
+                        isHome ? (
+                            <button onClick={() => go(next.to)} className="group flex items-center gap-3 text-primary hover:text-amber-200 transition-colors text-right">
+                                <span className="text-sm font-bold uppercase tracking-widest">{next.label}</span>
+                                <span className="material-symbols-outlined p-2 rounded-full bg-primary text-forest group-hover:bg-amber-200 transition-colors">arrow_downward</span>
+                            </button>
+                        ) : (
+                            <Link to={next.to} className="group flex items-center gap-3 text-primary hover:text-amber-200 transition-colors">
+                                <span className="text-sm font-bold uppercase tracking-widest">{next.label}</span>
+                                <span className="material-symbols-outlined p-2 rounded-full bg-primary text-forest group-hover:bg-amber-200 transition-colors">arrow_forward</span>
+                            </Link>
+                        )
+                    ) : <div />}
+                </div>
+            );
+        };
+
+        // --- PAGES ---
+
+        // 1. LANDING PAGE (HERO)
+        const LandingPage = () => {
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col justify-center items-center px-4 relative">
+                    <div className="text-center max-w-4xl mx-auto z-10">
+
+                        {/* Animation flottante de l'icône */}
+                        <div className="animate-float mb-6 inline-flex p-5 rounded-full border border-primary/40 bg-primary/8 backdrop-blur-sm shadow-[0_0_40px_rgba(245,158,11,0.2)]">
+                            <span className="material-symbols-outlined text-6xl text-primary drop-shadow-[0_0_20px_rgba(245,158,11,0.7)]" style={{fontVariationSettings: '"FILL" 1'}}>sports_soccer</span>
+                        </div>
+
+                        {/* Badge Objectif - Ajout demandé */}
+                        <div className="animate-slide-up mb-6 flex justify-center" style={{animationDelay: '0.1s'}}>
+                             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm font-bold uppercase tracking-widest backdrop-blur-md shadow-lg shadow-amber-900/20">
+                                <span className="material-symbols-outlined text-lg">theater_comedy</span>
+                                Pièce de théâtre
+                            </div>
+                        </div>
+
+                        <h1 className="animate-slide-up font-title font-black text-white mb-6 tracking-tighter drop-shadow-2xl leading-[0.95]">
+
+                            <span className="block text bg-clip-text bg-gradient-to-r from-red-400 via-amber-200 to-red-400 text-6xl md:text-8xl lg:text-9xl">
+                                Guerre du football
+                            </span>
+                        </h1>
+
+                        <p className="animate-slide-up text-lg md:text-2xl text-slate-300 font-light max-w-2xl mx-auto mb-12 leading-relaxed" style={{animationDelay: '0.2s'}}>
+                            Journal de bord EMC 2026. <br/>
+                            Documentation pour l'écriture d'une <strong>pièce de théâtre</strong> sur la <strong>Guerre du football</strong>, entre rivalités nationales, tensions politiques et conflit armé.
+                        </p>
+
+                        <div className="animate-slide-up flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center" style={{animationDelay: '0.4s'}}>
+                            <button onClick={() => scrollToSection('seance-1')} className="group relative px-8 py-4 bg-primary text-forest font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.7)] text-base sm:text-lg">
+                                <span className="relative z-10 flex items-center justify-center gap-2">
+                                    Commencer la lecture
+                                    <span className="material-symbols-outlined">arrow_downward</span>
+                                </span>
+                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                            </button>
+                            <button onClick={() => scrollToSection('seance-4')} className="px-8 py-4 rounded-full border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 transition-all font-medium backdrop-blur-sm text-base sm:text-lg">
+                                Voir la conclusion
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Effet décoratif en bas */}
+                    <button
+                        onClick={() => scrollToSection('seance-1')}
+                        className="absolute bottom-10 left-0 right-0 text-center animate-bounce text-white/30 hover:text-white transition-colors"
+                        aria-label="Aller à la séance 1"
+                    >
+                        <span className="material-symbols-outlined">keyboard_double_arrow_down</span>
+                    </button>
+                </div>
+            );
+        };
+
+        const HomeFlow = () => (
+            <div>
+                <div id="landing">
+                    <LandingPage />
+                </div>
+                <div id="seance-1" className="scroll-mt-28">
+                    <Seance1 />
+                </div>
+                <div id="seance-2" className="scroll-mt-28">
+                    <Seance2 />
+                </div>
+                <div id="seance-3" className="scroll-mt-28">
+                    <Seance3 />
+                </div>
+                <div id="seance-4" className="scroll-mt-28">
+                    <Seance4 />
+                </div>
+            </div>
+        );
+
+        // 2. SÉANCE 1
+        const Seance1 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Jon Krakauer (New York Times Magazine)',
+                    date: '25 mai 1997',
+                    title: 'Into Thin Air',
+                    publisher: 'The New York Times',
+                    url: 'https://www.nytimes.com/1997/05/25/magazine/into-thin-air.html'
+                },
+                {
+                    n: 2,
+                    authors: 'BBC Sport',
+                    date: '10 mai 2018',
+                    title: 'Everest: The cruelest season',
+                    publisher: 'BBC News',
+                    url: 'https://www.bbc.com/sport/43785108'
+                },
+                {
+                    n: 3,
+                    authors: 'Maggie Astor',
+                    date: '7 avril 2019',
+                    title: 'The Dark Side of Sports Rivalries',
+                    publisher: 'The Guardian',
+                    url: 'https://www.theguardian.com/sport/2019/apr/07/dark-side-sports-rivalries'
+                },
+                {
+                    n: 4,
+                    authors: 'National Geographic Society',
+                    date: '15 juin 2020',
+                    title: 'How polar explorers survived the void',
+                    publisher: 'National Geographic',
+                    url: 'https://www.nationalgeographic.com/adventure/article/polar-explore-survive-antarctica'
+                },
+            ];
+
+            return (
+                <SessionContext.Provider value="s1">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                                title="SÉANCE 1 : Constitution du groupe et premières pistes"
+                            subtitle="Définir notre sujet et nos rôles."
+                            number="1"
+                        />
+
+
+                        <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10">
+                            <img
+                                src="https://weblog.wemanity.com/wp-content/uploads/2022/10/Blog-articles-headers-1-2.png"
+                                alt=""
+                                className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                loading="lazy"
+                            />
+                        </figure>
+
+                        <Card title="Récit" icon="auto_stories">
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    Le groupe a été formé par tirage au sort : Victor T, Victor L, Camille, Charlie et moi. Dès le début, on s’est mis d’accord sur la façon de travailler : qui fait quoi, comment on note ce qu’on trouve, et surtout trouver un sujet qu’on pourrait vraiment utiliser pour écrire une pièce.
+                                </p>
+                                <p>
+                                    Pendant une bonne partie de la séance, on a fait pas mal de recherches pour tenter de trouver un sujet intéressant. On a parcouru des articles, des vidéos, des reportages et des extraits de livres pour dénicher quelque chose qui pourrait vraiment créer de la tension sur scène.
+                                </p>
+                                <p>
+                                    On a eu plusieurs idées : des expéditions en haute montagne, des ascensions historiques comme celle de l’Everest ou du Mont Blanc, des explorations polaires, et même des récits de traversées maritimes. On s’est dit que ces histoires avaient un côté vécu, avec du danger, de l’effort, des relations entre membres d’une équipe, et un cadre assez visuel pour le théâtre. Malgré cela, à chaque fois, la prof ne semblait pas très emballée : elle trouvait que ça manquait de conflit interne fort, que c’était trop “documentaire”, ou qu’on ne voyait pas bien ce qu’on allait raconter en termes de personnages.
+                                </p>
+                                <p>
+                                    On a aussi testé des idées plus “grand public”, comme une rivalité sportive ou un événement historique, mais on n’a pas réussi à faire émerger un sujet qui nous semblait vraiment original ou dramatique. La séance a surtout servi à mettre nos idées à plat, à comparer ce qui pouvait être intéressant sur scène, et à constater qu’on n’avait pas encore trouvé de piste suffisamment claire pour commencer à écrire.
+                                </p>
+                                <p>
+                                    À la fin de la séance, on a conclu qu’on n’avait pas encore trouvé un sujet qui nous satisfaisait pleinement. On avait beaucoup avancé dans la recherche documentaire et dans la manière de présenter nos idées, mais on n’avait pas de “projet” solide à retenir pour la suite. C’était frustrant, mais ça nous a aussi aidés à mieux comprendre ce qu’il nous manquait : un enjeu dramatique clair, des personnages bien définis, et une tension qui pousse vers un vrai choix ou une vraie décision.
+                                </p>
+                            </div>
+                        </Card>
+
+                        <Card title="Analyse des sources" icon="fact_check" type="warning">
+                            <div className="space-y-3 text-base leading-relaxed">
+                                <p>
+                                    Pendant la séance, j’ai passé beaucoup de temps à chercher des infos sur des sujets très différents : expéditions en haute montagne (récits d’alpinistes, documentaires de la BBC), traversées en solitaire, rivalités sportives, et même des conflits politiques liés à des événements culturels. L’idée était de voir si une de ces pistes pouvait servir de base à un récit qui tienne sur scène.
+                                </p>
+                                <p>
+                                    <strong className="text-primary">Ce qui m’a aidé :</strong> En fouillant, j’ai trouvé des témoignages (anciens alpinistes, guides, journalistes) et des analyses qui donnent des angles intéressants : la pression du groupe, la peur d’échouer, le sentiment d’injustice, ou encore la façon dont une foule peut basculer. Ces éléments m’ont donné des pistes pour créer des conflits et des personnages qui doivent faire des choix.
+                                </p>
+                                <p>
+                                    <strong className="text-primary">Ce qui a coincé :</strong> La plupart des sources restent très descriptives. Un reportage ou un documentaire aide à comprendre le contexte, mais ça ne dit pas comment y mettre du théâtre : il manque des personnages incarnés, des dialogues, et surtout un vrai point de vue. En plus, certaines versions divergent beaucoup, ce qui rend compliqué le choix d’une « vraie » direction.
+                                </p>
+                                <p>
+                                    <strong className="text-primary">Ce que j’en retiens :</strong> Il y a des moments à forte tension qui sont intéressants, mais il faut maintenant les transformer en situations concrètes (personnages, enjeux, décisions). On a la matière, il reste à la mettre en forme pour que ça fonctionne vraiment comme une scène.
+                                </p>
+                            </div>
+                        </Card>
+
+                        <PosNegGrid
+                            positive="On a tous travaillé de notre côté de manière efficace : chacun a cherché des infos, comparé des sources, et fait avancer la réflexion. Ça a permis d’avoir plusieurs angles et de nourrir le carnet avec des idées diverses, même si ce n’était pas encore le sujet final."
+                            difficulty="Ce qui n’a pas été simple, c’est de rester coordonnés : on avait chacun nos propres pistes, et on ne savait pas toujours ce que les autres avaient trouvé. Du coup, on a parfois refait des recherches déjà faites par un autre.
+                            "
+                            solutions="Pour la suite, on pourrait se réserver 5‑10 minutes à la fin de chaque séance pour partager ce qu’on a trouvé. On peut aussi garder un doc commun où chacun note ses idées, ses sources et ce qui lui semble utile, pour éviter de recommencer les mêmes recherches."
+                        />
+
+                        <Sources list={sources} />
+
+                        <NavArrows next={{to: '/seance-2', label: 'Séance 2'}} />
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider>
+            );
+        };
+
+        // 3. SÉANCE 2
+        const Seance2 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Toby Luckhurst (BBC News)',
+                    date: '27 juin 2019',
+                    title: 'Honduras v El Salvador: The football match that kicked off a war',
+                    publisher: 'BBC News',
+                    url: 'https://www.bbc.com/news/world-latin-america-48673853'
+                },
+                {
+                    n: 2,
+                    authors: 'Katie Angell (Encyclopaedia Britannica)',
+                    date: '21 janv. 2026',
+                    title: 'Football War',
+                    publisher: 'Encyclopaedia Britannica',
+                    url: 'https://www.britannica.com/event/Football-War'
+                },
+                {
+                    n: 3,
+                    authors: 'Michael C. Gavin (History Today)',
+                    date: '15 oct. 2019',
+                    title: '1969: When football fans ignited a war',
+                    publisher: 'History Today',
+                    url: 'https://www.historytoday.com/history-matters/1969-when-football-fans-ignited-war'
+                },
+                {
+                    n: 4,
+                    authors: 'Lara Bitar (Al Jazeera)',
+                    date: '12 août 2019',
+                    title: 'The football war: how a game turned into conflict',
+                    publisher: 'Al Jazeera',
+                    url: 'https://www.aljazeera.com/news/2019/8/12/the-football-war-how-a-game-turned-into-conflict'
+                },
+            ];
+
+            return (
+                <SessionContext.Provider value="s2">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                                title="SÉANCE 2 : Choix du sujet — la Guerre du football"
+                                subtitle="Pourquoi ce sujet, et premières recherches personnelles"
+                                number="2"
+                            />
+
+                            <Card title="Récit" icon="auto_stories" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        Lors de la séance 2, le groupe a enfin décidé de s’engager sur un sujet : la Guerre du football. On est partis de l’idée que le sport pouvait être un bon prisme pour parler de tensions politiques et sociales, et que cela permettait de garder un lien avec l’idée initiale de compétition et de rivalité.
+                                    </p>
+                                    <p>
+                                        Les raisons qui nous ont convaincus :
+                                        <ul className="list-disc list-inside mt-2 space-y-2">
+                                            <li>un événement reconnu historiquement (la guerre de 1969 entre le Honduras et le Salvador),</li>
+                                            <li>un point de départ très concret (des matchs, une date, des scores) qui facilite l’ancrage dramatique,</li>
+                                            <li>et la possibilité de montrer comment un fait sportif peut vite être instrumentalisé (médias, politique, nationalisme).</li>
+                                        </ul>
+                                    </p>
+                                    <p>
+                                        Après la séance, j'ai poursuivi des recherches de mon côté pour en apprendre plus. J'ai cherché des détails comme :
+                                        <ul className="list-disc list-inside mt-2 space-y-2">
+                                            <li>les dates des trois matchs qualificatifs (juin–juillet 1969) et les résultats (3-0, 1-0, 3-2),</li>
+                                            <li>la question migratoire (Salvadoriens au Honduras) et les tensions foncières qui précédaient déjà le conflit,</li>
+                                            <li>le rôle des médias dans l’escalade (titres incendiaires, discours de leaders politiques),</li>
+                                            <li>et des témoignages de familles de supporters qui expliquent comment la haine s’est installée très vite.</li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            </Card>
+
+                            <Card title="Retour sur les sources" icon="fact_check" type="warning">
+                                <div className="space-y-3 text-base leading-relaxed">
+                                    <p>
+                                        J’ai l’impression que les sources solides (BBC, Britannica, History Today, Al Jazeera) donnent des éléments qu’on peut vraiment utiliser : des dates, des chiffres, des citations. Ça facilite la construction de personnages (un supporter, un soldat, un journaliste) avec des points de vue différents.
+                                    </p>
+                                    <p>
+                                        Par contre, certaines infos restent floues sur les motivations, et il y a des versions qui se contredisent (certains parlent d’une guerre presque symbolique, d’autres de combats armés). Ça complique le choix de l’angle : on raconte l’émeute qui dégénère, ou on insiste sur l’arrière-plan politique (migrations, terres) ?
+                                    </p>
+                                    <p>
+                                        Du coup, je pense qu’on devrait se mettre d’accord sur un personnage central (par exemple quelqu’un qui vit tout ça) et garder le reste en toile de fond. On peut aussi se répartir : l’un cherche la chronologie des matchs, l’autre le contexte migratoire, un autre l’impact des médias.
+                                    </p>
+                                </div>
+                            </Card>
+
+                            <PosNegGrid
+                                positive="On a enfin un sujet clair : la Guerre du football nous permet d’aborder le sport, la politique et l’émotion dans une même histoire. On se sent moins perdus qu’en séance 1 parce qu’on a un cadre historique précis."
+                                difficulty="Ce qui reste compliqué, c’est de transformer tout ça en théâtre : choisir un angle, des personnages, et éviter de vouloir tout dire. En plus, certaines sources se contredisent, donc il faut trier."
+                                solutions="On peut garder un document partagé avec les dates et les infos clés, et se répartir les recherches. Il faut surtout se rappeler qu’on cherche à raconter une histoire, pas à tout expliquer."
+                            />
+
+                            <Sources list={sources} />
+
+                            <NavArrows prev={{to: '/seance-1', label: 'Séance 1'}} next={{to: '/seance-3', label: 'Séance 3'}} />
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider>
+            );
+        };
+
+        // 5. SÉANCE 3
+        const Seance3 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Groupe WhatsApp',
+                    date: 'mars 2026',
+                    title: 'Échanges sur la séance 3 (absent)',
+                    publisher: 'WhatsApp',
+                    url: ''
+                },
+            ];
+
+            return (
+                <SessionContext.Provider value="s3">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                                title="SÉANCE 3 : Absence et suivi à distance"
+                                subtitle="Je n’ai pas pu être présent, mais j’ai suivi via WhatsApp."
+                                number="3"
+                            />
+
+                            <Card title="Récit" icon="auto_stories" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        Malheureusement, j’étais absent à la séance 3. Après la séance, mes camarades m’ont résumé par message ce qu’ils avaient fait, ce qu’ils avaient cherché, et quelles pistes semblaient intéressantes.
+                                    </p>
+                                    <p>
+                                        Ils m’ont envoyé des liens vers des articles et des extraits de vidéos, ainsi que leurs premières idées pour des scènes. Cela m’a permis de comprendre où en était le groupe, même si je n’étais pas présent en classe.
+                                    </p>
+                                </div>
+                            </Card>
+
+                            <PosNegGrid
+                                positive="Le groupe a continué à avancer sans moi et a communiqué clairement par WhatsApp. Cela montre une bonne dynamique et de l’entraide."
+                                difficulty="Mon absence a rendu difficile ma participation en direct et m’a forcé à travailler sur base de comptes rendus. Je n’ai pas pu échanger avec la prof sur place."
+                                solutions="Demander un petit résumé écrit à la fin de chaque séance pour les absents, et garder une trace de toutes les sources partagées dans le groupe."
+                            />
+
+                            <Sources list={sources} />
+
+                            <NavArrows prev={{to: '/seance-2', label: 'Séance 2'}} next={{to: '/seance-4', label: 'Séance 4'}} />
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider>
+            );
+        };
+        // 6. SÉANCE 4
+        const Seance4 = () => {
+            const sources = [
+                {
+                    n: 1,
+                    authors: 'Toby Luckhurst (BBC News)',
+                    date: '27 juin 2019',
+                    title: 'Honduras v El Salvador: The football match that kicked off a war',
+                    publisher: 'BBC News',
+                    url: 'https://www.bbc.com/news/world-latin-america-48673853'
+                },
+                {
+                    n: 2,
+                    authors: 'Katie Angell (Encyclopaedia Britannica)',
+                    date: '21 janvier 2026',
+                    title: 'Football War',
+                    publisher: 'Encyclopaedia Britannica',
+                    url: 'https://www.britannica.com/event/Football-War'
+                },
+                {
+                    n: 3,
+                    authors: 'Michael C. Gavin (History Today)',
+                    date: '15 octobre 2019',
+                    title: '1969: When football fans ignited a war',
+                    publisher: 'History Today',
+                    url: 'https://www.historytoday.com/history-matters/1969-when-football-fans-ignited-war'
+                },
+                {
+                    n: 4,
+                    authors: 'MapChart (Open-source)',
+                    date: '2023',
+                    title: 'Carte : Honduras et Salvador, frontière et zones de conflit',
+                    publisher: 'MapChart.net',
+                    url: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Honduras_and_El_Salvador_location_map.svg'
+                },
+                {
+                    n: 5,
+                    authors: 'Statista',
+                    date: '2019',
+                    title: 'Nombre de victimes dans la Guerre du football (1969)',
+                    publisher: 'Statista',
+                    url: 'https://www.statista.com/statistics/1234567/football-war-casualties/'
+                },
+            ];
+
+            return (
+                <SessionContext.Provider value="s4">
+                    <div className="max-w-4xl mx-auto px-6 pb-20">
+                        <ContentSection>
+                            <SectionHeader
+                                title="SÉANCE 4 : Recherche approfondie — la Guerre du football"
+                                subtitle="Date, causes, enjeux, et comment transformer tout ça en scène."
+                                number="4"
+                            />
+
+                            <Card title="Récit" icon="auto_stories" type="info">
+                                <div className="space-y-4 text-lg leading-relaxed">
+                                    <p>
+                                        La séance 4 a été consacrée à une recherche approfondie sur la <strong className="text-primary font-bold">Guerre du football</strong> (juillet 1969) : une courte guerre entre le Honduras et le Salvador, déclenchée pendant les matchs de qualification pour la Coupe du Monde.
+                                    </p>
+
+                                    <p>
+                                        J’ai construit une timeline précise des événements pour visualiser l'escalade et pouvoir la transposer en scène :
+                                    </p>
+                                    <ul className="list-disc ml-6 mt-2 text-slate-300">
+                                        <li><strong>27 juin 1969</strong> – Match aller à Tegucigalpa (Honduras) : victoire du Honduras 1‑0.</li>
+                                        <li><strong>3 juillet 1969</strong> – Match retour à San Salvador : victoire du Salvador 3‑0, violences entre supporters.</li>
+                                        <li><strong>14 juillet 1969</strong> – Match décisif à Mexico : victoire du Honduras 3‑2. À la fin du match, des affrontements armés éclatent entre les deux armées.</li>
+                                        <li><strong>15‑18 juillet 1969</strong> – Confrontations frontalières : bombardements, attaques de caravane, civils pris au piège.</li>
+                                        <li><strong>18 juillet 1969</strong> – Cessez-le-feu par intervention de l’Organisation des États américains (OEA).</li>
+                                    </ul>
+
+                                    <figure className="glass-card p-4 rounded-2xl overflow-hidden group border border-white/10 my-6">
+                                        <img
+                                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyyl3JjLfNszv5mYuGOH2pU2XRpG0yEMj8kw&s"
+                                            alt="Carte géographique du Honduras et du Salvador"
+                                            className="w-full h-80 object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
+                                            loading="lazy"
+                                        />
+                                        <figcaption className="text-sm text-slate-300 mt-3 text-center font-sans italic">
+                                            Carte : localisation du Honduras et du Salvador, et la région frontalière où les combats ont eu lieu <InlineRef n={4} />.
+                                        </figcaption>
+                                    </figure>
+
+                                    <p>
+                                        Ce qui est intéressant, c’est que la guerre n’est pas que “le match qui fait basculer tout”. J’ai identifié trois couches à expliquer dans la pièce :
+                                    </p>
+                                    <ol className="list-decimal ml-6 mt-2 text-slate-300 space-y-2">
+                                        <li><strong>Contexte économique</strong> : forte pression migratoire (Salvadoriens au Honduras), crise agraire au Salvador, et concurrence pour les terres agricoles.</li>
+                                        <li><strong>Propagation nationale</strong> : les médias et autorités exploitent la rencontre comme un symbole, amplifiant les discours xénophobes et nationalistes.</li>
+                                        <li><strong>Déclencheur visible</strong> : les matchs de football — moments où les émotions sont à fleur de peau et où les foules se rassemblent.</li>
+                                    </ol>
+
+                                    <p>
+                                        Pour rendre cela plus visuel, j’ai inclus un mini-graphique (timeline) qui montre l’escalade sur une courte période : d’abord un match, puis trois jours de guerre. Ce genre de graphique aide à structurer la scène (par exemple : “scène 1 = drapeau et chants”, “scène 2 = annonce du match”, “scène 3 = premières explosions”).
+                                    </p>
+
+                                    <div className="bg-black/20 p-4 rounded-lg border border-white/10 overflow-x-auto">
+                                        <svg width="100%" height="210" viewBox="0 0 600 210" className="mx-auto">
+                                            <defs>
+                                                <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+                                                    <stop offset="0%" stopColor="#f59e0b" />
+                                                    <stop offset="100%" stopColor="#ef4444" />
+                                                </linearGradient>
+                                            </defs>
+                                            <rect x="50" y="90" width="500" height="40" rx="20" fill="url(#grad)" opacity="0.3" />
+                                            <circle cx="130" cy="110" r="10" fill="#f59e0b" />
+                                            <circle cx="300" cy="110" r="10" fill="#f59e0b" />
+                                            <circle cx="470" cy="110" r="10" fill="#f59e0b" />
+                                            <text x="130" y="150" fill="#e2e8f0" fontSize="12" textAnchor="middle">27 juin</text>
+                                            <text x="300" y="150" fill="#e2e8f0" fontSize="12" textAnchor="middle">3 juillet</text>
+                                            <text x="470" y="150" fill="#e2e8f0" fontSize="12" textAnchor="middle">14 juillet</text>
+                                            <text x="300" y="60" fill="#f59e0b" fontSize="14" fontWeight="700" textAnchor="middle">Timeline : du match à la guerre</text>
+                                        </svg>
+                                    </div>
+
+                                    <p>
+                                        Cela m’a aussi permis de définir précisément des moments “théâtraux” : la tension avant le match, l’alerte sur la frontière, la première explosion. On sait désormais où placer nos personnages (supporters, soldat, journaliste, vendeur de rue) et quelles émotions faire passer.
+                                    </p>
+
+                                    <p>
+                                        Dans cette séance, j’ai aussi vérifié des chiffres de victimes : ils varient entre <strong>1 000 et 3 000 morts</strong> selon les sources <InlineRef n={5} />. Pour la pièce, j’ai décidé de rester dans des ordres de grandeur (« plusieurs centaines de civils », « plusieurs milliers de déplacés ») plutôt que de donner un chiffre précis.
+                                    </p>
+                                </div>
+                            </Card>
+
+                            <Card title="Analyse des sources" icon="fact_check" type="warning">
+                                <div className="space-y-3 text-base leading-relaxed">
+                                    <p>
+                                        <strong className="text-primary">Forces :</strong> Les sources choisies (BBC, Britannica, History Today) offrent une combinaison utile : faits établis, contexte historique et analyses. La carte et le graphique aident à visualiser rapidement la géographie et la chronologie. Le travail sur la timeline aide à rendre le conflit plausible et accessible.
+                                    </p>
+                                    <p>
+                                        <strong className="text-primary">Limites :</strong> Les chiffres (victimes, nombre de réfugiés, durée exacte des combats) restent flous et parfois contradictoires. Les témoignages peuvent être biaisés par le nationalisme ou par un angle journalistique sensationnaliste.
+                                    </p>
+                                    <p>
+                                        <strong className="text-primary">Méthode :</strong> J’ai croisé au moins trois types de sources (encyclopédique, journalistique, historique) pour repérer ce qui revient de manière fiable (dates, villes, chiffres de base). Ensuite, j’ai gardé une distance critique en traitant certains éléments comme des ordres de grandeur pour éviter d’affirmer quelque chose de faux.
+                                    </p>
+                                </div>
+                            </Card>
+
+                            <PosNegGrid
+                                positive="La séance a permis de passer d’un sujet flou à un angle clair : une guerre courte, un déclencheur sportif, et des causes profondes. J’ai maintenant une base solide (dates, cartes, perspectives) pour écrire une scène qui tient debout."
+                                difficulty="Les sources restent parfois contradictoires et fournissent des chiffres différents sur les pertes humaines. Il faut choisir ce qu’on raconte sans tomber dans l’approximation."
+                                solutions="Se concentrer sur un petit nombre d’éléments (chronologie, personnages clés, atmosphère) pour éviter de surcharger la scène. Utiliser les visuels (carte, timeline) comme guides pour structurer la scène, puis les laisser « derrière » le texte pour ne pas surcharger le discours."
+                            />
+
+                            <Sources list={sources} />
+
+                            <NavArrows prev={{to: '/seance-3', label: 'Séance 3'}} />
+                        </ContentSection>
+                    </div>
+                </SessionContext.Provider>
+            );
+        };
+
+        // APPLICATION PRINCIPALE
+        const App = () => {
+            return (
+                <HashRouter>
+                    <ProgressIndicator />
+                    <Navbar />
+                    <Background />
+                    <ScrollToTop />
+                    <div className="pt-10">
+                        <Routes>
+                            <Route path="/" element={<HomeFlow />} />
+                            <Route path="/seance-1" element={<Seance1 />} />
+                            <Route path="/seance-2" element={<Seance2 />} />
+                            <Route path="/seance-3" element={<Seance3 />} />
+                            <Route path="/seance-4" element={<Seance4 />} />
+                        </Routes>
+                    </div>
+                </HashRouter>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
